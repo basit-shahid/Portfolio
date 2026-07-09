@@ -1,0 +1,174 @@
+---
+import BgGrid from "@/components/assets/BgGrid.astro";
+---
+
+<!-- Added pb-16 md:pb-24 below to provide structural separation before the Intro section -->
+<section id="hero-section" class="border-white/20 border-b pb-16 md:pb-24">
+  <!-- Fixed container height or padding to give enough runway for the scroll animation -->
+  <div class="bg-grid p-8 pt-12 md:pt-20 relative overflow-hidden">
+    <BgGrid />
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative">
+      
+      <!-- Text Container -->
+      <div class="lg:col-span-2">
+        <h1 class="text-white tracking-tighter font-black uppercase text-3xl lg:text-8xl select-none min-h-[160px] lg:min-h-[260px]">
+          <span class="animate-fade-in block">HEY THERE,</span>
+          
+          <span class="block mt-3 lg:mt-6 text-white">
+            This is <span class="inline shadow-none"><span id="typewriter" class="animate-gradient-text bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 bg-[length:200%_auto] bg-clip-text text-transparent inline"></span><span id="cursor" class="text-orange-500 font-light ml-1 animate-pulse-fast inline-block select-none">|</span></span>
+          </span>
+        </h1>
+      </div>
+
+      <div class="flex justify-center lg:justify-end animate-fade-in">
+        <div class="relative group w-64 h-64 lg:w-96 lg:h-96 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl">
+          <img 
+            src="/ID.jpeg" 
+            alt="Abdul Basit Shahid" 
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 ease-out"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  if (typeof window !== "undefined") {
+    const targetText = "Abdul Basit Shahid";
+    let lastCharIndex = 0;
+    let lastScrollY = 0;
+    let audioCtx: AudioContext | null = null;
+    let isTicking = false;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Forward mechanical typing stroke
+    function playMechanicalStroke() {
+      if (!audioCtx || audioCtx.state === 'suspended') return;
+
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+
+        filter.type = "highpass";
+        filter.frequency.setValueAtTime(650, now);
+
+        osc.connect(gainNode);
+        gainNode.connect(filter);
+        filter.connect(audioCtx.destination);
+
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(1500 + Math.random() * 200, now);
+        osc.frequency.exponentialRampToValueAtTime(400, now + 0.025);
+
+        gainNode.gain.setValueAtTime(0.45, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, now + 0.035);
+
+        const clickOsc = audioCtx.createOscillator();
+        const clickGain = audioCtx.createGain();
+
+        clickOsc.type = "sine";
+        clickOsc.frequency.setValueAtTime(3500, now);
+        clickOsc.connect(clickGain);
+        clickGain.connect(audioCtx.destination);
+
+        clickGain.gain.setValueAtTime(0.08, now);
+        clickGain.gain.exponentialRampToValueAtTime(0.00001, now + 0.008);
+
+        osc.start(now);
+        osc.stop(now + 0.04);
+        clickOsc.start(now);
+        clickOsc.stop(now + 0.01);
+      } catch (e) {}
+    }
+
+    function handleScrollAnimation() {
+      const typewriterElement = document.getElementById("typewriter");
+      if (!typewriterElement) return;
+
+      const currentScrollY = window.scrollY;
+      
+      // Determine scroll direction
+      const isScrollingDown = currentScrollY > lastScrollY;
+      lastScrollY = currentScrollY;
+
+      // Define runway distance for the animation effect
+      const maxScrollRunway = 350; 
+      const scrollRatio = Math.min(Math.max(currentScrollY / maxScrollRunway, 0), 1);
+      
+      // Map scroll progress to string length indices
+      const nextCharIndex = Math.floor(scrollRatio * targetText.length);
+
+      if (nextCharIndex !== lastCharIndex) {
+        typewriterElement.textContent = targetText.substring(0, nextCharIndex);
+        
+        // Trigger keystroke sound ONLY when moving forward (scrolling down)
+        if (isScrollingDown && nextCharIndex > lastCharIndex) {
+          playMechanicalStroke();
+        }
+        
+        lastCharIndex = nextCharIndex;
+      }
+
+      isTicking = false;
+    }
+
+    function onScroll() {
+      if (!isTicking) {
+        requestAnimationFrame(handleScrollAnimation);
+        isTicking = true;
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("click", initAudio, { once: true });
+    window.addEventListener("keydown", initAudio, { once: true });
+    window.addEventListener("touchstart", initAudio, { once: true });
+
+    // Run once at boot time to set target layouts
+    handleScrollAnimation();
+  }
+</script>
+
+<style>
+  .animate-fade-in {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-gradient-text {
+    animation: shiftGradient 4s linear infinite;
+  }
+
+  .animate-pulse-fast {
+    animation: pulseCursor 0.8s steps(2, start) infinite;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes shiftGradient {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  @keyframes pulseCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>

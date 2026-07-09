@@ -1,0 +1,168 @@
+---
+// Premium Adaptive Navbar - Ultra Smooth Precision Scrolling version
+---
+
+<div class="sticky top-0 z-50 w-full h-20 md:h-24 pointer-events-none">
+  
+  <div 
+    id="nav-wrapper" 
+    class="absolute inset-0 w-full pt-4 md:pt-6 px-4 pointer-events-auto bg-zinc-900/60 backdrop-blur-xl backdrop-saturate-150 border-b border-white/5 transition-all duration-300 ease-out"
+  >
+    
+    <nav id="nav-capsule" class="max-w-5xl mx-auto rounded-full border border-white/10 bg-white/[0.03] transition-all duration-300 ease-out">
+      <div id="nav-container" class="px-6 md:px-8 transition-all duration-300 ease-out">
+        
+        <div class="flex items-center justify-between h-14 md:h-16">
+          
+          <a href="/" class="transition-transform duration-200 hover:scale-105 shrink-0 flex items-center">
+            <h1 class="text-white font-sans font-black text-2xl md:text-3xl tracking-tighter">
+              A<span class="text-orange-500 font-black transition-colors duration-300 id-dot">.</span>
+            </h1>
+          </a>
+
+          <div class="flex items-center gap-1.5 md:gap-2 overflow-x-auto no-scrollbar ml-4 md:ml-0 py-1 max-w-full whitespace-nowrap">
+            <a
+              href="#about"
+              class="inline-block text-zinc-400 hover:text-white duration-200 font-bold px-4 py-2 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-colors nav-link js-smooth-scroll"
+            >
+              About
+            </a>
+
+            <a
+              href="#tech-stack"
+              class="inline-block text-zinc-400 hover:text-white duration-200 font-bold px-4 py-2 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-colors nav-link js-smooth-scroll"
+            >
+              Tech Stack
+            </a>
+            
+            <a
+              href="#projects"
+              class="inline-block text-zinc-400 hover:text-white duration-200 font-bold px-4 py-2 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-colors nav-link js-smooth-scroll"
+            >
+              Projects
+            </a>
+
+            <a
+              href="#goals"
+              class="inline-block text-zinc-400 hover:text-white duration-200 font-bold px-4 py-2 rounded-full text-[10px] md:text-xs uppercase tracking-wider transition-colors nav-link js-smooth-scroll"
+            >
+              GOALS
+            </a>
+            
+            <a
+              href="#contact"
+              id="contact-btn"
+              class="inline-block bg-orange-500 hover:bg-orange-600 duration-200 font-black text-white px-4 py-2 md:px-5 md:py-2.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider shadow-md shadow-orange-500/10 transition-all js-smooth-scroll"
+            >
+              Contact
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<script>
+  if (typeof window !== "undefined") {
+    const wrapper = document.getElementById("nav-wrapper");
+    const capsule = document.getElementById("nav-capsule");
+    const container = document.getElementById("nav-container");
+
+    let isScrollingLocked = false;
+    let currentNavbarState: 'floating' | 'fixed' = 'floating';
+
+    function updateNavbarStyles() {
+      if (!wrapper || !capsule || !container) return;
+
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 25 && currentNavbarState === 'floating') {
+        currentNavbarState = 'fixed';
+        wrapper.classList.remove("pt-4", "md:pt-6", "px-4", "bg-zinc-900/60", "backdrop-blur-xl");
+        wrapper.classList.add("pt-0", "px-0", "bg-zinc-950/40", "backdrop-blur-md");
+        capsule.classList.remove("rounded-full", "max-w-5xl", "border", "bg-white/[0.03]");
+        capsule.classList.add("rounded-none", "max-w-full", "bg-transparent");
+        container.classList.remove("px-6", "md:px-8");
+        container.classList.add("px-4", "sm:px-6", "lg:px-12");
+      } else if (currentScrollY <= 25 && currentNavbarState === 'fixed') {
+        currentNavbarState = 'floating';
+        wrapper.classList.add("pt-4", "md:pt-6", "px-4", "bg-zinc-900/60", "backdrop-blur-xl");
+        wrapper.classList.remove("pt-0", "px-0", "bg-zinc-950/40", "backdrop-blur-md");
+        capsule.classList.add("rounded-full", "max-w-5xl", "border", "bg-white/[0.03]");
+        capsule.classList.remove("rounded-none", "max-w-full", "bg-transparent");
+        container.classList.add("px-6", "md:px-8");
+        container.classList.remove("px-4", "sm:px-6", "lg:px-12");
+      }
+      isScrollingLocked = false;
+    }
+
+    // --- High Performance Cinematic Scroll Engine ---
+    function easeOutQuint(t: number): number {
+      return 1 - Math.pow(1 - t, 5);
+    }
+
+    function smoothScrollTo(targetY: number, duration: number = 900) {
+      const startY = window.scrollY;
+      const difference = targetY - startY;
+      const startTime = performance.now();
+
+      function step(currentTime: number) {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const ease = easeOutQuint(progress);
+        
+        window.scrollTo(0, startY + difference * ease);
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Initialize customized script callbacks
+    function initScrollInterceptors() {
+      const scrollLinks = document.querySelectorAll(".js-smooth-scroll");
+      
+      scrollLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const href = link.getAttribute("href");
+          if (!href || href === "#") return;
+
+          const targetElement = document.querySelector(href);
+          if (!targetElement) return;
+
+          // Calculate correct height matrix offset dynamically (96px for top buffer spacing)
+          const navbarOffset = 96;
+          const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+          const targetOffsetPosition = elementPosition - navbarOffset;
+
+          smoothScrollTo(targetOffsetPosition, 1100); // 1100ms for luxurious deceleration
+        });
+      });
+    }
+
+    window.addEventListener("scroll", () => {
+      if (!isScrollingLocked) {
+        isScrollingLocked = true;
+        requestAnimationFrame(updateNavbarStyles);
+      }
+    }, { passive: true });
+
+    updateNavbarStyles();
+    initScrollInterceptors();
+  }
+</script>
+
+<style is:global>
+  /* Embedded core menu helpers */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

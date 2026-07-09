@@ -1,0 +1,58 @@
+---
+const skills = [
+  { name: "Laravel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" },
+  { name: "Wordpress", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg" },
+  { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
+  { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
+  { name: "NodeJS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+];
+
+// Tripled for a perfectly seamless infinite loop on extra-wide monitors
+const marqueeItems = [...skills, ...skills, ...skills]; 
+---
+
+<section class="border-white/20 border-y mt-12 lg:mt-20">
+  <!-- Added the unique tracker class 'skills-marquee-zone' here -->
+  <div class="skills-marquee-zone overflow-hidden py-6 lg:py-10 relative text-white bg-black/30 backdrop-blur-sm">
+    <!-- Edge gradient overlays -->
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 z-10 pointer-events-none"
+    >
+      <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-zinc-950 to-transparent"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent"></div>
+    </div>
+
+    <!-- Marquee content -->
+    <div
+      class="flex w-max animate-marquee gap-16 lg:gap-24 whitespace-nowrap font-black tracking-widest uppercase items-center text-lg lg:text-3xl"
+    >
+      {
+        marqueeItems.map((skill, index) => (
+          <div class="flex items-center gap-4 lg:gap-6 cursor-default">
+            <img 
+              src={skill.icon} 
+              alt={`${skill.name} icon`} 
+              class={`h-8 w-8 lg:h-10 lg:w-10 object-contain ${
+                skill.name === 'GitHub' || skill.name === 'Wordpress' 
+                  ? 'brightness-0 invert' 
+                  : ''
+              }`}
+              loading="lazy"
+            />
+            <span class="text-zinc-400 hover:text-white transition-colors duration-200">{skill.name}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Intercepts the banner container hover state and locks the marquee track in place */
+  .skills-marquee-zone:hover .animate-marquee {
+    animation-play-state: paused;
+    cursor: pointer;
+  }
+</style>

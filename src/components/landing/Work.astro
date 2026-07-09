@@ -1,0 +1,311 @@
+---
+const projects = [
+  {
+    name: "FastFood Invoice System",
+    slug: "fastfood-system",
+    description: "A full-stack Laravel-based invoice management system for fast-food restaurants. Features role-based access control, guest profiles, OTP-less login, Docker deployment, and a complete order billing workflow.",
+    url: "https://github.com/basit-shahid/fastfood-invoice-system",
+    language: "PHP / Laravel",
+    tag: "Full Stack",
+    image: "/fastfood-preview.png",
+    color: "orange",
+    accent: "#f97316",
+    glow: "rgba(249,115,22,0.12)",
+    tagClass: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+    dotClass: "bg-orange-500",
+    iconBg: "bg-orange-500/10",
+    iconText: "text-orange-400",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" /></svg>`,
+  },
+  {
+    name: "Drop",
+    slug: "drop",
+    description: "A minimal, blazing-fast drag-and-drop file utility built for developers. Features instant file transfers, glowing drop zones, multi-format support, and a clean dark UI designed for productive workflows.",
+    url: "https://github.com/basit-shahid/drop",
+    language: "Electron / JS",
+    tag: "Desktop App",
+    image: "/drop-preview.png",
+    color: "purple",
+    accent: "#a855f7",
+    glow: "rgba(168,85,247,0.12)",
+    tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+    dotClass: "bg-purple-500",
+    iconBg: "bg-purple-500/10",
+    iconText: "text-purple-400",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>`,
+  },
+  {
+    name: "TurboDM",
+    slug: "turbodm",
+    description: "A high-performance direct messaging desktop application. Features real-time chat, contact management, message history, and a polished dark interface built for speed and reliability.",
+    url: "https://github.com/basit-shahid/turbodm",
+    language: "Electron / Node",
+    tag: "Messaging",
+    image: "/turbodm-preview.png",
+    color: "cyan",
+    accent: "#22d3ee",
+    glow: "rgba(34,211,238,0.12)",
+    tagClass: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+    dotClass: "bg-cyan-500",
+    iconBg: "bg-cyan-500/10",
+    iconText: "text-cyan-400",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>`,
+  },
+];
+---
+
+<section id="projects" class="border-b border-white/10 overflow-hidden bg-black project-section-viewport">
+  <div class="max-w-7xl mx-auto px-8 pt-20 pb-10 text-left">
+    <div class="animate-reveal inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" style="animation-delay: 100ms;">
+      <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+      <span class="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-400">Open Source</span>
+    </div>
+    <p class="animate-reveal text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl text-xl" style="animation-delay: 200ms;">
+      My <span class="text-orange-500">Projects</span><span class="text-orange-500">.</span>
+    </p>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 pb-16">
+
+    <div
+      id="feature-card"
+      class="group animate-reveal-card view-timeline-trigger relative w-full rounded-2xl border border-white/10 bg-zinc-950/60 backdrop-blur-md overflow-hidden shadow-2xl transition-all duration-500"
+      style="min-height: 420px; animation-delay: 350ms;"
+    >
+      <div id="feature-accent-bar" class="absolute top-0 left-0 right-0 h-px opacity-70 transition-all duration-500"
+        style="background: linear-gradient(90deg, transparent, #f97316, transparent);" />
+
+      <div class="flex flex-col lg:flex-row h-full">
+
+        <div class="relative lg:w-[55%] h-48 sm:h-56 lg:h-auto overflow-hidden bg-zinc-900 flex-shrink-0">
+          {projects.map((p, i) => (
+            <img
+              id={`feat-img-${i}`}
+              src={p.image}
+              alt={`${p.name} preview`}
+              class={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out transform ${i === 0 ? 'opacity-100 scale-100 group-hover:scale-105' : 'opacity-0 scale-105'}`}
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          ))}
+          <div class="hidden lg:block absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-zinc-950/90 pointer-events-none" />
+          <div class="lg:hidden absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-transparent pointer-events-none" />
+
+          {projects.map((p, i) => (
+            <div
+              id={`feat-tag-${i}`}
+              class={`absolute top-4 left-4 transition-all duration-500 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+            >
+              <span class={`text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border ${p.tagClass} backdrop-blur-sm`}>
+                {p.tag}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div class="relative flex-1" style="min-height: 340px;">
+          <div id="feature-glow" class="absolute inset-0 pointer-events-none transition-all duration-700"
+            style="background: radial-gradient(500px circle at 100% 50%, rgba(249,115,22,0.08), transparent 70%);" />
+
+          {projects.map((p, i) => (
+            <div
+              id={`feat-info-${i}`}
+              class={`absolute inset-0 flex flex-col justify-center p-5 sm:p-8 lg:pl-7 transition-all duration-500 ease-in-out ${i === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
+            >
+              <div class="flex items-center gap-3 mb-4">
+                <div class={`p-2.5 rounded-xl border border-white/5 ${p.iconBg} shrink-0`}>
+                  <span class={`w-5 h-5 block ${p.iconText}`} set:html={p.icon} />
+                </div>
+                <div>
+                  <h3 class="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white leading-none">
+                    {p.name}
+                  </h3>
+                  <span class="text-[10px] font-mono tracking-widest uppercase mt-1 flex items-center gap-1.5 text-zinc-500">
+                    <span class={`w-1.5 h-1.5 rounded-full ${p.dotClass}`} />
+                    {p.language}
+                  </span>
+                </div>
+              </div>
+
+              <p class="text-sm text-zinc-400 leading-relaxed max-w-md mb-6">
+                {p.description}
+              </p>
+
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-all duration-300 group/link w-fit"
+                style={`color: ${p.accent};`}
+              >
+                View on GitHub
+                <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </a>
+            </div>
+          ))}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mt-5">
+      {projects.map((p, i) => (
+        <button
+          id={`tab-${i}`}
+          data-index={i}
+          data-accent={p.accent}
+          data-glow={p.glow}
+          class={`animate-reveal-tab project-tab flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-300 text-left group ${
+            i === 0
+              ? 'border-orange-500/40 bg-orange-500/5 shadow-lg'
+              : 'border-white/5 bg-zinc-950/40 hover:border-white/15 hover:bg-zinc-900/40'
+          }`}
+          style={`animation-delay: ${500 + i * 80}ms;`}
+        >
+          <img
+            src={p.image}
+            alt={p.name}
+            class="w-12 h-10 object-cover rounded-lg border border-white/10 shrink-0 transition-all duration-300 group-hover:border-white/20"
+          />
+          <div class="min-w-0">
+            <p class={`text-xs font-bold uppercase tracking-wide truncate transition-colors duration-300 ${i === 0 ? 'text-white' : 'text-zinc-400 group-hover:text-white'}`}>
+              {p.name}
+            </p>
+            <p class="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mt-0.5 truncate">
+              {p.language}
+            </p>
+          </div>
+          <div
+            id={`tab-bar-${i}`}
+            class={`ml-auto w-0.5 h-6 rounded-full shrink-0 transition-all duration-300 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+            style={`background: ${p.accent};`}
+          />
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .animate-reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-reveal-card {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    animation: cardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-reveal-tab {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes cardReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    .view-timeline-trigger {
+      animation: viewportEntrance linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 35%;
+    }
+
+    @keyframes viewportEntrance {
+      from {
+        opacity: 0.3;
+        transform: translateY(40px) scale(0.96);
+        filter: blur(2px) brightness(0.6);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px) brightness(1);
+      }
+    }
+  }
+</style>
+
+<script>
+  const projects = [
+    { accent: "#f97316", glow: "rgba(249,115,22,0.12)" },
+    { accent: "#a855f7", glow: "rgba(168,85,247,0.12)" },
+    { accent: "#22d3ee", glow: "rgba(34,211,238,0.12)" },
+  ];
+
+  const accentBar = document.getElementById("feature-accent-bar") as HTMLElement;
+  const featureGlow = document.getElementById("feature-glow") as HTMLElement;
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".project-tab");
+  let current = 0;
+
+  function switchTo(index: number) {
+    if (index === current) return;
+    const prev = current;
+    current = index;
+    const p = projects[index];
+
+    const prevImg = document.getElementById(`feat-img-${prev}`) as HTMLElement;
+    const nextImg = document.getElementById(`feat-img-${index}`) as HTMLElement;
+    
+    prevImg.className = "absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out transform opacity-0 scale-105";
+    nextImg.className = "absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out transform opacity-100 scale-100 group-hover:scale-105";
+
+    (document.getElementById(`feat-tag-${prev}`) as HTMLElement).style.opacity = "0";
+    (document.getElementById(`feat-tag-${index}`) as HTMLElement).style.opacity = "1";
+
+    const prevInfo = document.getElementById(`feat-info-${prev}`) as HTMLElement;
+    const nextInfo = document.getElementById(`feat-info-${index}`) as HTMLElement;
+    prevInfo.style.opacity = "0";
+    prevInfo.style.transform = "translateY(16px)";
+    prevInfo.classList.add("pointer-events-none");
+    setTimeout(() => {
+      nextInfo.classList.remove("pointer-events-none");
+      nextInfo.style.opacity = "1";
+      nextInfo.style.transform = "translateY(0)";
+    }, 100);
+
+    accentBar.style.background = `linear-gradient(90deg, transparent, ${p.accent}, transparent)`;
+    featureGlow.style.background = `radial-gradient(500px circle at 100% 50%, ${p.glow}, transparent 70%)`;
+
+    tabs.forEach((tab, i) => {
+      const bar = document.getElementById(`tab-bar-${i}`) as HTMLElement;
+      const label = tab.querySelector("p") as HTMLElement;
+      if (i === index) {
+        tab.style.borderColor = `${projects[i].accent}66`;
+        tab.style.background = `${projects[i].glow}`;
+        bar.style.opacity = "1";
+        if (label) label.style.color = "white";
+      } else {
+        tab.style.borderColor = "";
+        tab.style.background = "";
+        bar.style.opacity = "0";
+        if (label) label.style.color = "";
+      }
+    });
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => switchTo(i));
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") switchTo(Math.max(0, current - 1));
+    if (e.key === "ArrowRight") switchTo(Math.min(projects.length - 1, current + 1));
+  });
+</script>

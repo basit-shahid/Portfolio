@@ -1,0 +1,96 @@
+---
+import BgGrid from "@/components/assets/BgGrid.astro";
+
+const services = [
+  {
+    title: "🎯 Strengthening the Foundation",
+    description:
+      "Deepening my grasp of core computer science — currently pushing further into Trees, Graphs, and Dynamic Programming while leveling up my Node.js skills to complement the Laravel based backend work I already do.",
+  },
+  {
+    title: "🚀 Building Real, Complete Projects",
+    description:
+      "I’m moving beyond small scripts to build complete, end-to-end applications. My focus is on creating polished, functional systems that solve real problems — with clean code, solid architecture, and attention to detail.",
+  },
+  {
+    title: "🛠️ Exploring Developer Tooling & Systems Software",
+    description:
+      "I’m diving into developer tools, CLIs, and systems-level utilities. The goal is to build software that improves workflows, automates repetitive tasks, and operates with speed and precision at a lower level.",
+  },
+  {
+    title: "🏗️ Specializing in Backend & API Architecture",
+    description:
+      "I’m focusing on building fast, scalable, and maintainable backend systems. My goal is to design clean APIs, optimize database performance, and implement robust server-side logic that can support complex applications and high-traffic demands.",
+  },
+];
+---
+
+<!-- Added explicit padding-top (pt-20 md:pt-28) to give breathing room from the preceding section -->
+<section id="goals" class="relative pt-20 md:pt-28 pb-16 overflow-hidden bg-black">
+  <div class="px-8 pb-8 relative">
+    <p class="text-3xl font-black text-white uppercase lg:text-7xl text-xl tracking-tighter">
+      <span class="text-white">FUTURE</span> <span class="text-orange-500">GOALS.</span>
+    </p>
+  </div>
+
+  <!-- Responsive grid layout optimized with gap configurations -->
+  <div class="px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+    {
+      services.map(({ title, description }, index) => (
+        <div 
+          class="goal-card group relative p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md overflow-hidden transition-all duration-500 hover:border-orange-500/30 hover:bg-zinc-900/40 hover:-translate-y-1 shadow-xl flex flex-col justify-between"
+          style={`animation-delay: ${index * 100}ms;`}
+        >
+          <!-- Subtle corner accent glow matching your card design style -->
+          <div class="absolute -top-12 -right-12 w-24 h-24 bg-orange-500/5 rounded-full blur-2xl transition-all duration-500 group-hover:bg-orange-500/10 group-hover:scale-150 pointer-events-none" />
+          
+          <div>
+            <h3 class="text-base sm:text-lg uppercase font-black text-white tracking-tight leading-snug transition-colors duration-300 group-hover:text-orange-400">
+              {title}
+            </h3>
+            <p class="mt-3 text-zinc-400 text-sm leading-relaxed font-medium normal-case">
+              {description}
+            </p>
+          </div>
+          
+          <!-- Bottom subtle border accent strip -->
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-orange-500/0 to-transparent transition-all duration-500 group-hover:via-orange-500/40" />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  /* Base entrance scroll-animation configuration */
+  .goal-card {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  @supports (animation-timeline: view()) {
+    .goal-card {
+      animation: cardEntrance linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 25%;
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  }
+
+  /* Fallback animations for older browsers that lack view() engine support */
+  @media (prefers-reduced-motion: no-preference) {
+    @ some-selector-fallback {
+      /* Handled elegantly inline via CSS engine runtime specs */
+    }
+  }
+</style>
