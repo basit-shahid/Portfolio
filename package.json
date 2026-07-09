@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "chmod +x ./node_modules/.bin/astro && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -14,8 +14,7 @@
     "@astrojs/sitemap": "^3.7.1",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/typography": "^0.5.19",
-    "astro": "^6.0.5",
-    "npm": "^11.11.1"
+    "astro": "^6.0.5"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.1",
