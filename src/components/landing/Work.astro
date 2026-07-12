@@ -56,11 +56,11 @@ const projects = [
 
 <section id="projects" class="border-b border-white/10 overflow-hidden bg-black project-section-viewport">
   <div class="max-w-7xl mx-auto px-8 pt-20 pb-10 text-left">
-    <div class="animate-reveal inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" style="animation-delay: 100ms;">
+    <div class="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" data-framer-reveal data-delay="0.1">
       <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
       <span class="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-400">Open Source</span>
     </div>
-    <p class="animate-reveal text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl text-xl" style="animation-delay: 200ms;">
+    <p class="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl text-xl" data-framer-reveal data-delay="0.2">
       My <span class="text-orange-500">Projects</span><span class="text-orange-500">.</span>
     </p>
   </div>
@@ -69,8 +69,10 @@ const projects = [
 
     <div
       id="feature-card"
-      class="group animate-reveal-card view-timeline-trigger relative w-full rounded-2xl border border-white/10 bg-zinc-950/60 backdrop-blur-md overflow-hidden shadow-2xl transition-all duration-500"
-      style="min-height: 420px; animation-delay: 350ms;"
+      class="group relative w-full rounded-2xl border border-white/10 bg-zinc-950/60 backdrop-blur-md overflow-hidden shadow-2xl transition-all duration-500"
+      style="min-height: 420px;"
+      data-framer-reveal
+      data-delay="0.3"
     >
       <div id="feature-accent-bar" class="absolute top-0 left-0 right-0 h-px opacity-70 transition-all duration-500"
         style="background: linear-gradient(90deg, transparent, #f97316, transparent);" />
@@ -156,12 +158,13 @@ const projects = [
           data-index={i}
           data-accent={p.accent}
           data-glow={p.glow}
-          class={`animate-reveal-tab project-tab flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-300 text-left group ${
+          class={`project-tab flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-300 text-left group ${
             i === 0
               ? 'border-orange-500/40 bg-orange-500/5 shadow-lg'
               : 'border-white/5 bg-zinc-950/40 hover:border-white/15 hover:bg-zinc-900/40'
           }`}
-          style={`animation-delay: ${500 + i * 80}ms;`}
+          data-framer-reveal
+          data-delay={0.5 + i * 0.1}
         >
           <img
             src={p.image}
@@ -188,58 +191,6 @@ const projects = [
 </section>
 
 <style>
-  .animate-reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    animation: fadeReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .animate-reveal-card {
-    opacity: 0;
-    transform: translateY(24px) scale(0.98);
-    animation: cardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .animate-reveal-tab {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes fadeReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes cardReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  @supports (animation-timeline: view()) {
-    .view-timeline-trigger {
-      animation: viewportEntrance linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 35%;
-    }
-
-    @keyframes viewportEntrance {
-      from {
-        opacity: 0.3;
-        transform: translateY(40px) scale(0.96);
-        filter: blur(2px) brightness(0.6);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0px) brightness(1);
-      }
-    }
-  }
 </style>
 
 <script>

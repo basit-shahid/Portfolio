@@ -27,7 +27,7 @@ const services = [
 
 <!-- Added explicit padding-top (pt-20 md:pt-28) to give breathing room from the preceding section -->
 <section id="goals" class="relative pt-20 md:pt-28 pb-16 overflow-hidden bg-black">
-  <div class="px-8 pb-8 relative">
+  <div class="px-8 pb-8 relative" data-framer-reveal>
     <p class="text-3xl font-black text-white uppercase lg:text-7xl text-xl tracking-tighter">
       <span class="text-white">FUTURE</span> <span class="text-orange-500">GOALS.</span>
     </p>
@@ -39,7 +39,8 @@ const services = [
       services.map(({ title, description }, index) => (
         <div 
           class="goal-card group relative p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md overflow-hidden transition-all duration-500 hover:border-orange-500/30 hover:bg-zinc-900/40 hover:-translate-y-1 shadow-xl flex flex-col justify-between"
-          style={`animation-delay: ${index * 100}ms;`}
+          data-framer-reveal
+          data-delay={0.1 * index}
         >
           <!-- Subtle corner accent glow matching your card design style -->
           <div class="absolute -top-12 -right-12 w-24 h-24 bg-orange-500/5 rounded-full blur-2xl transition-all duration-500 group-hover:bg-orange-500/10 group-hover:scale-150 pointer-events-none" />
@@ -59,38 +60,4 @@ const services = [
       ))
     }
   </div>
-</section>
-
-<style>
-  /* Base entrance scroll-animation configuration */
-  .goal-card {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  @supports (animation-timeline: view()) {
-    .goal-card {
-      animation: cardEntrance linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 25%;
-    }
-
-    @keyframes cardEntrance {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.97);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-  }
-
-  /* Fallback animations for older browsers that lack view() engine support */
-  @media (prefers-reduced-motion: no-preference) {
-    @ some-selector-fallback {
-      /* Handled elegantly inline via CSS engine runtime specs */
-    }
-  }
-</style>
+</section>

@@ -3,14 +3,14 @@ import BgGrid from "@/components/assets/BgGrid.astro";
 ---
 
 <section id="about" class="relative">
-  <div class="px-8 pt-8 pb-4 relative">
+  <div class="px-8 pt-8 pb-4 relative" data-framer-reveal>
     <p class="text-white font-black uppercase tracking-tighter lg:text-7xl text-xl">
       <span class="text-white">About</span> <span class="text-orange-500">ME.</span>
     </p>
   </div>
   
   <div class="px-8 pb-8 pt-2 text-white">
-    <div class="relative max-w-5xl">
+    <div class="relative max-w-5xl" data-framer-reveal data-delay="0.2">
       
       <p 
         id="intro-ghost-text" 
@@ -21,7 +21,7 @@ import BgGrid from "@/components/assets/BgGrid.astro";
 
       <p 
         id="intro-text" 
-        class="absolute inset-0 text-white-400 font-medium lg:text-2xl text-base normal-case leading-relaxed opacity-0 transition-opacity duration-300"
+        class="absolute inset-0 text-white-400 font-medium lg:text-2xl text-base normal-case leading-relaxed transition-opacity duration-300"
       >
         Hey, I'm <span class="text-orange-500 font-bold">Abdul Basit Shahid</span> a Software Engineering student at <span class="text-orange-500 font-bold">COMSATS</span> Lahore Campus (Spring 2025 batch). I'm based in Lahore, Pakistan, and I spend most of my time geeking out over Data Structures & Algorithms, Object-Oriented Design, and building things end-to-end with Full-Stack Web Development and Backend Engineering. I like turning ideas into working code and figuring out how systems tick under the hood.<span id="intro-cursor" class="text-orange-500 ml-1 font-light inline-block animate-cursor-blink">|</span>
       </p>
@@ -31,6 +31,8 @@ import BgGrid from "@/components/assets/BgGrid.astro";
 </section>
 
 <script>
+  import { inView } from "framer-motion/dom";
+
   document.addEventListener("DOMContentLoaded", () => {
     const textContainer = document.getElementById("intro-text");
     const cursor = document.getElementById("intro-cursor");
@@ -39,8 +41,7 @@ import BgGrid from "@/components/assets/BgGrid.astro";
     // Cache the original layout
     const originalHTML = textContainer.innerHTML.replace(cursor.outerHTML, "").trim();
     
-    // Make wrapper visible, clear content, display typing start
-    textContainer.style.opacity = "1";
+    // Clear content immediately
     textContainer.innerHTML = "";
     textContainer.appendChild(cursor);
 
@@ -76,7 +77,11 @@ import BgGrid from "@/components/assets/BgGrid.astro";
       }
     }
 
-    setTimeout(typeWriter, 400);
+    // Trigger typewriter only when the section comes into view
+    inView(textContainer, () => {
+       setTimeout(typeWriter, 500);
+       return () => {}; // ensures it only runs once
+    });
   });
 </script>
 

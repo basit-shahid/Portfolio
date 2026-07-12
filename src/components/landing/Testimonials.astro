@@ -36,7 +36,7 @@ const techStack = [
 ];
 ---
 
-<div id="tech-stack" class="max-w-7xl mx-auto px-8 mt-24 mb-10 text-left">
+<div id="tech-stack" class="max-w-7xl mx-auto px-8 mt-24 mb-10 text-left" data-framer-reveal>
   <p class="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl text-xl">
     Tech <span class="text-orange-500">Stack</span><span class="text-orange-500">.</span>
   </p>
@@ -44,8 +44,12 @@ const techStack = [
 
 <div class="max-w-7xl mx-auto gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-8 pb-16">
   {
-    techStack.map((item) => (
-      <div class={`group relative flex flex-col justify-between p-5 border border-white/10 rounded-xl bg-zinc-950/40 backdrop-blur-md shadow-xl transition-all duration-300 ease-out transform hover:-translate-y-1.5 hover:shadow-[0_0_30px_-5px_rgba(0,0,0,0.3)] ${item.colorClass}`}>
+    techStack.map((item, index) => (
+      <div 
+        class={`group relative flex flex-col justify-between p-5 border border-white/10 rounded-xl bg-zinc-950/40 backdrop-blur-md shadow-xl transition-all duration-300 ease-out transform hover:-translate-y-1.5 hover:shadow-[0_0_30px_-5px_rgba(0,0,0,0.3)] ${item.colorClass}`}
+        data-framer-reveal
+        data-delay={0.1 * index}
+      >
         
         <div class={`absolute inset-0 rounded-xl bg-gradient-to-br ${item.glowGradient} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
         

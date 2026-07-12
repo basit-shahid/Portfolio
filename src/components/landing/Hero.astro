@@ -1,27 +1,28 @@
 ---
-import BgGrid from "@/components/assets/BgGrid.astro";
+// Standalone Full-Bleed Cyber Grid Mesh - 100% Native, zero external asset assets needed
 ---
 
-<!-- Added pb-16 md:pb-24 below to provide structural separation before the Intro section -->
-<section id="hero-section" class="border-white/20 border-b pb-16 md:pb-24">
-  <!-- Fixed container height or padding to give enough runway for the scroll animation -->
-  <div class="bg-grid p-8 pt-12 md:pt-20 relative overflow-hidden">
-    <BgGrid />
+<section id="hero-section" class="border-white/20 border-b pb-16 md:pb-24 relative overflow-hidden bg-zinc-950 min-h-[85vh] flex items-center">
+  <!-- Full-Bleed Hardware Accelerated Vector Canvas Matrix -->
+  <div id="canvas-container" class="absolute inset-0 z-0 pointer-events-none opacity-40"></div>
 
+  <!-- Content Container -->
+  <div class="p-8 pt-12 md:pt-20 relative z-10 w-full">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative">
       
       <!-- Text Container -->
       <div class="lg:col-span-2">
         <h1 class="text-white tracking-tighter font-black uppercase text-3xl lg:text-8xl select-none min-h-[160px] lg:min-h-[260px]">
-          <span class="animate-fade-in block">HEY THERE,</span>
+          <span class="block" data-framer-reveal>HEY THERE,</span>
           
-          <span class="block mt-3 lg:mt-6 text-white">
+          <span class="block mt-3 lg:mt-6 text-white" data-framer-reveal data-delay="0.1">
             This is <span class="inline shadow-none"><span id="typewriter" class="animate-gradient-text bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 bg-[length:200%_auto] bg-clip-text text-transparent inline"></span><span id="cursor" class="text-orange-500 font-light ml-1 animate-pulse-fast inline-block select-none">|</span></span>
           </span>
         </h1>
       </div>
 
-      <div class="flex justify-center lg:justify-end animate-fade-in">
+      <!-- Profile Image Container -->
+      <div class="flex justify-center lg:justify-end" data-framer-reveal data-delay="0.2">
         <div class="relative group w-64 h-64 lg:w-96 lg:h-96 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl">
           <img 
             src="/ID.jpeg" 
@@ -38,6 +39,116 @@ import BgGrid from "@/components/assets/BgGrid.astro";
 
 <script>
   if (typeof window !== "undefined") {
+    // Dynamic import to prevent bundler locking during local pipeline compilation
+    import('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js')
+      .then((THREE) => {
+        runCyberMeshEngine(THREE);
+      })
+      .catch((err) => console.error("Failed to compile Three.js context layout", err));
+
+    function runCyberMeshEngine(THREE) {
+      const container = document.getElementById('canvas-container');
+      if (!container) return;
+
+      let scene, camera, renderer, wireframeMesh;
+      let mouseX = 0, mouseY = 0;
+      let targetX = 0, targetY = 0;
+      const clock = new THREE.Clock();
+
+      scene = new THREE.Scene();
+
+      // Cinematic broad angle perspective positioned to span the entire structural background
+      camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.set(0, 3.5, 7.5);
+      camera.lookAt(0, 1, 0);
+
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // --- GENERATE CYBER HORIZON GRID PLANE ---
+      // Width 32, Height 24, with 30 segments each spreads perfectly across the viewing boundaries
+      const planeGeo = new THREE.PlaneGeometry(35, 25, 32, 24);
+      
+      // Inject mathematical noise topology straight into the initial mesh state
+      const posAttr = planeGeo.attributes.position;
+      for (let i = 0; i < posAttr.count; i++) {
+        let x = posAttr.getX(i);
+        let y = posAttr.getY(i);
+        
+        // Form uneven structural landscape segments using combined sin/cos frequencies
+        let zNoise = Math.sin(x * 0.4) * Math.cos(y * 0.4) * 0.6;
+        zNoise += Math.sin(x * 0.8) * 0.2;
+        
+        posAttr.setZ(i, zNoise);
+      }
+      planeGeo.computeVertexNormals();
+
+      // Cyberpunk structural wireframe mapping sharp lines
+      const wireframeMat = new THREE.MeshBasicMaterial({
+        color: 0xea580c, // Deep Tactical Orange
+        wireframe: true,
+        transparent: true,
+        opacity: 0.25,
+        blending: THREE.AdditiveBlending
+      });
+
+      wireframeMesh = new THREE.Mesh(planeGeo, wireframeMat);
+      
+      // Pivot the plane flat along the horizontal view vector like an expansive floor/horizon grid
+      wireframeMesh.rotation.x = -Math.PI / 2.1; 
+      wireframeMesh.position.set(0, -1, -2);
+      scene.add(wireframeMesh);
+
+      // Event Listeners
+      window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+
+      window.addEventListener('mousemove', (event) => {
+        // Track coordinate ratios across bounds
+        mouseX = (event.clientX - window.innerWidth / 2) / window.innerWidth;
+        mouseY = (event.clientY - window.innerHeight / 2) / window.innerHeight;
+      });
+
+      // --- RUNTIME RENDER ENGINE LOOP ---
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const elapsed = clock.getElapsedTime();
+
+        // Continuous mathematical wave calculation animating across the plane coordinates
+        const positions = wireframeMesh.geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+          const xCoord = positions[i];
+          const yCoord = positions[i + 1];
+          
+          // Generate active rippling movements across the Z index over time
+          positions[i + 2] = 
+            Math.sin(xCoord * 0.3 + elapsed * 1.2) * Math.cos(yCoord * 0.3 + elapsed * 1.0) * 0.5 +
+            Math.sin(xCoord * 0.6 + elapsed * 1.5) * 0.15;
+        }
+        wireframeMesh.geometry.attributes.position.needsUpdate = true;
+
+        // Smooth structural cursor interpolation tracking vectors (Inertia shift)
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
+
+        // Shift view perspectives seamlessly without breaking the background layout boundaries
+        wireframeMesh.rotation.z = elapsed * 0.02 + targetX * 0.25;
+        wireframeMesh.position.y = -1 + (targetY * -0.6);
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    }
+
+
+    // --- MECHANICAL TYPEWRITER & SCROLL ENGINE ---
     const targetText = "Abdul Basit Shahid";
     let lastCharIndex = 0;
     let lastScrollY = 0;
@@ -54,7 +165,6 @@ import BgGrid from "@/components/assets/BgGrid.astro";
       }
     }
 
-    // Forward mechanical typing stroke
     function playMechanicalStroke() {
       if (!audioCtx || audioCtx.state === 'suspended') return;
 
@@ -101,22 +211,16 @@ import BgGrid from "@/components/assets/BgGrid.astro";
       if (!typewriterElement) return;
 
       const currentScrollY = window.scrollY;
-      
-      // Determine scroll direction
       const isScrollingDown = currentScrollY > lastScrollY;
       lastScrollY = currentScrollY;
 
-      // Define runway distance for the animation effect
       const maxScrollRunway = 350; 
       const scrollRatio = Math.min(Math.max(currentScrollY / maxScrollRunway, 0), 1);
-      
-      // Map scroll progress to string length indices
       const nextCharIndex = Math.floor(scrollRatio * targetText.length);
 
       if (nextCharIndex !== lastCharIndex) {
         typewriterElement.textContent = targetText.substring(0, nextCharIndex);
         
-        // Trigger keystroke sound ONLY when moving forward (scrolling down)
         if (isScrollingDown && nextCharIndex > lastCharIndex) {
           playMechanicalStroke();
         }
@@ -139,27 +243,17 @@ import BgGrid from "@/components/assets/BgGrid.astro";
     window.addEventListener("keydown", initAudio, { once: true });
     window.addEventListener("touchstart", initAudio, { once: true });
 
-    // Run once at boot time to set target layouts
     handleScrollAnimation();
   }
 </script>
 
 <style>
-  .animate-fade-in {
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
   .animate-gradient-text {
     animation: shiftGradient 4s linear infinite;
   }
 
   .animate-pulse-fast {
     animation: pulseCursor 0.8s steps(2, start) infinite;
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes shiftGradient {

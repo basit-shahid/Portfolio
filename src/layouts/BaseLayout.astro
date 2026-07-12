@@ -16,3 +16,30 @@ import Footer from "@/components/global/Footer.astro";
     <Footer />
   </body>
 </html>
+
+<style is:global>
+  /* Initial hidden state for scroll reveal elements to prevent flash of visible content */
+  [data-framer-reveal] {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+</style>
+
+<script>
+  import { inView, animate } from "framer-motion/dom";
+
+  // Use Astro's page-load event if ViewTransitions is available, or just standard load
+  const initRevealObserver = () => {
+    inView("[data-framer-reveal]", (element) => {
+      const delay = parseFloat(element.getAttribute("data-delay") || "0");
+      animate(element, 
+        { opacity: 1, transform: "translateY(0px)" }, 
+        { duration: 0.8, delay: delay, ease: [0.16, 1, 0.3, 1] }
+      );
+    });
+  };
+
+  document.addEventListener("DOMContentLoaded", initRevealObserver);
+  // Support for Astro ViewTransitions if added later
+  document.addEventListener("astro:page-load", initRevealObserver);
+</script>
