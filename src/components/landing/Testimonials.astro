@@ -1,35 +1,27 @@
 ---
-// 1. FRONTMATTER - Updated with custom shadow glow classes tailored to your themes
+// 1. FRONTMATTER - Retaining your core data structure unchanged
 const techStack = [
   {
     name: "Laravel",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg",
-    colorClass: "hover:border-orange-500/40 hover:shadow-orange-500/10",
-    glowGradient: "from-orange-500/10",
     shouldInvert: false,
     description: "My core architecture suite. Used to build secure, robust APIs and service layers, focusing heavily on optimized database design, custom caching strategies, and reliable background job queues."
   },
   {
     name: "GitHub",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
-    colorClass: "hover:border-white/30 hover:shadow-white/5",
-    glowGradient: "from-white/5",
-    shouldInvert: true, // Forces black icon to turn white
+    shouldInvert: true,
     description: "Crucial for workflow automation and source integrity. Beyond basic hosting, I emphasize semantic version control and continuous integration paths to streamline development pipeline speed."
   },
   {
     name: "WordPress",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg",
-    colorClass: "hover:border-sky-500/40 hover:shadow-sky-500/10",
-    glowGradient: "from-sky-500/10",
-    shouldInvert: true, // Forces black icon to turn white
+    shouldInvert: true,
     description: "Leveraged for rapid deployment of heavy content structures. I bypass template assumptions to write optimized queries, clean headless integration layers, and performant local setups."
   },
   {
     name: "HTML & CSS",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
-    colorClass: "hover:border-orange-600/40 hover:shadow-orange-600/10",
-    glowGradient: "from-orange-600/10",
     shouldInvert: false,
     description: "The core canvas of the web interface layer. I prioritize structural, semantic markup and fast utility styling via Tailwind CSS to build layouts that render instantly under any regional connection constraint."
   }
@@ -37,50 +29,124 @@ const techStack = [
 ---
 
 <div id="tech-stack" class="max-w-7xl mx-auto px-8 mt-24 mb-10 text-left" data-framer-reveal>
-  <p class="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl text-xl">
+  <p class="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl">
     Tech <span class="text-orange-500">Stack</span><span class="text-orange-500">.</span>
   </p>
 </div>
 
-<div class="max-w-7xl mx-auto gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-8 pb-16">
+<!-- Grid container wrapping the cards with perspective context -->
+<div class="max-w-7xl mx-auto gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-8 pb-16 card-perspective">
   {
     techStack.map((item, index) => (
+      /* Outer Container protects the layout from frame reveal shifts */
       <div 
-        class={`group relative flex flex-col justify-between p-5 border border-white/10 rounded-xl bg-zinc-950/40 backdrop-blur-md shadow-xl transition-all duration-300 ease-out transform hover:-translate-y-1.5 hover:shadow-[0_0_30px_-5px_rgba(0,0,0,0.3)] ${item.colorClass}`}
+        class="w-full h-64 unique-card-container"
         data-framer-reveal
         data-delay={0.1 * index}
       >
-        
-        <div class={`absolute inset-0 rounded-xl bg-gradient-to-br ${item.glowGradient} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
-        
-        <div class="relative z-10">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="p-3 bg-zinc-900/80 rounded-xl border border-white/5 shadow-inner transition-all duration-300 group-hover:scale-105 group-hover:border-white/10 group-hover:bg-zinc-900 shrink-0 flex items-center justify-center w-14 h-14">
+        <!-- Inner Card handles the actual 3D turn -->
+        <div class="flip-card-inner h-full w-full relative">
+          
+          <!-- ================= CARD FRONT: ONLY ICON ================= -->
+          <div class="flip-card-front absolute inset-0 flex items-center justify-center p-5 border border-white/10 rounded-xl bg-zinc-900/40 backdrop-blur-md shadow-xl">
+            <div class="w-24 h-24 flex items-center justify-center animate-pulse-slow">
               <img 
                 src={item.iconUrl} 
                 alt={`${item.name} icon`} 
-                class="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110"
-                style={item.shouldInvert ? "filter: invert(1) brightness(100);" : ""}
+                class={`w-20 h-20 object-contain ${item.shouldInvert ? 'inverted-icon' : ''}`}
                 loading="lazy"
               />
             </div>
-            
-            <div class="flex flex-col justify-center">
-              <h3 class="text-sm sm:text-base font-bold text-white tracking-wide uppercase transition-colors duration-300 group-hover:text-orange-500">
-                {item.name}
-              </h3>
-              <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase mt-0.5 transition-colors duration-300 group-hover:text-zinc-400">
-                Core Engine
-              </span>
+          </div>
+
+          <!-- ================= CARD BACK: TEXT + ORANGE BG ================= -->
+          <div class="flip-card-back absolute inset-0 flex flex-col justify-between p-5 rounded-xl bg-orange-500 shadow-[0_0_30px_5px_rgba(234,88,12,0.3)] border border-orange-500 text-zinc-950">
+            <div class="w-full">
+              <div class="flex items-center gap-4">
+                <div class="p-2 bg-zinc-950 rounded-lg border border-white/10 shrink-0 flex items-center justify-center w-11 h-11 shadow-md">
+                  <img 
+                    src={item.iconUrl} 
+                    alt={`${item.name} icon`} 
+                    class="w-7 h-7 object-contain back-tech-icon"
+                    style={item.shouldInvert ? "" : "filter: brightness(0) invert(1);"} 
+                  />
+                </div>
+                
+                <div class="flex flex-col justify-center">
+                  <h3 class="text-sm sm:text-base font-black tracking-wide uppercase text-zinc-950">
+                    {item.name}
+                  </h3>
+                  <span class="text-[10px] font-black tracking-widest text-orange-950/80 uppercase mt-0.5">
+                    Core Engine
+                  </span>
+                </div>
+              </div>
+
+              <p class="text-[11px] sm:text-xs text-white-950 font-medium leading-relaxed tracking-wide mt-4 pt-3 border-t border-orange-700/40">
+                {item.description}
+              </p>
             </div>
           </div>
 
-          <p class="text-[11px] sm:text-xs text-zinc-400 group-hover:text-zinc-200 font-normal leading-relaxed tracking-wide transition-colors duration-300">
-            {item.description}
-          </p>
         </div>
-
       </div>
     ))
   }
 </div>
+
+<style>
+  /* 1. Perspective Setup */
+  .card-perspective {
+    perspective: 1200px;
+  }
+
+  /* 2. 3D Engine Setup */
+  .flip-card-inner {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Flip action when the outer element is hovered */
+  .unique-card-container:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  /* Structural sharing with clean visibility clipping */
+  .flip-card-front, .flip-card-back {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75rem; /* Matches rounded-xl */
+  }
+
+  /* Base states layout layer separation */
+  .flip-card-front {
+    transform: rotateY(0deg);
+    z-index: 2; /* Ensures icon shows up first */
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+  }
+
+  /* 3. Utility Styles */
+  @keyframes pulseSlow {
+    0%, 100% { transform: scale(0.96); opacity: 0.9; }
+    50% { transform: scale(1.04); opacity: 1; }
+  }
+  .animate-pulse-slow {
+    animation: pulseSlow 3s ease-in-out infinite;
+  }
+
+  .inverted-icon {
+    filter: invert(1) brightness(100%);
+  }
+
+  .back-tech-icon {
+    filter: brightness(1) invert(1);
+  }
+</style>
