@@ -4,25 +4,23 @@ const techStack = [
   {
     name: "Laravel",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg",
-    shouldInvert: false,
     description: "My core architecture suite. Used to build secure, robust APIs and service layers, focusing heavily on optimized database design, custom caching strategies, and reliable background job queues."
   },
   {
     name: "GitHub",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
-    shouldInvert: true,
+    forceWhite: true,
     description: "Crucial for workflow automation and source integrity. Beyond basic hosting, I emphasize semantic version control and continuous integration paths to streamline development pipeline speed."
   },
   {
     name: "WordPress",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg",
-    shouldInvert: true,
+    forceWhite: true,
     description: "Leveraged for rapid deployment of heavy content structures. I bypass template assumptions to write optimized queries, clean headless integration layers, and performant local setups."
   },
   {
     name: "HTML & CSS",
     iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
-    shouldInvert: false,
     description: "The core canvas of the web interface layer. I prioritize structural, semantic markup and fast utility styling via Tailwind CSS to build layouts that render instantly under any regional connection constraint."
   }
 ];
@@ -39,52 +37,58 @@ const techStack = [
   {
     techStack.map((item, index) => (
       /* Outer Container protects the layout from frame reveal shifts */
-      <div 
-        class="w-full h-64 unique-card-container"
+      <div
+        class="w-full h-80 unique-card-container cursor-pointer"
         data-framer-reveal
         data-delay={0.1 * index}
       >
         <!-- Inner Card handles the actual 3D turn -->
         <div class="flip-card-inner h-full w-full relative">
-          
+
           <!-- ================= CARD FRONT: ONLY ICON ================= -->
-          <div class="flip-card-front absolute inset-0 flex items-center justify-center p-5 border border-white/10 rounded-xl bg-zinc-900/40 backdrop-blur-md shadow-xl">
-            <div class="w-24 h-24 flex items-center justify-center animate-pulse-slow">
-              <img 
-                src={item.iconUrl} 
-                alt={`${item.name} icon`} 
-                class={`w-20 h-20 object-contain ${item.shouldInvert ? 'inverted-icon' : ''}`}
-                loading="lazy"
-              />
+          <div class="flip-card-front absolute inset-0 flex items-center justify-center p-6 border border-white/10 rounded-2xl bg-zinc-900/40 backdrop-blur-md shadow-xl">
+            <div class="relative flex items-center justify-center animate-pulse-slow">
+              <div class="absolute inset-0 rounded-full bg-orange-500/10 blur-xl scale-150" />
+              <div class="relative w-24 h-24 rounded-2xl bg-zinc-950/70 border border-orange-500/25 flex items-center justify-center shadow-[0_0_25px_-5px_rgba(234,88,12,0.35)]">
+                <img
+                  src={item.iconUrl}
+                  alt={`${item.name} icon`}
+                  class={`w-14 h-14 object-contain ${item.forceWhite ? 'icon-force-white' : ''}`}
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
 
           <!-- ================= CARD BACK: TEXT + ORANGE BG ================= -->
-          <div class="flip-card-back absolute inset-0 flex flex-col justify-between p-5 rounded-xl bg-orange-500 shadow-[0_0_30px_5px_rgba(234,88,12,0.3)] border border-orange-500 text-zinc-950">
-            <div class="w-full">
-              <div class="flex items-center gap-4">
-                <div class="p-2 bg-zinc-950 rounded-lg border border-white/10 shrink-0 flex items-center justify-center w-11 h-11 shadow-md">
-                  <img 
-                    src={item.iconUrl} 
-                    alt={`${item.name} icon`} 
-                    class="w-7 h-7 object-contain back-tech-icon"
-                    style={item.shouldInvert ? "" : "filter: brightness(0) invert(1);"} 
-                  />
+          <div class="flip-card-back absolute inset-0 flex flex-col justify-between p-6 rounded-2xl bg-orange-500 shadow-[0_0_30px_5px_rgba(234,88,12,0.3)] border border-orange-500 text-zinc-950">
+            <div class="w-full h-full flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-4">
+                  <div class="p-2 bg-zinc-950 rounded-lg border border-orange-500/40 shrink-0 flex items-center justify-center w-11 h-11 shadow-md">
+                    <img
+                      src={item.iconUrl}
+                      alt={`${item.name} icon`}
+                      class={`w-7 h-7 object-contain ${item.forceWhite ? 'icon-force-white' : ''}`}
+                    />
+                  </div>
+
+                  <div class="flex flex-col justify-center">
+                    <h3 class="text-sm sm:text-base font-black tracking-wide uppercase text-zinc-950 leading-tight">
+                      {item.name}
+                    </h3>
+                    <span class="text-[10px] font-black tracking-widest text-orange-950/80 uppercase mt-0.5">
+                      Core Engine
+                    </span>
+                  </div>
                 </div>
-                
-                <div class="flex flex-col justify-center">
-                  <h3 class="text-sm sm:text-base font-black tracking-wide uppercase text-zinc-950">
-                    {item.name}
-                  </h3>
-                  <span class="text-[10px] font-black tracking-widest text-orange-950/80 uppercase mt-0.5">
-                    Core Engine
-                  </span>
-                </div>
+
+                <p class="text-[11px] sm:text-xs text-white-950 font-medium leading-relaxed tracking-wide mt-4 pt-3 border-t border-orange-700/40">
+                  {item.description}
+                </p>
               </div>
 
-              <p class="text-[11px] sm:text-xs text-white-950 font-medium leading-relaxed tracking-wide mt-4 pt-3 border-t border-orange-700/40">
-                {item.description}
-              </p>
+              <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-zinc-950/20 to-transparent" />
             </div>
           </div>
 
@@ -119,7 +123,7 @@ const techStack = [
     backface-visibility: hidden;
     width: 100%;
     height: 100%;
-    border-radius: 0.75rem; /* Matches rounded-xl */
+    border-radius: 1rem; /* Matches rounded-2xl */
   }
 
   /* Base states layout layer separation */
@@ -136,17 +140,16 @@ const techStack = [
   /* 3. Utility Styles */
   @keyframes pulseSlow {
     0%, 100% { transform: scale(0.96); opacity: 0.9; }
-    50% { transform: scale(1.04); opacity: 1; }
+    50% { transform: scale(1.06); opacity: 1; }
   }
   .animate-pulse-slow {
     animation: pulseSlow 3s ease-in-out infinite;
   }
 
-  .inverted-icon {
-    filter: invert(1) brightness(100%);
-  }
-
-  .back-tech-icon {
-    filter: brightness(1) invert(1);
+  /* GitHub and WordPress marks are effectively single-tone already,
+     so a full brightness(0) + invert(1) safely turns them solid white
+     without losing any internal detail (unlike the multi-tone HTML5 logo). */
+  .icon-force-white {
+    filter: brightness(0) invert(1);
   }
 </style>
