@@ -5,8 +5,7 @@ export default defineConfig({
    vite: {
     plugins: [tailwindcss()],
   },
-  // add yur domain name here
-  site: 'https://lexingtonthemes.com',
+  site: 'https://abdulbasitshahid.vercel.app',
   compressHTML: true,
   integrations: [sitemap()]
-});
+});

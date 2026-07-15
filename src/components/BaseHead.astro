@@ -1,48 +1,85 @@
 ---
 import "@/styles/global.css";
+
+// SEO Configuration
+const title = "Abdul Basit Shahid — Full-Stack Developer & Backend Engineer";
+const description = "Portfolio of Abdul Basit Shahid, a Software Engineering student at COMSATS Lahore specializing in Full-Stack Web Development, Backend Engineering, Laravel, and Node.js. Explore projects, skills, and future goals.";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL("/ID.jpeg", Astro.site);
 ---
 
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width" />
+<!-- Primary Meta Tags -->
 <meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="author" content="Michael Andreuzza" />
-<meta name="your keywords" content="Add ypour keywords here" />
-<!-- Favicon guidelines generated with https://favicon.io/ -->
-<link
-  rel="apple-touch-icon"
-  sizes="180x180"
-  href="/favicons/apple-touch-icon.png"
-/>
-<link
-  rel="icon"
-  type="image/png"
-  sizes="32x32"
-  href="/favicons/favicon-32x32.png"
-/>
-<link
-  rel="icon"
-  type="image/png"
-  sizes="16x16"
-  href="/favicons/favicon-16x16.png"
-/>
-<link rel="manifest" href="/favicons/site.webmanifest" />
-<link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ffffff" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="theme-color" content="#ffffff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="author" content="Abdul Basit Shahid" />
+<meta name="keywords" content="Abdul Basit Shahid, Full-Stack Developer, Backend Engineer, Laravel Developer, Node.js, Software Engineer, COMSATS Lahore, Web Developer Pakistan, Portfolio, PHP Developer, API Architecture, Electron Developer" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<link rel="canonical" href={canonicalURL} />
 
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-></script>
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="Abdul Basit Shahid — Portfolio" />
+<meta property="og:locale" content="en_US" />
 
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImage} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="mask-icon" href="/favicon.svg" color="#f97316" />
+<meta name="msapplication-TileColor" content="#000000" />
+<meta name="theme-color" content="#000000" />
+
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap"
   rel="stylesheet"
 />
-<!--- Keen Slider -->
+
+<!-- Keen Slider -->
 <link
   href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css"
   rel="stylesheet"
 />
+
+<!-- Alpine.js -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Abdul Basit Shahid",
+  "url": "https://abdulbasitshahid.vercel.app",
+  "image": "https://abdulbasitshahid.vercel.app/ID.jpeg",
+  "jobTitle": "Full-Stack Developer & Backend Engineer",
+  "description": description,
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "COMSATS University Islamabad, Lahore Campus"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Lahore",
+    "addressCountry": "PK"
+  },
+  "knowsAbout": ["Laravel", "PHP", "Node.js", "Full-Stack Web Development", "Backend Engineering", "API Architecture", "Electron", "Data Structures & Algorithms"],
+  "sameAs": [
+    "https://github.com/basit-shahid"
+  ]
+})} />

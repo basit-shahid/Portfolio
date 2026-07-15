@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abdulbasitshahid.vercel.app/sitemap-index.xml
