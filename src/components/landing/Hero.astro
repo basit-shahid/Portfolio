@@ -41,11 +41,6 @@ import IDImg from "../../assets/ID.jpeg";
   if (typeof window !== "undefined") {
     // Dynamic asset runtime loader to safeguard bundle compilation in Astro environments
     const initThreeJS = () => {
-      // Safe-guard mobile devices from total thread starvation
-      if (window.innerWidth < 768) {
-         console.warn("Mobile viewport detected: Deferring experimental WebGL core for performance.");
-         return; 
-      }
       import('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js')
         .then((THREE) => {
           runHighContrastWaveEngine(THREE);
@@ -68,11 +63,12 @@ import IDImg from "../../assets/ID.jpeg";
       let targetX = 0, targetY = 0;
       const clock = new THREE.Clock();
 
-      // --- STRETCHED WIDTH CONFIGURATION ---
-      // Increased from 120 to 200 to extend across wide screens without losing pixel density
-      const numParticlesX = 200; 
-      const numParticlesY = 85;
-      const separation = 0.32;
+      // --- WIDTH CONFIGURATION & MOBILE SCALING ---
+      // Reduced configuration dynamically on mobile devices to prevent thread starvation
+      const isMobile = window.innerWidth < 768;
+      const numParticlesX = isMobile ? 100 : 200; 
+      const numParticlesY = isMobile ? 50 : 85;
+      const separation = isMobile ? 0.35 : 0.32;
 
       scene = new THREE.Scene();
 
