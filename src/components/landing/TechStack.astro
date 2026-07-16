@@ -201,7 +201,7 @@ const techStack = [
     height: 22px;
     box-shadow: 0 0 12px rgba(249,115,22,0.6);
   }
-  @media (max-width: 767px) {
+  @media (max-width: 1023px) {
     .tech-progress { display: none; }
   }
 
@@ -375,6 +375,23 @@ const techStack = [
     const cards = Array.from(grid.querySelectorAll(".tech-bounce-card"));
     const dots = progress ? Array.from(progress.querySelectorAll(".tech-progress-dot")) : [];
     const total = cards.length;
+
+    // Mobile/Tablet fallback: reveal naturally on scroll instead of scrolljacking
+    if (window.matchMedia("(max-width: 1023px)").matches) {
+      const mobileObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("bounce-in");
+            mobileObserver.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -50px 0px", threshold: 0 });
+
+      cards.forEach((c) => {
+        mobileObserver.observe(c);
+      });
+      return;
+    }
 
     let revealed = 0;
     let engaged = false;
