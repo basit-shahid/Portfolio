@@ -1,5 +1,9 @@
 ---
 import "@/styles/global.css";
+import { getImage } from "astro:assets";
+import IDImg from "../assets/ID.jpeg";
+
+const optimizedLCP = await getImage({ src: IDImg, format: "webp" });
 
 // SEO Configuration
 const title = "Abdul Basit Shahid — Full-Stack Developer & Backend Engineer";
@@ -42,6 +46,9 @@ const ogImage = new URL("/ID.jpeg", Astro.site);
 <link rel="mask-icon" href="/favicon.svg" color="#f97316" />
 <meta name="msapplication-TileColor" content="#000000" />
 <meta name="theme-color" content="#000000" />
+
+<!-- Preload LCP Image -->
+<link rel="preload" as="image" href={optimizedLCP.src} fetchpriority="high" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />

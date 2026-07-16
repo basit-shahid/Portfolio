@@ -1,5 +1,7 @@
 ---
 // Standalone High-Contrast Abstract Fluid Cyber-Wave Landscape Engine
+import { Image } from "astro:assets";
+import IDImg from "../../assets/ID.jpeg";
 ---
 
 <section id="hero-section" class="border-white/20 border-b pb-16 md:pb-24 relative overflow-hidden bg-zinc-950 min-h-[90vh] flex items-center">
@@ -20,10 +22,12 @@
 
       <div class="flex justify-center lg:justify-end" data-framer-reveal data-delay="0.2">
         <div class="relative group w-64 h-64 lg:w-96 lg:h-96 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl">
-          <img 
-            src="/ID.jpeg" 
+          <Image 
+            src={IDImg} 
             alt="Abdul Basit Shahid" 
             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 ease-out"
+            fetchpriority="high"
+            decoding="sync"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
         </div>
@@ -36,11 +40,24 @@
 <script>
   if (typeof window !== "undefined") {
     // Dynamic asset runtime loader to safeguard bundle compilation in Astro environments
-    import('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js')
-      .then((THREE) => {
-        runHighContrastWaveEngine(THREE);
-      })
-      .catch((err) => console.error("Failed to build high-visibility particle context matrix", err));
+    const initThreeJS = () => {
+      // Safe-guard mobile devices from total thread starvation
+      if (window.innerWidth < 768) {
+         console.warn("Mobile viewport detected: Deferring experimental WebGL core for performance.");
+         return; 
+      }
+      import('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js')
+        .then((THREE) => {
+          runHighContrastWaveEngine(THREE);
+        })
+        .catch((err) => console.error("Failed to build high-visibility particle context matrix", err));
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(initThreeJS, { timeout: 2000 });
+    } else {
+      setTimeout(initThreeJS, 100);
+    }
 
     function runHighContrastWaveEngine(THREE) {
       const container = document.getElementById('canvas-container');

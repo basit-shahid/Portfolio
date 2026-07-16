@@ -1,4 +1,9 @@
 ---
+import { Image } from "astro:assets";
+import fastfoodImg from "../../assets/fastfood-preview.png";
+import dropImg from "../../assets/drop-preview.png";
+import turbodmImg from "../../assets/turbodm-preview.png";
+
 const projects = [
   {
     name: "FastFood Invoice System",
@@ -7,7 +12,7 @@ const projects = [
     url: "https://github.com/basit-shahid/fastfood-invoice-system",
     language: "PHP / Laravel",
     tag: "Full Stack",
-    image: "/fastfood-preview.png",
+    image: fastfoodImg,
     color: "orange",
     accent: "#f97316",
     glow: "rgba(249,115,22,0.12)",
@@ -24,7 +29,7 @@ const projects = [
     url: "https://github.com/basit-shahid/drop",
     language: "Electron / JS",
     tag: "Desktop App",
-    image: "/drop-preview.png",
+    image: dropImg,
     color: "purple",
     accent: "#a855f7",
     glow: "rgba(168,85,247,0.12)",
@@ -41,7 +46,7 @@ const projects = [
     url: "https://github.com/basit-shahid/turbodm",
     language: "Electron / Node",
     tag: "Downloading",
-    image: "/turbodm-preview.png",
+    image: turbodmImg,
     color: "cyan",
     accent: "#22d3ee",
     glow: "rgba(34,211,238,0.12)",
@@ -81,12 +86,14 @@ const projects = [
 
         <div class="relative lg:w-[55%] h-48 sm:h-56 lg:h-auto overflow-hidden bg-zinc-900 flex-shrink-0">
           {projects.map((p, i) => (
-            <img
+            <Image
               id={`feat-img-${i}`}
               src={p.image}
               alt={`${p.name} preview`}
               class={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out transform ${i === 0 ? 'opacity-100 scale-100 group-hover:scale-105' : 'opacity-0 scale-105'}`}
               loading={i === 0 ? 'eager' : 'lazy'}
+              decoding={i === 0 ? 'sync' : 'async'}
+              fetchpriority={i === 0 ? 'high' : 'auto'}
             />
           ))}
           <div class="hidden lg:block absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-zinc-950/90 pointer-events-none" />
@@ -166,10 +173,12 @@ const projects = [
           data-framer-reveal
           data-delay={0.5 + i * 0.1}
         >
-          <img
+          <Image
             src={p.image}
             alt={p.name}
             class="w-12 h-10 object-cover rounded-lg border border-white/10 shrink-0 transition-all duration-300 group-hover:border-white/20"
+            loading="lazy"
+            decoding="async"
           />
           <div class="min-w-0">
             <p class={`text-xs font-bold uppercase tracking-wide truncate transition-colors duration-300 ${i === 0 ? 'text-white' : 'text-zinc-400 group-hover:text-white'}`}>
