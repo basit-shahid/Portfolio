@@ -1,0 +1,116 @@
+---
+// Minimalist Terminal Narrative Preloader
+---
+
+<div id="loader-wrapper" class="fixed inset-0 z-[100] bg-zinc-950 flex flex-col justify-center items-center md:items-start px-8 md:px-24 transition-transform duration-[1.2s] cubic-bezier(0.16, 1, 0.3, 1) font-mono">
+  
+  <div id="loader-content" class="w-full max-w-3xl flex flex-col items-start justify-center">
+    
+    <div class="flex items-center gap-4 mb-8">
+      <span class="text-orange-500 font-bold text-3xl">A.</span>
+      <span class="w-px h-6 bg-white/20"></span>
+      <span class="text-xs md:text-sm tracking-[0.3em] uppercase text-zinc-500 font-bold">System Boot Sequence</span>
+    </div>
+    
+    <!-- Dynamic lines container -->
+    <div id="terminal-lines" class="text-zinc-400 text-sm md:text-base leading-loose w-full flex flex-col justify-end min-h-[140px] overflow-hidden">
+      <!-- Lines injected here dynamically via JS -->
+    </div>
+    
+    <!-- Active typing row -->
+    <div class="mt-2 flex items-center md:text-base text-sm leading-loose w-full">
+      <span class="text-orange-500 mr-3 font-bold">></span>
+      <span id="current-typing" class="text-white tracking-wide"></span><span id="terminal-cursor" class="bg-orange-500 w-2.5 h-5 ml-1 inline-block animate-cursor-blink"></span>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  if (typeof window !== "undefined") {
+    // Session state check so we don't annoy users doing multiple page navigations
+    if (sessionStorage.getItem('portfolio_booted')) {
+      const loader = document.getElementById('loader-wrapper');
+      if (loader) {
+         loader.style.display = 'none';
+      }
+    } else {
+      document.body.style.overflow = 'hidden'; 
+      
+      document.addEventListener("DOMContentLoaded", () => {
+        const wrapper = document.getElementById('loader-wrapper');
+        const linesContainer = document.getElementById('terminal-lines');
+        const currentTyping = document.getElementById('current-typing');
+
+        const sequenceData = [
+          "booting architecture_core.exe...",
+          "resolving system dependencies...",
+          "compiling data structures...",
+          "waking up abstract_wave_engine...",
+          "[ SYSTEM ACTIVE \\ ABDUL BASIT ]"
+        ];
+
+        let lineIdx = 0;
+        let charIdx = 0;
+        
+        function processTyping() {
+          if (!wrapper || !linesContainer || !currentTyping) return;
+
+          if (lineIdx >= sequenceData.length) {
+            // Boot sequence complete! Initiate exit animation
+            setTimeout(() => {
+               wrapper.style.transform = 'translateY(-100%)';
+               document.body.style.overflow = ''; // Un-freeze body
+               sessionStorage.setItem('portfolio_booted', 'true');
+            }, 700);
+            return;
+          }
+
+          const currentTargetLine = sequenceData[lineIdx];
+
+          if (charIdx < currentTargetLine.length) {
+            currentTyping.textContent += currentTargetLine.charAt(charIdx);
+            charIdx++;
+            
+            // Randomized keystroke delay simulates high-speed typing
+            setTimeout(processTyping, Math.random() * 20 + 15);
+          } else {
+            // Finalize current finished line
+            const historyLine = document.createElement("p");
+            
+            // Highlight the final activation message specifically
+            if (lineIdx === sequenceData.length - 1) {
+               historyLine.className = "text-orange-500 font-bold tracking-widest mt-4 drop-shadow-[0_0_8px_rgba(249,115,22,0.6)]";
+               historyLine.textContent = currentTargetLine; 
+            } else {
+               historyLine.textContent = "> " + currentTargetLine;
+            }
+            
+            linesContainer.appendChild(historyLine);
+            
+            currentTyping.textContent = "";
+            charIdx = 0;
+            lineIdx++;
+            
+            // Tiny pause before printing the next sequence line
+            setTimeout(processTyping, lineIdx === sequenceData.length - 1 ? 500 : 200); 
+          }
+        }
+
+        // Kickoff terminal
+        setTimeout(processTyping, 400); 
+      });
+    }
+  }
+</script>
+
+<style>
+  .animate-cursor-blink {
+    animation: blink 0.9s steps(2, start) infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>
