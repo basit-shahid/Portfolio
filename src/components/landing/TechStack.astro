@@ -1,5 +1,5 @@
 ---
-// 1. FRONTMATTER - Retaining your core data structure unchanged
+// 1. FRONTMATTER - unchanged
 const techStack = [
   {
     name: "Laravel",
@@ -26,85 +26,80 @@ const techStack = [
 ];
 ---
 
-<div id="tech-stack" class="max-w-7xl mx-auto px-8 mt-24 mb-10 text-left" data-framer-reveal>
-  <p class="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl">
-    Tech <span class="text-orange-500">Stack</span><span class="text-orange-500">.</span>
-  </p>
-</div>
+<section id="tech-stack-section" class="tech-stack-pin-wrap">
+  <div id="tech-stack" class="max-w-7xl mx-auto px-8 mt-24 mb-10 text-left">
+    <p class="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-none text-white lg:text-7xl">
+      Tech <span class="text-orange-500">Stack</span><span class="text-orange-500">.</span>
+    </p>
+  </div>
 
-<!-- Grid container wrapping the cards with perspective context -->
-<div class="max-w-7xl mx-auto gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-8 pb-16 card-perspective">
-  {
-    techStack.map((item, index) => (
-      /* Outer Container protects the layout from frame reveal shifts */
-      <div
-        class="w-full h-80 unique-card-container cursor-pointer"
-        data-framer-reveal
-        data-delay={0.1 * index}
-      >
-        <!-- Inner Card handles the actual 3D turn -->
-        <div class="flip-card-inner h-full w-full relative">
+  <div id="tech-stack-grid" class="max-w-7xl mx-auto gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-8 pb-16 card-perspective">
+    {
+      techStack.map((item, index) => (
+        <div
+          class="w-full h-80 unique-card-container tech-bounce-card cursor-pointer"
+          data-index={index}
+        >
+          <div class="flip-card-inner h-full w-full relative">
 
-          <!-- ================= CARD FRONT: ONLY ICON ================= -->
-          <div class="flip-card-front absolute inset-0 flex items-center justify-center p-6 border border-white/10 rounded-2xl bg-zinc-900/40 backdrop-blur-md shadow-xl">
-            <div class="relative flex items-center justify-center animate-pulse-slow">
-              <div class="absolute inset-0 rounded-full bg-orange-500/10 blur-xl scale-150" />
-              <div class="relative w-24 h-24 rounded-2xl bg-zinc-950/70 border border-orange-500/25 flex items-center justify-center shadow-[0_0_25px_-5px_rgba(234,88,12,0.35)]">
-                <img
-                  src={item.iconUrl}
-                  alt={`${item.name} icon`}
-                  class={`w-14 h-14 object-contain ${item.forceWhite ? 'icon-force-white' : ''}`}
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
-          <!-- ================= CARD BACK: TEXT + ORANGE BG ================= -->
-          <div class="flip-card-back absolute inset-0 flex flex-col justify-between p-6 rounded-2xl bg-orange-500 shadow-[0_0_30px_5px_rgba(234,88,12,0.3)] border border-orange-500 text-zinc-950">
-            <div class="w-full h-full flex flex-col justify-between">
-              <div>
-                <div class="flex items-center gap-4">
-                  <div class="p-2 bg-zinc-950 rounded-lg border border-orange-500/40 shrink-0 flex items-center justify-center w-11 h-11 shadow-md">
-                    <img
-                      src={item.iconUrl}
-                      alt={`${item.name} icon`}
-                      class={`w-7 h-7 object-contain ${item.forceWhite ? 'icon-force-white' : ''}`}
-                    />
-                  </div>
-
-                  <div class="flex flex-col justify-center">
-                    <h3 class="text-sm sm:text-base font-black tracking-wide uppercase text-zinc-950 leading-tight">
-                      {item.name}
-                    </h3>
-                    <span class="text-[10px] font-black tracking-widest text-orange-950/80 uppercase mt-0.5">
-                      Core Engine
-                    </span>
-                  </div>
+            <div class="flip-card-front absolute inset-0 flex items-center justify-center p-6 border border-white/10 rounded-2xl bg-zinc-900/40 backdrop-blur-md shadow-xl">
+              <div class="relative flex items-center justify-center animate-pulse-slow">
+                <div class="absolute inset-0 rounded-full bg-orange-500/10 blur-xl scale-150" />
+                <div class="relative w-24 h-24 rounded-2xl bg-zinc-950/70 border border-orange-500/25 flex items-center justify-center shadow-[0_0_25px_-5px_rgba(234,88,12,0.35)]">
+                  <img
+                    src={item.iconUrl}
+                    alt={`${item.name} icon`}
+                    class={`w-14 h-14 object-contain ${item.forceWhite ? 'icon-force-white' : ''}`}
+                    loading="lazy"
+                  />
                 </div>
-
-                <p class="text-[11px] sm:text-xs text-white-950 font-medium leading-relaxed tracking-wide mt-4 pt-3 border-t border-orange-700/40">
-                  {item.description}
-                </p>
               </div>
-
-              <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-zinc-950/20 to-transparent" />
             </div>
-          </div>
 
+            <div class="flip-card-back absolute inset-0 flex flex-col justify-between p-6 rounded-2xl bg-orange-500 shadow-[0_0_30px_5px_rgba(234,88,12,0.3)] border border-orange-500 text-zinc-950">
+              <div class="w-full h-full flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-4">
+                    <div class="p-2 bg-zinc-950 rounded-lg border border-orange-500/40 shrink-0 flex items-center justify-center w-11 h-11 shadow-md">
+                      <img
+                        src={item.iconUrl}
+                        alt={`${item.name} icon`}
+                        class={`w-7 h-7 object-contain ${item.forceWhite ? 'icon-force-white' : ''}`}
+                      />
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h3 class="text-sm sm:text-base font-black tracking-wide uppercase text-zinc-950 leading-tight">
+                        {item.name}
+                      </h3>
+                      <span class="text-[10px] font-black tracking-widest text-orange-950/80 uppercase mt-0.5">
+                        Core Engine
+                      </span>
+                    </div>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-white-950 font-medium leading-relaxed tracking-wide mt-4 pt-3 border-t border-orange-700/40">
+                    {item.description}
+                  </p>
+                </div>
+                <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-zinc-950/20 to-transparent" />
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
-    ))
-  }
-</div>
+      ))
+    }
+  </div>
+</section>
 
 <style>
-  /* 1. Perspective Setup */
+  .tech-stack-pin-wrap {
+    position: relative;
+  }
+
   .card-perspective {
     perspective: 1200px;
   }
 
-  /* 2. 3D Engine Setup */
   .flip-card-inner {
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
@@ -112,24 +107,21 @@ const techStack = [
     height: 100%;
   }
 
-  /* Flip action when the outer element is hovered */
   .unique-card-container:hover .flip-card-inner {
     transform: rotateY(180deg);
   }
 
-  /* Structural sharing with clean visibility clipping */
   .flip-card-front, .flip-card-back {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     width: 100%;
     height: 100%;
-    border-radius: 1rem; /* Matches rounded-2xl */
+    border-radius: 1rem;
   }
 
-  /* Base states layout layer separation */
   .flip-card-front {
     transform: rotateY(0deg);
-    z-index: 2; /* Ensures icon shows up first */
+    z-index: 2;
   }
 
   .flip-card-back {
@@ -137,7 +129,34 @@ const techStack = [
     z-index: 1;
   }
 
-  /* 3. Utility Styles */
+  /* Scroll-jacked bounce states */
+  .tech-bounce-card {
+    opacity: 0;
+    transform: translateY(70px) scale(0.75);
+  }
+
+  .tech-bounce-card.bounce-in {
+    animation: bounceInCard 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .tech-bounce-card.bounce-out {
+    animation: bounceOutCard 0.45s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  }
+
+  @keyframes bounceInCard {
+    0%   { opacity: 0; transform: translateY(70px) scale(0.7); }
+    50%  { opacity: 1; transform: translateY(-16px) scale(1.06); }
+    72%  { transform: translateY(6px) scale(0.97); }
+    88%  { transform: translateY(-2px) scale(1.015); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes bounceOutCard {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    30%  { transform: translateY(-8px) scale(1.03); }
+    100% { opacity: 0; transform: translateY(50px) scale(0.75); }
+  }
+
   @keyframes pulseSlow {
     0%, 100% { transform: scale(0.96); opacity: 0.9; }
     50% { transform: scale(1.06); opacity: 1; }
@@ -146,10 +165,178 @@ const techStack = [
     animation: pulseSlow 3s ease-in-out infinite;
   }
 
-  /* GitHub and WordPress marks are effectively single-tone already,
-     so a full brightness(0) + invert(1) safely turns them solid white
-     without losing any internal detail (unlike the multi-tone HTML5 logo). */
   .icon-force-white {
     filter: brightness(0) invert(1);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tech-bounce-card,
+    .tech-bounce-card.bounce-in,
+    .tech-bounce-card.bounce-out {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
 </style>
+
+<script>
+  (() => {
+    const section = document.getElementById("tech-stack-section");
+    const grid = document.getElementById("tech-stack-grid");
+    if (!section || !grid) return;
+
+    const cards = Array.from(grid.querySelectorAll(".tech-bounce-card"));
+    const total = cards.length;
+
+    let revealed = 0;        // how many cards are currently bounced-in (0..total)
+    let engaged = false;     // is this section currently "hijacking" scroll?
+    let locked = false;      // is a single step-animation in flight?
+    let direction = "down";  // last known scroll direction
+    let lastScrollY = window.scrollY;
+
+    const STEP_LOCK_MS = 550; // roughly matches the animation duration
+
+    // ---- direction tracking (used only to decide whether to engage) ----
+    window.addEventListener(
+      "scroll",
+      () => {
+        const y = window.scrollY;
+        if (Math.abs(y - lastScrollY) > 2) {
+          direction = y > lastScrollY ? "down" : "up";
+          lastScrollY = y;
+        }
+      },
+      { passive: true }
+    );
+
+    function lockBodyScroll() {
+      document.body.style.overflow = "hidden";
+    }
+    function unlockBodyScroll() {
+      document.body.style.overflow = "";
+    }
+
+    function bounceIn(i) {
+      const c = cards[i];
+      c.classList.remove("bounce-out");
+      void c.offsetWidth; // restart animation cleanly
+      c.classList.add("bounce-in");
+    }
+    function bounceOut(i) {
+      const c = cards[i];
+      c.classList.remove("bounce-in");
+      void c.offsetWidth;
+      c.classList.add("bounce-out");
+    }
+
+    function releaseEngagement() {
+      engaged = false;
+      unlockBodyScroll();
+    }
+
+    // Reveal the next card (left -> right order = array order)
+    function stepDown() {
+      if (revealed >= total) {
+        releaseEngagement();
+        return false; // nothing consumed, let native scroll continue
+      }
+      bounceIn(revealed);
+      revealed++;
+      locked = true;
+      setTimeout(() => (locked = false), STEP_LOCK_MS);
+      if (revealed === total) {
+        setTimeout(releaseEngagement, STEP_LOCK_MS);
+      }
+      return true;
+    }
+
+    // Hide the last revealed card (reverse order = right -> left)
+    function stepUp() {
+      if (revealed <= 0) {
+        releaseEngagement();
+        return false;
+      }
+      revealed--;
+      bounceOut(revealed);
+      locked = true;
+      setTimeout(() => (locked = false), STEP_LOCK_MS);
+      if (revealed === 0) {
+        setTimeout(releaseEngagement, STEP_LOCK_MS);
+      }
+      return true;
+    }
+
+    // ---- engage when the section becomes substantially visible ----
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target !== section) return;
+          if (!entry.isIntersecting || entry.intersectionRatio < 0.55) return;
+          if (engaged) return;
+
+          // Only take over scroll if there is actually something left
+          // to animate in the direction the user is heading.
+          if (direction === "down" && revealed < total) {
+            engaged = true;
+            lockBodyScroll();
+          } else if (direction === "up" && revealed > 0) {
+            engaged = true;
+            lockBodyScroll();
+          }
+        });
+      },
+      { threshold: [0, 0.55, 1] }
+    );
+    observer.observe(section);
+
+    // ---- wheel (mouse/trackpad) ----
+    function onWheel(e) {
+      if (!engaged) return;
+      if (locked) {
+        e.preventDefault();
+        return;
+      }
+      const goingDown = e.deltaY > 0;
+      const consumed = goingDown ? stepDown() : stepUp();
+      if (consumed) e.preventDefault();
+    }
+
+    // ---- keyboard ----
+    function onKeyDown(e) {
+      if (!engaged) return;
+      const downKeys = ["ArrowDown", "PageDown", " "];
+      const upKeys = ["ArrowUp", "PageUp"];
+
+      if (downKeys.includes(e.key)) {
+        if (locked) { e.preventDefault(); return; }
+        if (stepDown()) e.preventDefault();
+      } else if (upKeys.includes(e.key)) {
+        if (locked) { e.preventDefault(); return; }
+        if (stepUp()) e.preventDefault();
+      }
+    }
+
+    // ---- touch (mobile swipe) ----
+    let touchStartY = 0;
+    function onTouchStart(e) {
+      touchStartY = e.touches[0].clientY;
+    }
+    function onTouchMove(e) {
+      if (engaged) e.preventDefault();
+    }
+    function onTouchEnd(e) {
+      if (!engaged || locked) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) < 25) return;
+      if (dy > 0) stepDown();
+      else stepUp();
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+  })();
+</script>
