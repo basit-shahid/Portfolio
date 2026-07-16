@@ -5,50 +5,79 @@ const services = [
   {
     icon: `<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>`,
     title: "Strengthening the Foundation",
+    tag: "Core CS",
     description:
       "Deepening my grasp of core computer science — currently pushing further into Trees, Graphs, and Dynamic Programming while leveling up my Node.js skills to complement the Laravel based backend work I already do.",
   },
   {
     icon: `<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>`,
     title: "Building Real, Complete Projects",
+    tag: "Shipping",
     description:
       "I’m moving beyond small scripts to build complete, end-to-end applications. My focus is on creating polished, functional systems that solve real problems — with clean code, solid architecture, and attention to detail.",
   },
   {
     icon: `<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>`,
     title: "Exploring Tooling & Systems",
+    tag: "Tooling",
     description:
       "I’m diving into developer tools, CLIs, and systems-level utilities. The goal is to build software that improves workflows, automates repetitive tasks, and operates with speed and precision at a lower level.",
   },
   {
     icon: `<rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>`,
     title: "Backend & API Architecture",
+    tag: "Infra",
     description:
       "I’m focusing on building fast, scalable, and maintainable backend systems. My goal is to design clean APIs, optimize database performance, and implement robust server-side logic that can support complex applications and high-traffic demands.",
   },
 ];
 ---
 
-<section id="goals" class="relative pt-20 md:pt-28 pb-16 overflow-hidden bg-black">
-  <div class="px-8 pb-8 relative" data-framer-reveal>
+<section id="goals" class="relative pt-20 md:pt-28 pb-16 overflow-hidden bg-black goals-pin-wrap">
+
+  <div class="goals-bg-glow" aria-hidden="true"></div>
+  <div class="goals-bg-grid" aria-hidden="true"></div>
+
+  <div class="px-8 pb-8 relative z-10" data-framer-reveal>
+    <div class="flex items-center gap-3 mb-4">
+      <span class="h-px w-10 bg-orange-500/70"></span>
+      <span class="text-orange-500 text-xs font-bold tracking-[0.3em] uppercase">What's Next</span>
+    </div>
     <p class="text-3xl font-black text-white uppercase lg:text-7xl text-xl tracking-tighter">
-      <span class="text-white">FUTURE</span> <span class="text-orange-500">GOALS.</span>
+      <span class="text-white">FUTURE</span> <span class="text-orange-500 relative inline-block">
+        GOALS.
+        <svg class="goals-underline" viewBox="0 0 220 12" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M2 8 Q 55 2, 110 6 T 218 5" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </p>
+    <p class="text-zinc-400 text-sm md:text-base font-medium mt-5 max-w-xl leading-relaxed">
+      Not a finished skillset — a direction I'm deliberately growing toward.
     </p>
   </div>
 
-  <div class="max-w-7xl mx-auto gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-8 pb-16 card-perspective relative z-10">
+  <div id="goals-progress" class="goals-progress" aria-hidden="true">
+    {services.map((_, i) => (
+      <span class="goals-progress-dot" data-dot={i}></span>
+    ))}
+  </div>
+
+  <div id="goals-grid" class="max-w-7xl mx-auto gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-8 pb-16 card-perspective relative z-10">
     {
-      services.map(({ icon, title, description }, index) => (
-        /* Outer Container protects layout from frame reveal shifts */
+      services.map(({ icon, title, tag, description }, index) => (
+        /* Outer Container protected and handles bounce classes */
         <div
-          class="w-full h-80 unique-card-container cursor-pointer"
-          data-framer-reveal
-          data-delay={0.1 * index}
+          class="w-full h-80 unique-card-container goals-bounce-card cursor-pointer"
+          data-index={index}
         >
           <div class="flip-card-inner h-full w-full relative">
 
-            <div class="flip-card-front absolute inset-0 flex flex-col items-center justify-center p-6 border border-white/10 rounded-2xl bg-zinc-900/40 backdrop-blur-md shadow-xl">
+            <div class="flip-card-front absolute inset-0 flex flex-col items-center justify-center p-6 rounded-2xl overflow-hidden">
+              <div class="card-face-bg"></div>
+              <div class="card-border-glow"></div>
               <div class="absolute -top-12 -right-12 w-24 h-24 bg-orange-500/5 rounded-full blur-2xl pointer-events-none" />
+
+              <span class="card-tag">{tag}</span>
 
               <div class="relative flex items-center justify-center animate-pulse-slow">
                 <div class="absolute inset-0 rounded-full bg-orange-500/10 blur-xl scale-150" />
@@ -66,10 +95,17 @@ const services = [
                   />
                 </div>
               </div>
+
+              <h3 class="text-white/90 text-xs font-bold tracking-[0.15em] uppercase mt-5 text-center leading-snug px-2">
+                {title}
+              </h3>
+
+              <span class="card-hint">Hover to explore</span>
             </div>
 
-            <div class="flip-card-back absolute inset-0 flex flex-col justify-between p-6 rounded-2xl bg-orange-500 shadow-[0_0_30px_5px_rgba(234,88,12,0.3)] border border-orange-500 text-zinc-950">
-              <div class="w-full h-full flex flex-col justify-between">
+            <div class="flip-card-back absolute inset-0 flex flex-col justify-between p-6 rounded-2xl text-zinc-950 overflow-hidden">
+              <div class="card-back-texture"></div>
+              <div class="w-full h-full flex flex-col justify-between relative z-10">
                 <div>
                   <div class="flex items-center gap-4">
                     <div class="p-2 bg-zinc-950 rounded-lg border border-white/10 shrink-0 flex items-center justify-center w-11 h-11 shadow-md">
@@ -90,10 +126,13 @@ const services = [
                       <h3 class="text-sm sm:text-base font-black tracking-wide uppercase text-zinc-950 leading-tight">
                         {title}
                       </h3>
+                      <span class="text-[10px] font-black tracking-widest text-orange-950/80 uppercase mt-0.5">
+                        {tag}
+                      </span>
                     </div>
                   </div>
 
-                  <p class="text-[11px] sm:text-xs text-white-950 font-medium leading-relaxed tracking-wide mt-4 pt-3 border-t border-orange-700/40">
+                  <p class="text-[11px] sm:text-xs text-zinc-950/85 font-medium leading-relaxed tracking-wide mt-4 pt-3 border-t border-zinc-950/15">
                     {description}
                   </p>
                 </div>
@@ -110,45 +149,211 @@ const services = [
 </section>
 
 <style>
-  /* 1. Perspective Setup */
-  .card-perspective {
-    perspective: 1200px;
+  .goals-pin-wrap {
+    position: relative;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(234,88,12,0.05), transparent 60%);
   }
 
-  /* 2. 3D Engine Setup */
+  /* ---------- Ambient background ---------- */
+  .goals-bg-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(600px 300px at 12% 8%, rgba(234,88,12,0.08), transparent 70%),
+      radial-gradient(500px 260px at 92% 25%, rgba(234,88,12,0.05), transparent 70%);
+    z-index: 0;
+  }
+
+  .goals-bg-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 15%, black 40%, transparent 90%);
+    z-index: 0;
+  }
+
+  /* ---------- Heading flourish ---------- */
+  .goals-underline {
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 10px;
+    color: rgb(249 115 22 / 0.6);
+  }
+
+  /* ---------- Scroll progress dots ---------- */
+  .goals-progress {
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    float: right;
+    margin-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 20;
+    width: 0;
+  }
+  .goals-progress-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: block;
+  }
+  .goals-progress-dot.active {
+    background: rgb(249 115 22);
+    height: 22px;
+    box-shadow: 0 0 12px rgba(249,115,22,0.6);
+  }
+  @media (max-width: 767px) {
+    .goals-progress { display: none; }
+  }
+
+  /* ---------- Perspective + flip engine ---------- */
+  .card-perspective {
+    perspective: 1400px;
+  }
+
   .flip-card-inner {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     transform-style: preserve-3d;
     width: 100%;
     height: 100%;
   }
 
-  /* Flip action when the outer element is hovered */
   .unique-card-container:hover .flip-card-inner {
     transform: rotateY(180deg);
   }
 
-  /* Structural sharing with clean visibility clipping */
   .flip-card-front, .flip-card-back {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     width: 100%;
     height: 100%;
-    border-radius: 1rem; /* Matches rounded-2xl */
+    border-radius: 1rem;
   }
 
-  /* Base states layout layer separation */
   .flip-card-front {
     transform: rotateY(0deg);
-    z-index: 2; /* Ensures icon shows up first */
+    z-index: 2;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: border-color 0.4s ease, transform 0.4s ease;
+  }
+  .unique-card-container:hover .flip-card-front {
+    border-color: rgba(249,115,22,0.35);
   }
 
   .flip-card-back {
     transform: rotateY(180deg);
     z-index: 1;
+    border: 1px solid rgba(249,115,22,0.5);
+    box-shadow: 0 0 40px 6px rgba(234,88,12,0.25);
   }
 
-  /* 3. Utility Styles */
+  /* Card front layered material */
+  .card-face-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(160deg, rgba(39,39,42,0.55), rgba(9,9,11,0.75));
+    backdrop-filter: blur(14px);
+  }
+  .card-border-glow {
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: conic-gradient(from 180deg at 50% 50%, transparent, rgba(249,115,22,0.25), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .unique-card-container:hover .card-border-glow {
+    opacity: 1;
+    animation: rotateGlow 3.5s linear infinite;
+  }
+  @keyframes rotateGlow {
+    to { transform: rotate(360deg); }
+  }
+
+  .card-tag {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(249,115,22,0.85);
+    background: rgba(249,115,22,0.08);
+    border: 1px solid rgba(249,115,22,0.25);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  .card-hint {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.35s ease;
+  }
+  .unique-card-container:hover .card-hint {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Card back texture */
+  .flip-card-back {
+    background: linear-gradient(155deg, #fb923c 0%, #ea580c 55%, #c2410c 100%);
+  }
+  .card-back-texture {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 10px 10px;
+    opacity: 0.4;
+    z-index: 0;
+  }
+
+  /* ---------- Scroll bounce ---------- */
+  .goals-bounce-card {
+    opacity: 0;
+    transform: translateY(70px) scale(0.75);
+  }
+
+  .goals-bounce-card.bounce-in {
+    animation: bounceInCard 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .goals-bounce-card.bounce-out {
+    animation: bounceOutCard 0.45s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  }
+
+  @keyframes bounceInCard {
+    0%   { opacity: 0; transform: translateY(70px) scale(0.7); }
+    50%  { opacity: 1; transform: translateY(-16px) scale(1.06); }
+    72%  { transform: translateY(6px) scale(0.97); }
+    88%  { transform: translateY(-2px) scale(1.015); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes bounceOutCard {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    30%  { transform: translateY(-8px) scale(1.03); }
+    100% { opacity: 0; transform: translateY(50px) scale(0.75); }
+  }
+
+  /* ---------- Icon pulse ---------- */
   @keyframes pulseSlow {
     0%, 100% { transform: scale(0.96); opacity: 0.9; }
     50% { transform: scale(1.06); opacity: 1; }
@@ -156,4 +361,151 @@ const services = [
   .animate-pulse-slow {
     animation: pulseSlow 3s ease-in-out infinite;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .goals-bounce-card,
+    .goals-bounce-card.bounce-in,
+    .goals-bounce-card.bounce-out {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .card-border-glow { animation: none !important; }
+  }
 </style>
+
+<script>
+  (() => {
+    const section = document.getElementById("goals");
+    const grid = document.getElementById("goals-grid");
+    const progress = document.getElementById("goals-progress");
+    if (!section || !grid) return;
+
+    const cards = Array.from(grid.querySelectorAll(".goals-bounce-card"));
+    const dots = progress ? Array.from(progress.querySelectorAll(".goals-progress-dot")) : [];
+    const total = cards.length;
+
+    let revealed = 0;
+    let engaged = false;
+    let locked = false;
+    let direction = "down";
+    let lastScrollY = window.scrollY;
+
+    const STEP_LOCK_MS = 550;
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        const y = window.scrollY;
+        if (Math.abs(y - lastScrollY) > 2) {
+          direction = y > lastScrollY ? "down" : "up";
+          lastScrollY = y;
+        }
+      },
+      { passive: true }
+    );
+
+    function updateDots() {
+      dots.forEach((d, i) => d.classList.toggle("active", i < revealed));
+    }
+
+    function lockBodyScroll() { document.body.style.overflow = "hidden"; }
+    function unlockBodyScroll() { document.body.style.overflow = ""; }
+
+    function bounceIn(i) {
+      const c = cards[i];
+      c.classList.remove("bounce-out");
+      void c.offsetWidth;
+      c.classList.add("bounce-in");
+    }
+    function bounceOut(i) {
+      const c = cards[i];
+      c.classList.remove("bounce-in");
+      void c.offsetWidth;
+      c.classList.add("bounce-out");
+    }
+
+    function releaseEngagement() {
+      engaged = false;
+      unlockBodyScroll();
+    }
+
+    function stepDown() {
+      if (revealed >= total) { releaseEngagement(); return false; }
+      bounceIn(revealed);
+      revealed++;
+      updateDots();
+      locked = true;
+      setTimeout(() => (locked = false), STEP_LOCK_MS);
+      if (revealed === total) setTimeout(releaseEngagement, STEP_LOCK_MS);
+      return true;
+    }
+
+    function stepUp() {
+      if (revealed <= 0) { releaseEngagement(); return false; }
+      revealed--;
+      bounceOut(revealed);
+      updateDots();
+      locked = true;
+      setTimeout(() => (locked = false), STEP_LOCK_MS);
+      if (revealed === 0) setTimeout(releaseEngagement, STEP_LOCK_MS);
+      return true;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target !== section) return;
+          if (!entry.isIntersecting || entry.intersectionRatio < 0.55) return;
+          if (engaged) return;
+
+          if (direction === "down" && revealed < total) {
+            engaged = true;
+            lockBodyScroll();
+          } else if (direction === "up" && revealed > 0) {
+            engaged = true;
+            lockBodyScroll();
+          }
+        });
+      },
+      { threshold: [0, 0.55, 1] }
+    );
+    observer.observe(section);
+
+    function onWheel(e) {
+      if (!engaged) return;
+      if (locked) { e.preventDefault(); return; }
+      const consumed = e.deltaY > 0 ? stepDown() : stepUp();
+      if (consumed) e.preventDefault();
+    }
+
+    function onKeyDown(e) {
+      if (!engaged) return;
+      const downKeys = ["ArrowDown", "PageDown", " "];
+      const upKeys = ["ArrowUp", "PageUp"];
+      if (downKeys.includes(e.key)) {
+        if (locked) { e.preventDefault(); return; }
+        if (stepDown()) e.preventDefault();
+      } else if (upKeys.includes(e.key)) {
+        if (locked) { e.preventDefault(); return; }
+        if (stepUp()) e.preventDefault();
+      }
+    }
+
+    let touchStartY = 0;
+    function onTouchStart(e) { touchStartY = e.touches[0].clientY; }
+    function onTouchMove(e) { if (engaged) e.preventDefault(); }
+    function onTouchEnd(e) {
+      if (!engaged || locked) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) < 25) return;
+      dy > 0 ? stepDown() : stepUp();
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+  })();
+</script>
