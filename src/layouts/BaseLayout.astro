@@ -1,5 +1,4 @@
 ---
-
 import BaseHead from "@/components/BaseHead.astro";
 import Loader from "@/components/global/Loader.astro";
 import Navigation from "@/components/global/Navigation.astro";
@@ -25,6 +24,18 @@ import Footer from "@/components/global/Footer.astro";
   [data-framer-reveal] {
     opacity: 0;
     transform: translateY(30px);
+  }
+
+  /* Native scrollbar hidden — the TimelineScroll bubble nav now
+     handles scroll position/progress visually instead. */
+  html {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent;
   }
 </style>
 
