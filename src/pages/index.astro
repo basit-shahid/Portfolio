@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import TimelineScroll from "@/components/global/TimelineScroll.astro";
 import Hero from "@/components/landing/Hero.astro";
 import Projects from "@/components/landing/Projects.astro";
 import Intro from "@/components/landing/Intro.astro";
@@ -8,10 +9,23 @@ import Cta from "@/components/landing/Cta.astro";
 import Banner from '../components/landing/Banner.astro';
 import TechStack from '../components/landing/TechStack.astro';
 
+const sections = [
+  { id: "hero-section", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "tech-stack-section", label: "Tech Stack" },
+  { id: "projects", label: "Projects" },
+  { id: "goals", label: "Goals" },
+];
 ---
 
-
 <BaseLayout>
+  <TimelineScroll sections={sections} />
+  <script
+    type="application/json"
+    id="timeline-sections-data"
+    set:html={JSON.stringify(sections.map((s) => s.id))}
+  />
+
   <Hero />
   <Intro />
   <Banner />
