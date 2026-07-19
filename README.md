@@ -1,54 +1,82 @@
-# Astro & Tailwind CSS Starter Kit by lexingtonthemes.com
+# Abdul Basit Shahid — Portfolio
+
+Personal portfolio website of **Abdul Basit Shahid**, a Software Engineering student at COMSATS Lahore Campus specializing in Full-Stack Web Development and Backend Engineering (Laravel, Node.js).
+
+🔗 **Live site:** [abdulbasitshahid.vercel.app](https://abdulbasitshahid.vercel.app)
+
+![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat&logo=astro&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?style=flat&logo=vercel)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue)
+
+---
+
+## About
+
+This site is a single-page portfolio introducing Abdul Basit, showcasing his tech stack, featured projects, and future learning goals. It features a boot-sequence intro animation, an interactive tech-stack section, and a project showcase with GitHub links.
+
+**Sections:**
+- **Hero** — intro / system boot animation
+- **About** — background and interests (DSA, OOP, full-stack & backend engineering)
+- **Tech Stack** — Laravel, WordPress, HTML/CSS, GitHub, Node.js
+- **Projects** — featured builds ([FastFood Invoice System](https://github.com/basit-shahid/fastfood-invoice-system), [Drop](https://github.com/basit-shahid/drop), [TurboDM](https://github.com/basit-shahid/turbodm))
+- **Goals** — current learning direction (DSA, backend/API architecture, tooling)
+- **Contact** — email and social links
+
+## Tech Stack
+
+- **Framework:** [Astro](https://astro.build)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com) (`@tailwindcss/typography`, `@tailwindcss/forms`)
+- **Language:** TypeScript / Astro components
+- **Deployment:** [Vercel](https://vercel.com)
+
+## Project Structure
+
+```
+/
+├── public/              # Static assets (images, icons, etc.)
+├── src/
+│   ├── pages/           # Route pages (index.astro, etc.)
+│   ├── components/      # Astro/UI components
+│   └── styles/
+│       └── global.css   # Tailwind v4 theme (@import "tailwindcss"; @theme {...})
+├── astro.config.mjs
+├── tsconfig.json
+└── package.json
+```
+
+Astro automatically maps files in `src/pages/` to routes based on file name.
+
+## Getting Started
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/basit-shahid/Portfolio.git
+cd Portfolio
+npm install
+```
+
+### Commands
+
+| Command                | Action                                           |
+| ----------------------- | ------------------------------------------------ |
+| `npm install`           | Install dependencies                             |
+| `npm run dev`           | Start local dev server at `localhost:3000`       |
+| `npm run build`         | Build production site to `./dist/`               |
+| `npm run preview`       | Preview the production build locally             |
+| `npm run astro ...`     | Run Astro CLI commands (`astro add`, `astro check`) |
+
+## Deployment
+
+The site is deployed on **Vercel** and auto-deploys from the `main` branch.
+
+## Contact
+
+- 📧 Email: [basitdogar59@gmail.com](mailto:basitdogar59@gmail.com)
+- 💻 GitHub: [@basit-shahid](https://github.com/basit-shahid)
+- 📍 Based in Lahore, Pakistan
 
 ## License
 
-This template is open-source software licensed under the [GPL-3.0 license](https://opensource.org/licenses/GPL-3.0). Feel free to fork, modify, and use it in your projects.
-## Before using this template publicly, please ensure you remove my name and any links associated with me from the website.
-
-## This template is using Tailwind CSS V4
-
-Now we are using only a CSS file. It's called `global.css` and it's located in the src/styles folder. Now we are eimporting Tailwind CSS on the same file instead of using the `tailwind.config.cjs` file. Like this:
-
-```css
-// Importing Tailwind CSS
-@import "tailwindcss";
-// Importing Tailwind plugins
-@plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/forms";
-```
-
-Then to add your styles you will use the @theme directive. Like this:
-
-```css
-@theme {
-  /* Your CSS goes here, see how styles are written on the global.css file */
-}
-```
-
-Remember this is just in Alpha version, so you can use it as you want. Just keep an eye on the changes that Tailwind CSS is going to make.
-## Template Structure
-Inside of your Astro project, you'll see the following folders and files:
-```
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-Any static assets, like images, can be placed in the `public/` directory.
-
-## Commands
-All commands are run from the root of the project, from a terminal:
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
-| `npm run build`        | Build your production site to `./dist/`          |
-| `npm run preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI                     |
-## Want to learn more?
-Feel free to check Astros [documentation](https://docs.astro.build)
+This project is licensed under the **GPL-3.0 License** — see the [LICENSE](./LICENSE) file for details.
