@@ -2,7 +2,16 @@
 // Minimalist Terminal Narrative Preloader
 ---
 
-<div id="loader-wrapper" class="fixed inset-0 z-[100] bg-zinc-950 flex flex-col justify-center items-center md:items-start px-8 md:px-24 transition-transform duration-[1.2s] cubic-bezier(0.16, 1, 0.3, 1) font-mono">
+<script is:inline>
+  if (typeof window !== "undefined" && !sessionStorage.getItem('portfolio_booted')) {
+    const style = document.createElement('style');
+    style.id = 'loader-scroll-lock';
+    style.innerHTML = 'html, body { overflow: hidden !important; } #timeline-scroll { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }';
+    document.head.appendChild(style);
+  }
+</script>
+
+<div id="loader-wrapper" class="fixed inset-0 z-[100] bg-zinc-950 flex flex-col justify-center items-center md:items-start px-8 md:px-24 transition-transform duration-[0.6s] cubic-bezier(0.16, 1, 0.3, 1) font-mono">
   
   <div id="loader-content" class="w-full max-w-3xl flex flex-col items-start justify-center">
     
@@ -36,7 +45,13 @@
          loader.style.display = 'none';
       }
     } else {
-      document.body.style.overflow = 'hidden'; 
+      // Re-apply if script runs after a hydration step occasionally
+      if (!document.getElementById('loader-scroll-lock')) {
+         const style = document.createElement('style');
+         style.id = 'loader-scroll-lock';
+         style.innerHTML = 'html, body { overflow: hidden !important; } #timeline-scroll { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }';
+         document.head.appendChild(style);
+      }
       
       document.addEventListener("DOMContentLoaded", () => {
         const wrapper = document.getElementById('loader-wrapper');
@@ -61,9 +76,12 @@
             // Boot sequence complete! Initiate exit animation
             setTimeout(() => {
                wrapper.style.transform = 'translateY(-100%)';
+               const lock = document.getElementById('loader-scroll-lock');
+               if (lock) lock.remove();
                document.body.style.overflow = ''; // Un-freeze body
+               document.documentElement.style.overflow = '';
                sessionStorage.setItem('portfolio_booted', 'true');
-            }, 700);
+            }, 500);
             return;
           }
 
@@ -74,7 +92,7 @@
             charIdx++;
             
             // Randomized keystroke delay simulates high-speed typing
-            setTimeout(processTyping, Math.random() * 20 + 15);
+            setTimeout(processTyping, Math.random() * 12 + 10);
           } else {
             // Finalize current finished line
             const historyLine = document.createElement("p");
@@ -94,12 +112,12 @@
             lineIdx++;
             
             // Tiny pause before printing the next sequence line
-            setTimeout(processTyping, lineIdx === sequenceData.length - 1 ? 500 : 200); 
+            setTimeout(processTyping, lineIdx === sequenceData.length - 1 ? 300 : 150); 
           }
         }
 
         // Kickoff terminal
-        setTimeout(processTyping, 400); 
+        setTimeout(processTyping, 200); 
       });
     }
   }
