@@ -18,14 +18,9 @@ const sections = [
 ];
 ---
 
+
 <BaseLayout>
   <TimelineScroll sections={sections} />
-  <script
-    type="application/json"
-    id="timeline-sections-data"
-    set:html={JSON.stringify(sections.map((s) => s.id))}
-  />
-
   <Hero />
   <Intro />
   <Banner />
