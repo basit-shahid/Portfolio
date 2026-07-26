@@ -1,7 +1,7 @@
 ---
 import "@/styles/global.css";
 import { getImage } from "astro:assets";
-import IDImg from "../assets/ID.jpeg";
+import IDImg from "../assets/abdul-basit-shahid-software-engineer.png";
 
 const optimizedLCP = await getImage({ src: IDImg, format: "webp" });
 
@@ -9,7 +9,7 @@ const optimizedLCP = await getImage({ src: IDImg, format: "webp" });
 const title = "Abdul Basit Shahid — Full-Stack Developer & Backend Engineer";
 const description = "Portfolio of Abdul Basit Shahid, a Software Engineering student at COMSATS Lahore specializing in Full-Stack Web Development, Backend Engineering, Laravel, and Node.js. Explore projects, skills, and future goals.";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL("/ID.jpeg", Astro.site);
+const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site);
 ---
 
 <!-- Primary Meta Tags -->
@@ -74,7 +74,7 @@ const ogImage = new URL("/ID.jpeg", Astro.site);
   "@type": "Person",
   "name": "Abdul Basit Shahid",
   "url": "https://abdulbasitshahid.vercel.app",
-  "image": "https://abdulbasitshahid.vercel.app/ID.jpeg",
+  "image": "https://abdulbasitshahid.vercel.app/abdul-basit-shahid-software-engineer.png",
   "jobTitle": "Full-Stack Developer & Backend Engineer",
   "description": description,
   "alumniOf": {
