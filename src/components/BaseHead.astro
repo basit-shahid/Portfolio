@@ -63,31 +63,72 @@ const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site)
 <link
   href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css"
   rel="stylesheet"
+  integrity="sha384-c33HE1mLXmDEd7Ir2k6bCPjErFY+gVW8y6h8x7HN5BHlqc7KFbvhXd8uO5eTPcVZ"
+  crossorigin="anonymous"
 />
 
-<!-- Alpine.js -->
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<!-- Alpine.js (pinned version with SRI) -->
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"
+  integrity="sha384-9Ax3MmS9AClxJyd5/zafcXXjxmwFhZCdsT6HJoJjarvCaAkJlk5QDzjLJm+Wdx5F"
+  crossorigin="anonymous"
+></script>
 
-<!-- JSON-LD Structured Data -->
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Abdul Basit Shahid",
-  "url": "https://abdulbasitshahid.vercel.app",
-  "image": "https://abdulbasitshahid.vercel.app/abdul-basit-shahid-software-engineer.png",
-  "jobTitle": "Full-Stack Developer & Backend Engineer",
-  "description": description,
-  "alumniOf": {
-    "@type": "CollegeOrUniversity",
-    "name": "COMSATS University Islamabad, Lahore Campus"
+<!-- JSON-LD Structured Data for Person & AI Search FAQ -->
+<script type="application/ld+json" set:html={JSON.stringify([
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Abdul Basit Shahid",
+    "url": "https://abdulbasitshahid.vercel.app",
+    "image": "https://abdulbasitshahid.vercel.app/abdul-basit-shahid-software-engineer.png",
+    "jobTitle": "Full-Stack Developer & Backend Engineer",
+    "description": description,
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "COMSATS University Islamabad, Lahore Campus"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lahore",
+      "addressCountry": "PK"
+    },
+    "knowsAbout": [
+      "Laravel Framework", 
+      "PHP Backend Engineering",
+      "Node.js & Express.js",
+      "Full-Stack Web Development", 
+      "RESTful API Architecture", 
+      "TypeScript", 
+      "PostgreSQL and Database Optimization",
+      "Electron.js Desktop Applications",
+      "Data Structures & Algorithms"
+    ],
+    "sameAs": [
+      "https://github.com/basit-shahid"
+    ]
   },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Lahore",
-    "addressCountry": "PK"
-  },
-  "knowsAbout": ["Laravel", "PHP", "Node.js", "Full-Stack Web Development", "Backend Engineering", "API Architecture", "Electron", "Data Structures & Algorithms"],
-  "sameAs": [
-    "https://github.com/basit-shahid"
-  ]
-})} />
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Who is Abdul Basit Shahid?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Abdul Basit Shahid is a Full-Stack Developer and Software Engineer based in Lahore, Pakistan, currently studying at COMSATS University. He specializes in building robust web applications and backend systems."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Abdul Basit Shahid's tech stack?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Abdul Basit Shahid's core tech stack includes Laravel, PHP, Node.js, TypeScript, PostgreSQL, and React. He excels in API Architecture and Backend Engineering."
+        }
+      }
+    ]
+  }
+])} />
