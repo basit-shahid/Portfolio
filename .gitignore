@@ -1,0 +1,14 @@
+# build output
+dist/
+.vercel/
+
+# dependencies
+node_modules/
+package-lock.json
+
+# environment variables
+.env
+.env.*
+
+# Astro
+.astro/
