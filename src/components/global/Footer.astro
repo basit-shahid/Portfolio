@@ -47,7 +47,7 @@ const socialLinks = [
   <div class="footer-bg-grid" aria-hidden="true"></div>
 
   <!-- Giant watermark text -->
-  <p class="footer-watermark" aria-hidden="true">ASTROMAX</p>
+  <p class="footer-watermark" aria-hidden="true" data-text="ASTROMAX">ASTROMAX</p>
 
   <div class="max-w-7xl mx-auto relative z-10">
 
@@ -68,12 +68,19 @@ const socialLinks = [
         <p class="text-zinc-400 text-base max-w-sm leading-relaxed font-medium">
           Designing and crafting high-performance, edge-optimized web applications with modern architecture and exceptional attention to detail.
         </p>
-        <div class="flex items-center gap-3 px-4 py-2 rounded-xl border border-orange-500/20 bg-orange-500/5 text-xs font-mono text-orange-400 tracking-wide status-beacon">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-          </span>
-          <span>Open to specialized backend & system roles</span>
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center gap-3 px-4 py-2 rounded-xl border border-orange-500/20 bg-orange-500/5 text-xs font-mono text-orange-400 tracking-wide status-beacon w-max">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+            </span>
+            <span>Open to specialized backend & system roles</span>
+          </div>
+          
+          <a href="/Resume.pdf" target="_blank" class="magnetic inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-xl hover:bg-orange-500/20 hover:text-white transition-all duration-300 text-xs font-mono uppercase tracking-[0.1em] font-bold w-max shadow-lg shadow-orange-500/5 group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:-translate-y-0.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Resume
+          </a>
         </div>
       </div>
 
@@ -138,7 +145,7 @@ const socialLinks = [
             rel="noopener noreferrer"
             title={social.name}
             aria-label={`Visit my ${social.name}`}
-            class="footer-social-icon p-3 rounded-xl border border-white/5 bg-zinc-900/40 text-zinc-400 hover:text-orange-500 hover:border-orange-500/40 hover:bg-orange-500/5 transition-all duration-300 flex items-center justify-center shadow-lg group relative overflow-hidden"
+            class="footer-social-icon magnetic p-3 rounded-xl border border-white/5 bg-zinc-900/40 text-zinc-400 hover:text-orange-500 hover:border-orange-500/40 hover:bg-orange-500/5 transition-all duration-300 flex items-center justify-center shadow-lg group relative overflow-hidden"
           >
             <span class="footer-social-glow"></span>
             <span class="block transition-transform duration-300 group-hover:scale-110 relative z-10" set:html={social.icon} />
@@ -197,6 +204,12 @@ const socialLinks = [
     pointer-events: none;
     z-index: 0;
     user-select: none;
+    animation: gentleBreathe 8s ease-in-out infinite;
+  }
+
+  @keyframes gentleBreathe {
+    0%, 100% { -webkit-text-stroke-color: rgba(255, 255, 255, 0.05); }
+    50% { -webkit-text-stroke-color: rgba(249, 115, 22, 0.25); }
   }
 
   /* ---------- Back to top ---------- */
