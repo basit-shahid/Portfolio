@@ -1,6 +1,63 @@
 @import "tailwindcss";
-@theme  {
+
+/* -------------------------------------------------------------
+ * Custom Fonts Structure (Easily swap --font-sans in @theme below)
+ * ------------------------------------------------------------- */
+
+/* 1. QurovaDEMO-Bold */
+@font-face {
+  font-family: 'QurovaDEMO-Bold';
+  src: url('/fonts/QurovaDEMO-Bold.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2. Brotheric Regular Demo */
+@font-face {
+  font-family: 'Brotheric Regular Demo';
+  src: url('/fonts/Brotheric-Regular-Demo.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 3. Bilderberg */
+@font-face {
+  font-family: 'Bilderberg';
+  src: url('/fonts/Bilderberg.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bilderberg';
+  src: url('/fonts/Bilderberg-Italic.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* 4. Casta */
+@font-face {
+  font-family: 'Casta';
+  src: url('/fonts/Casta-Thin.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* Default active font (Reverted back to Geist) */
   --font-sans: Geist, sans-serif;
+  
+  /* Quick Swap Reference:
+   * --font-sans: 'QurovaDEMO-Bold', sans-serif;
+   * --font-sans: 'Brotheric Regular Demo', sans-serif;
+   * --font-sans: 'Bilderberg', sans-serif;
+   * --font-sans: 'Casta', sans-serif;
+   */
   --font-mono: Geist mono, monospace;
   --color-black: #1e1e1e;
   --color-white: #e7e7d8;
