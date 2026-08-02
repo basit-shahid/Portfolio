@@ -1,6 +1,7 @@
 # Abdul Basit Shahid — Full-Stack Developer & Backend Engineer
 
 > Portfolio: https://abdulbasitshahid.vercel.app
+> LinkedIn: https://www.linkedin.com/in/abdulbasit-shahid-9612a5424/
 > GitHub: https://github.com/basit-shahid
 > Email: basitdogar59@gmail.com
 > Location: Lahore, Punjab, Pakistan
@@ -71,6 +72,7 @@ Abdul Basit Shahid is open to specialized backend and system development roles. 
 ## Contact
 
 - **Email**: basitdogar59@gmail.com
+- **LinkedIn**: https://www.linkedin.com/in/abdulbasit-shahid-9612a5424/
 - **GitHub**: https://github.com/basit-shahid
 - **Instagram**: https://www.instagram.com/abdulbasit_shahid
 - **Portfolio**: https://abdulbasitshahid.vercel.app
