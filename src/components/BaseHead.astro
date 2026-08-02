@@ -6,10 +6,11 @@ import IDImg from "../assets/abdul-basit-shahid-software-engineer.png";
 const optimizedLCP = await getImage({ src: IDImg, format: "webp" });
 
 // SEO Configuration
-const title = "Abdul Basit Shahid — Full-Stack Developer & Backend Engineer";
-const description = "Portfolio of Abdul Basit Shahid, a Software Engineering student at COMSATS Lahore specializing in Full-Stack Web Development, Backend Engineering, Laravel, and Node.js. Explore projects, skills, and future goals.";
+const title = "Abdul Basit Shahid — Full-Stack Developer & Backend Engineer | Portfolio";
+const description = "Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer from Lahore, Pakistan, studying Software Engineering at COMSATS University. Specializing in Laravel, Node.js, TypeScript, and scalable backend systems. Explore projects, skills, and professional portfolio.";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site);
+const siteUrl = "https://abdulbasitshahid.vercel.app";
 ---
 
 <!-- Primary Meta Tags -->
@@ -20,19 +21,33 @@ const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site)
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta name="author" content="Abdul Basit Shahid" />
-<meta name="keywords" content="Abdul Basit Shahid, Full-Stack Developer, Backend Engineer, Laravel Developer, Node.js, Software Engineer, COMSATS Lahore, Web Developer Pakistan, Portfolio, PHP Developer, API Architecture, Electron Developer" />
-<meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow" />
+<meta name="keywords" content="Abdul Basit Shahid, Abdul Basit, Basit Shahid, Abdul Basit developer, Abdul Basit Shahid portfolio, Abdul Basit Shahid software engineer, Full-Stack Developer, Backend Engineer, Laravel Developer, Node.js Developer, Software Engineer Pakistan, COMSATS Lahore, Web Developer Lahore, PHP Developer, API Architecture, Electron Developer, TypeScript Developer, PostgreSQL, React Developer, Abdul Basit COMSATS, basit-shahid GitHub" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="subject" content="Abdul Basit Shahid — Software Engineer Portfolio" />
+<meta name="classification" content="Portfolio, Software Engineering, Web Development" />
+<meta name="rating" content="General" />
+<meta name="revisit-after" content="3 days" />
 <link rel="canonical" href={canonicalURL} />
 
+<!-- Social Profile Links (rel=me) -->
+<link rel="me" href="https://github.com/basit-shahid" />
+<link rel="me" href="https://www.instagram.com/abdulbasit_shahid" />
+<link rel="me" href="mailto:basitdogar59@gmail.com" />
+
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content="profile" />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Abdul Basit Shahid — Full-Stack Developer and Backend Engineer" />
 <meta property="og:site_name" content="Abdul Basit Shahid — Portfolio" />
 <meta property="og:locale" content="en_US" />
+<meta property="profile:first_name" content="Abdul Basit" />
+<meta property="profile:last_name" content="Shahid" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -40,6 +55,7 @@ const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site)
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
+<meta property="twitter:image:alt" content="Abdul Basit Shahid — Full-Stack Developer and Backend Engineer" />
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
@@ -75,39 +91,139 @@ const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site)
   crossorigin="anonymous"
 ></script>
 
-<!-- JSON-LD Structured Data for Person & AI Search FAQ -->
+<!-- JSON-LD Structured Data: WebSite + ProfilePage + Person + FAQ + ItemList -->
 <script type="application/ld+json" set:html={JSON.stringify([
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Abdul Basit Shahid",
-    "url": "https://abdulbasitshahid.vercel.app",
-    "image": "https://abdulbasitshahid.vercel.app/abdul-basit-shahid-software-engineer.png",
-    "jobTitle": "Full-Stack Developer & Backend Engineer",
+    "@type": "WebSite",
+    "name": "Abdul Basit Shahid — Portfolio",
+    "alternateName": ["Abdul Basit Shahid", "Basit Shahid", "Abdul Basit"],
+    "url": siteUrl,
     "description": description,
+    "inLanguage": "en-US",
+    "publisher": {
+      "@type": "Person",
+      "name": "Abdul Basit Shahid"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "dateCreated": "2024-01-01",
+    "dateModified": "2026-08-02",
+    "mainEntity": {
+      "@type": "Person",
+      "@id": siteUrl + "/#person"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": siteUrl + "/#person",
+    "name": "Abdul Basit Shahid",
+    "givenName": "Abdul Basit",
+    "familyName": "Shahid",
+    "alternateName": ["Basit Shahid", "Abdul Basit", "basit-shahid"],
+    "url": siteUrl,
+    "image": {
+      "@type": "ImageObject",
+      "url": siteUrl + "/abdul-basit-shahid-software-engineer.png",
+      "width": 1200,
+      "height": 1600,
+      "caption": "Abdul Basit Shahid — Full-Stack Developer and Backend Engineer"
+    },
+    "jobTitle": "Full-Stack Developer & Backend Engineer",
+    "description": "Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer from Lahore, Pakistan. He is a Software Engineering student at COMSATS University Islamabad, Lahore Campus, specializing in building scalable web applications, backend systems, and developer tools using Laravel, Node.js, TypeScript, and modern web technologies.",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": siteUrl
+    },
     "alumniOf": {
       "@type": "CollegeOrUniversity",
-      "name": "COMSATS University Islamabad, Lahore Campus"
+      "name": "COMSATS University Islamabad, Lahore Campus",
+      "url": "https://lahore.comsats.edu.pk",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lahore",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
+      }
+    },
+    "hasOccupation": {
+      "@type": "Occupation",
+      "name": "Full-Stack Developer",
+      "occupationLocation": {
+        "@type": "City",
+        "name": "Lahore"
+      },
+      "skills": "Laravel, PHP, Node.js, TypeScript, PostgreSQL, React, Next.js, Astro, Electron.js, Express.js, REST APIs, Docker, Tailwind CSS, Data Structures & Algorithms"
+    },
+    "knowsAbout": [
+      "Laravel Framework",
+      "PHP Backend Engineering",
+      "Node.js & Express.js",
+      "Full-Stack Web Development",
+      "RESTful API Architecture",
+      "TypeScript",
+      "PostgreSQL and Database Optimization",
+      "MySQL",
+      "Electron.js Desktop Applications",
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming",
+      "React & Next.js",
+      "Astro Framework",
+      "Docker & Containerization",
+      "Tailwind CSS",
+      "Git & Version Control",
+      "Software Architecture",
+      "CLI & Developer Tools"
+    ],
+    "knowsLanguage": ["en", "ur"],
+    "nationality": {
+      "@type": "Country",
+      "name": "Pakistan"
     },
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Lahore",
+      "addressRegion": "Punjab",
       "addressCountry": "PK"
     },
-    "knowsAbout": [
-      "Laravel Framework", 
-      "PHP Backend Engineering",
-      "Node.js & Express.js",
-      "Full-Stack Web Development", 
-      "RESTful API Architecture", 
-      "TypeScript", 
-      "PostgreSQL and Database Optimization",
-      "Electron.js Desktop Applications",
-      "Data Structures & Algorithms"
-    ],
+    "email": "basitdogar59@gmail.com",
     "sameAs": [
-      "https://github.com/basit-shahid"
-    ]
+      "https://github.com/basit-shahid",
+      "https://www.instagram.com/abdulbasit_shahid"
+    ],
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Full-Stack Web Development",
+          "description": "End-to-end web application development using Laravel, Node.js, React, and modern frameworks"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Backend Engineering & API Architecture",
+          "description": "Scalable backend systems, RESTful API design, database optimization, and server-side logic"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Desktop Application Development",
+          "description": "Cross-platform desktop applications built with Electron.js and Node.js"
+        }
+      }
+    ],
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".sr-only", "meta[name='description']"]
+    }
   },
   {
     "@context": "https://schema.org",
@@ -118,7 +234,7 @@ const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site)
         "name": "Who is Abdul Basit Shahid?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Abdul Basit Shahid is a Full-Stack Developer and Software Engineer based in Lahore, Pakistan, currently studying at COMSATS University. He specializes in building robust web applications and backend systems."
+          "text": "Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer based in Lahore, Pakistan. He is currently studying Software Engineering at COMSATS University Islamabad, Lahore Campus (Spring 2025 batch). He specializes in building robust web applications, scalable backend systems, and developer tools using modern technologies like Laravel, Node.js, TypeScript, and PostgreSQL."
         }
       },
       {
@@ -126,7 +242,92 @@ const ogImage = new URL("/abdul-basit-shahid-software-engineer.png", Astro.site)
         "name": "What is Abdul Basit Shahid's tech stack?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Abdul Basit Shahid's core tech stack includes Laravel, PHP, Node.js, TypeScript, PostgreSQL, and React. He excels in API Architecture and Backend Engineering."
+          "text": "Abdul Basit Shahid's core tech stack includes: Backend — Laravel, PHP, Node.js, Express.js, TypeScript; Frontend — React, Next.js, Astro, Tailwind CSS; Databases — PostgreSQL, MySQL; Desktop — Electron.js; DevOps — Docker, Git. He excels in API Architecture, Backend Engineering, and Full-Stack Web Development."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where does Abdul Basit Shahid study?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Abdul Basit Shahid studies Software Engineering at COMSATS University Islamabad, Lahore Campus. He is part of the Spring 2025 batch and focuses on Data Structures & Algorithms, Object-Oriented Design, and Full-Stack Web Development alongside his academic curriculum."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What projects has Abdul Basit Shahid built?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Abdul Basit Shahid has built several notable projects: 1) FastFood Invoice System — a full-stack Laravel-based invoice management system with role-based access control and Docker deployment; 2) Drop — a minimal, blazing-fast drag-and-drop file utility built with Electron.js; 3) TurboDM — a high-performance download manager for Windows with multi-threaded downloading supporting up to 32 parallel connections. All projects are available on his GitHub at github.com/basit-shahid."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I contact Abdul Basit Shahid?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can contact Abdul Basit Shahid via email at basitdogar59@gmail.com. You can also find him on GitHub (github.com/basit-shahid) and Instagram (@abdulbasit_shahid). His portfolio website is available at abdulbasitshahid.vercel.app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Abdul Basit Shahid located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Abdul Basit Shahid is based in Lahore, Punjab, Pakistan. He is open to remote opportunities and specialized backend and system development roles."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Abdul Basit Shahid's portfolio website?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Abdul Basit Shahid's portfolio website is abdulbasitshahid.vercel.app. It showcases his projects, technical skills, professional goals, and provides ways to get in touch. The site is built with Astro and features a modern, high-performance design."
+        }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Projects by Abdul Basit Shahid",
+    "description": "Featured software projects built by Abdul Basit Shahid",
+    "numberOfItems": 3,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "FastFood Invoice System",
+          "description": "A full-stack Laravel-based invoice management system for fast-food restaurants with role-based access control, guest profiles, OTP-less login, Docker deployment, and complete order billing workflow.",
+          "programmingLanguage": "PHP / Laravel",
+          "codeRepository": "https://github.com/basit-shahid/fastfood-invoice-system",
+          "author": { "@type": "Person", "name": "Abdul Basit Shahid" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "Drop",
+          "description": "A minimal, blazing-fast drag-and-drop file utility built for developers with instant file transfers, glowing drop zones, multi-format support, and a clean dark UI.",
+          "programmingLanguage": "JavaScript / Electron",
+          "codeRepository": "https://github.com/basit-shahid/drop",
+          "author": { "@type": "Person", "name": "Abdul Basit Shahid" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "TurboDM",
+          "description": "A high-performance, professional-grade Download Manager for Windows with a sleek neon-inspired UI and a powerful multi-threaded core capable of accelerating downloads with up to 32 parallel connections.",
+          "programmingLanguage": "JavaScript / Electron / Node.js",
+          "codeRepository": "https://github.com/basit-shahid/turbodm",
+          "author": { "@type": "Person", "name": "Abdul Basit Shahid" }
         }
       }
     ]

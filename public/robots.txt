@@ -1,4 +1,43 @@
+# Abdul Basit Shahid — Portfolio
+# https://abdulbasitshahid.vercel.app
+
+# Allow all crawlers
 User-agent: *
 Allow: /
 
+# Explicitly allow AI search bots
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap
 Sitemap: https://abdulbasitshahid.vercel.app/sitemap-index.xml
+
+# AI-readable content
+# LLMs-Txt: https://abdulbasitshahid.vercel.app/llms.txt

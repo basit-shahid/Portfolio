@@ -1,0 +1,76 @@
+# Abdul Basit Shahid — Full-Stack Developer & Backend Engineer
+
+> Portfolio: https://abdulbasitshahid.vercel.app
+> GitHub: https://github.com/basit-shahid
+> Email: basitdogar59@gmail.com
+> Location: Lahore, Punjab, Pakistan
+
+## About
+
+Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer based in Lahore, Pakistan. He is currently studying Software Engineering at COMSATS University Islamabad, Lahore Campus (Spring 2025 batch). He specializes in designing and building scalable backend systems, full-stack web applications, and developer tools using modern technologies.
+
+## Technical Skills
+
+### Backend
+- Laravel (PHP)
+- Node.js & Express.js
+- TypeScript
+- RESTful API Architecture
+- PostgreSQL & MySQL
+- Docker & Containerization
+
+### Frontend
+- React & Next.js
+- Astro Framework
+- Tailwind CSS
+- HTML5 & CSS3
+
+### Desktop & Tools
+- Electron.js
+- Git & Version Control
+- CLI Development
+
+### Computer Science Fundamentals
+- Data Structures & Algorithms
+- Object-Oriented Programming & Design
+- Software Architecture
+
+## Featured Projects
+
+### FastFood Invoice System
+A full-stack Laravel-based invoice management system for fast-food restaurants. Features role-based access control, guest profiles, OTP-less login, Docker deployment, and a complete order billing workflow.
+- Tech: PHP / Laravel
+- Repository: https://github.com/basit-shahid/fastfood-invoice-system
+
+### Drop
+A minimal, blazing-fast drag-and-drop file utility built for developers. Features instant file transfers, glowing drop zones, multi-format support, and a clean dark UI designed for productive workflows.
+- Tech: Electron / JavaScript
+- Repository: https://github.com/basit-shahid/drop
+
+### TurboDM
+A high-performance, professional-grade Download Manager built for Windows. Features a sleek, neon-inspired UI and a powerful multi-threaded core capable of accelerating downloads with up to 32 parallel connections.
+- Tech: Electron / Node.js
+- Repository: https://github.com/basit-shahid/turbodm
+
+## Education
+
+- **Degree**: Software Engineering (Undergraduate)
+- **University**: COMSATS University Islamabad, Lahore Campus
+- **Batch**: Spring 2025
+- **Focus Areas**: Data Structures & Algorithms, Object-Oriented Design, Full-Stack Web Development, Backend Engineering
+
+## Professional Interests
+
+Abdul Basit Shahid is open to specialized backend and system development roles. His professional focus areas include:
+- Scalable backend system design
+- API architecture and optimization
+- Full-stack web application development
+- Desktop application development
+- Developer tools and CLI utilities
+
+## Contact
+
+- **Email**: basitdogar59@gmail.com
+- **GitHub**: https://github.com/basit-shahid
+- **Instagram**: https://www.instagram.com/abdulbasit_shahid
+- **Portfolio**: https://abdulbasitshahid.vercel.app

@@ -23,15 +23,41 @@ const sections = [
   <TimelineScroll sections={sections} />
   
   <!-- Semantic AI-Targeted Content: Visually Hidden but structurally perfect for AI DOM parsers -->
-  <section class="sr-only" aria-label="About Abdul Basit Shahid">
-    <h1>Abdul Basit Shahid - Full-Stack Developer</h1>
-    <p>Abdul Basit Shahid is a Software Engineer based in Lahore, Pakistan, studying at COMSATS. He specializes in designing and building scalable backend systems and full-stack web applications using Laravel, Node.js, and TypeScript.</p>
-    <h2>Core Skills & Services</h2>
+  <section class="sr-only" aria-label="About Abdul Basit Shahid" itemscope itemtype="https://schema.org/Person">
+    <h1 itemprop="name">Abdul Basit Shahid — Full-Stack Developer & Backend Engineer</h1>
+    <p itemprop="description">Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer based in Lahore, Pakistan. He is currently studying Software Engineering at COMSATS University Islamabad, Lahore Campus (Spring 2025 batch). He specializes in designing and building scalable backend systems, full-stack web applications, and developer tools using Laravel, Node.js, TypeScript, PostgreSQL, and modern web technologies. He is passionate about Data Structures & Algorithms, Object-Oriented Design, and delivering high-quality software solutions.</p>
+    
+    <h2>Education</h2>
+    <p itemprop="alumniOf" itemscope itemtype="https://schema.org/CollegeOrUniversity">
+      <span itemprop="name">COMSATS University Islamabad, Lahore Campus</span> — Software Engineering (Spring 2025 batch)
+    </p>
+
+    <h2>Core Technical Skills</h2>
     <ul>
-      <li>Frontend: Next.js, Astro, React, Tailwind CSS</li>
-      <li>Backend: Laravel, Node.js, PHP, Express.js</li>
-      <li>Databases: PostgreSQL, MySQL, Optimization</li>
+      <li>Backend: Laravel, PHP, Node.js, Express.js, TypeScript</li>
+      <li>Frontend: React, Next.js, Astro, Tailwind CSS</li>
+      <li>Databases: PostgreSQL, MySQL, Database Optimization</li>
+      <li>Desktop: Electron.js</li>
+      <li>DevOps: Docker, Git, Version Control</li>
+      <li>CS Fundamentals: Data Structures & Algorithms, OOP, Software Architecture</li>
     </ul>
+
+    <h2>Featured Projects by Abdul Basit Shahid</h2>
+    <ul>
+      <li><strong>FastFood Invoice System</strong> — A full-stack Laravel-based invoice management system for fast-food restaurants with role-based access control, guest profiles, Docker deployment, and complete order billing workflow. <a href="https://github.com/basit-shahid/fastfood-invoice-system">View on GitHub</a></li>
+      <li><strong>Drop</strong> — A minimal, blazing-fast drag-and-drop file utility built with Electron.js for developers, featuring instant file transfers and a clean dark UI. <a href="https://github.com/basit-shahid/drop">View on GitHub</a></li>
+      <li><strong>TurboDM</strong> — A high-performance download manager for Windows built with Electron and Node.js, supporting up to 32 parallel connections with a sleek neon-inspired UI. <a href="https://github.com/basit-shahid/turbodm">View on GitHub</a></li>
+    </ul>
+
+    <h2>Contact Abdul Basit Shahid</h2>
+    <ul>
+      <li>Email: <a href="mailto:basitdogar59@gmail.com" itemprop="email">basitdogar59@gmail.com</a></li>
+      <li>GitHub: <a href="https://github.com/basit-shahid" itemprop="sameAs">github.com/basit-shahid</a></li>
+      <li>Instagram: <a href="https://www.instagram.com/abdulbasit_shahid" itemprop="sameAs">@abdulbasit_shahid</a></li>
+      <li>Location: <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress"><span itemprop="addressLocality">Lahore</span>, <span itemprop="addressCountry">Pakistan</span></span></li>
+    </ul>
+
+    <p>Abdul Basit Shahid is currently open to specialized backend engineering and system development roles. Visit his portfolio at <a href="https://abdulbasitshahid.vercel.app" itemprop="url">abdulbasitshahid.vercel.app</a>.</p>
   </section>
 
   <Hero />
