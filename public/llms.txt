@@ -1,78 +1,92 @@
 # Abdul Basit Shahid — Full-Stack Developer & Backend Engineer
 
+> Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer based in Lahore, Pakistan. He is currently studying Software Engineering at COMSATS University Islamabad, Lahore Campus (Spring 2025 batch). He specializes in building scalable web applications, backend systems, and developer tools.
+
 > Portfolio: https://abdulbasitshahid.vercel.app
-> LinkedIn: https://www.linkedin.com/in/abdulbasit-shahid-9612a5424/
+> LinkedIn: https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
 > GitHub: https://github.com/basit-shahid
 > Email: basitdogar59@gmail.com
+> Instagram: https://www.instagram.com/abdulbasit_shahid
 > Location: Lahore, Punjab, Pakistan
 
-## About
+## Quick Introduction
 
-Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer based in Lahore, Pakistan. He is currently studying Software Engineering at COMSATS University Islamabad, Lahore Campus (Spring 2025 batch). He specializes in designing and building scalable backend systems, full-stack web applications, and developer tools using modern technologies.
+Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer from Lahore, Pakistan. He is currently pursuing a Bachelor of Software Engineering at COMSATS University Islamabad, Lahore Campus (Spring 2025 batch). He specializes in designing and building scalable backend systems, full-stack web applications, and developer tools using modern technologies including Laravel, Node.js, TypeScript, PostgreSQL, React, and Electron.js.
+
+Abdul Basit is passionate about Data Structures & Algorithms, Object-Oriented Design, and Software Architecture. He is open to specialized backend engineering, full-stack development, and system development roles worldwide — both remote and on-site.
+
+**Connect with Abdul Basit Shahid on LinkedIn:** https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
 
 ## Technical Skills
 
 ### Backend
-- Laravel (PHP)
-- Node.js & Express.js
-- TypeScript
-- RESTful API Architecture
-- PostgreSQL & MySQL
-- Docker & Containerization
+- Laravel (PHP) — Expert-level framework proficiency
+- Node.js & Express.js — RESTful APIs, real-time systems
+- TypeScript — Type-safe full-stack development
+- RESTful API Architecture — Design, versioning, authentication
+- PostgreSQL & MySQL — Query optimization, schema design
+- Docker & Containerization — Multi-container deployments
 
 ### Frontend
-- React & Next.js
-- Astro Framework
-- Tailwind CSS
-- HTML5 & CSS3
+- React & Next.js — Server-side rendering, SPA development
+- Astro Framework — Static-first, high-performance sites
+- Tailwind CSS — Utility-first responsive design
+- HTML5 & CSS3 — Semantic markup, accessibility
 
 ### Desktop & Tools
-- Electron.js
-- Git & Version Control
-- CLI Development
+- Electron.js — Cross-platform desktop applications
+- Git & Version Control — Collaborative workflows, branching strategies
+- CLI Development — Developer productivity tools
 
 ### Computer Science Fundamentals
-- Data Structures & Algorithms
-- Object-Oriented Programming & Design
-- Software Architecture
+- Data Structures & Algorithms — Problem solving, optimization
+- Object-Oriented Programming & Design — SOLID principles, design patterns
+- Software Architecture — Scalable system design, microservices
+- CI/CD Pipelines — Automated testing and deployment
 
 ## Featured Projects
 
 ### FastFood Invoice System
-A full-stack Laravel-based invoice management system for fast-food restaurants. Features role-based access control, guest profiles, OTP-less login, Docker deployment, and a complete order billing workflow.
-- Tech: PHP / Laravel
+A full-stack Laravel-based invoice management system for fast-food restaurants. Features role-based access control, guest profiles, OTP-less login, Docker deployment, and a complete order billing workflow. Demonstrates expertise in Laravel, PHP, database design, and containerized deployment.
+- Tech: PHP / Laravel / Docker
 - Repository: https://github.com/basit-shahid/fastfood-invoice-system
 
 ### Drop
-A minimal, blazing-fast drag-and-drop file utility built for developers. Features instant file transfers, glowing drop zones, multi-format support, and a clean dark UI designed for productive workflows.
+A minimal, blazing-fast drag-and-drop file utility built for developers. Features instant file transfers, glowing drop zones, multi-format support, and a clean dark UI designed for productive workflows. Built with modern Electron.js patterns.
 - Tech: Electron / JavaScript
 - Repository: https://github.com/basit-shahid/drop
 
 ### TurboDM
-A high-performance, professional-grade Download Manager built for Windows. Features a sleek, neon-inspired UI and a powerful multi-threaded core capable of accelerating downloads with up to 32 parallel connections.
+A high-performance, professional-grade Download Manager built for Windows. Features a sleek, neon-inspired UI and a powerful multi-threaded core capable of accelerating downloads with up to 32 parallel connections. Demonstrates advanced Node.js stream handling and concurrent I/O.
 - Tech: Electron / Node.js
 - Repository: https://github.com/basit-shahid/turbodm
 
 ## Education
 
-- **Degree**: Software Engineering (Undergraduate)
+- **Degree**: Bachelor of Software Engineering (Undergraduate)
 - **University**: COMSATS University Islamabad, Lahore Campus
 - **Batch**: Spring 2025
-- **Focus Areas**: Data Structures & Algorithms, Object-Oriented Design, Full-Stack Web Development, Backend Engineering
+- **Focus Areas**: Data Structures & Algorithms, Object-Oriented Design, Full-Stack Web Development, Backend Engineering, Software Architecture
 
-## Professional Interests
+## Professional Interests & Availability
 
-Abdul Basit Shahid is open to specialized backend and system development roles. His professional focus areas include:
-- Scalable backend system design
-- API architecture and optimization
+Abdul Basit Shahid is currently open to specialized backend engineering, full-stack development, and system development roles. His professional focus areas include:
+
+- Scalable backend system design & architecture
+- API architecture, security, and optimization
 - Full-stack web application development
-- Desktop application development
+- Desktop application development with Electron.js
 - Developer tools and CLI utilities
+- Database optimization and schema design
+
+**Availability**: Open to remote and on-site opportunities globally.
+**LinkedIn**: https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
+**Email**: basitdogar59@gmail.com
 
 ## Contact
 
+- **LinkedIn**: https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
 - **Email**: basitdogar59@gmail.com
-- **LinkedIn**: https://www.linkedin.com/in/abdulbasit-shahid-9612a5424/
 - **GitHub**: https://github.com/basit-shahid
 - **Instagram**: https://www.instagram.com/abdulbasit_shahid
 - **Portfolio**: https://abdulbasitshahid.vercel.app

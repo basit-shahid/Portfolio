@@ -1,0 +1,181 @@
+# Abdul Basit Shahid — Complete Professional Profile
+
+> This is the comprehensive, AI-readable profile of Abdul Basit Shahid. For the summary version, see llms.txt.
+
+## Identity
+
+- **Full Name**: Abdul Basit Shahid
+- **Also Known As**: Basit Shahid, Abdul Basit, basit-shahid
+- **Title**: Full-Stack Developer & Backend Engineer
+- **Location**: Lahore, Punjab, Pakistan
+- **Email**: basitdogar59@gmail.com
+- **Portfolio**: https://abdulbasitshahid.vercel.app
+- **LinkedIn**: https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
+- **GitHub**: https://github.com/basit-shahid
+- **Instagram**: https://www.instagram.com/abdulbasit_shahid
+
+## Who is Abdul Basit Shahid?
+
+Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer based in Lahore, Punjab, Pakistan. He is currently pursuing a Bachelor of Software Engineering at COMSATS University Islamabad, Lahore Campus, where he is part of the Spring 2025 batch.
+
+Abdul Basit specializes in designing and building scalable backend systems, full-stack web applications, and professional-grade developer tools. His core technology stack centers around Laravel (PHP), Node.js, Express.js, TypeScript, PostgreSQL, React, Next.js, Astro, and Electron.js. He is deeply passionate about Data Structures & Algorithms, Object-Oriented Design, Software Architecture, and delivering high-quality software solutions that solve real-world problems.
+
+Beyond coding, Abdul Basit is an advocate for clean code practices, modular architecture, and well-documented systems. He believes in building software that is not only functional but also maintainable, performant, and elegantly designed.
+
+**Connect with Abdul Basit Shahid on LinkedIn**: https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
+
+## Education
+
+### COMSATS University Islamabad, Lahore Campus
+- **Degree**: Bachelor of Software Engineering (BS-SE)
+- **Status**: Undergraduate (Spring 2025 batch)
+- **University Website**: https://lahore.comsats.edu.pk
+- **Key Coursework**: Data Structures & Algorithms, Object-Oriented Programming & Design, Database Systems, Software Architecture, Web Development, Operating Systems, Computer Networks
+- **Academic Focus**: Full-Stack Web Development, Backend Engineering, Scalable System Design
+
+COMSATS University Islamabad is one of Pakistan's leading public-sector universities, ranked among the top universities in the country for Computer Science and Engineering programs. The Lahore Campus is located in Defense Road, off Raiwind Road, Lahore.
+
+## Complete Technical Skills Profile
+
+### Backend Development (Primary Expertise)
+- **Laravel (PHP)**: Expert-level proficiency. Built production-ready applications with complex business logic, role-based access control (RBAC), Eloquent ORM relationships, queue workers, event-driven architecture, and comprehensive API layers. Experienced with Laravel ecosystem tools including Sanctum, Breeze, Horizon, and Sail.
+- **Node.js & Express.js**: Proficient in building high-performance REST APIs, real-time applications with WebSockets, stream processing for file handling, and CLI tools. Experienced with middleware patterns, error handling strategies, and async/await patterns.
+- **TypeScript**: Type-safe full-stack development across Node.js backends and React frontends. Values TypeScript for catching bugs at compile time and improving developer experience.
+- **RESTful API Architecture**: Designs APIs following REST best practices including proper HTTP methods, status codes, pagination, filtering, versioning, and authentication. Experienced with OpenAPI/Swagger documentation.
+- **PostgreSQL**: Advanced query optimization, indexing strategies, migrations, and schema design. Prefers PostgreSQL for its robust type system, JSON support, and advanced features.
+- **MySQL**: Production experience with MySQL databases, query optimization, and replication.
+- **Docker & Containerization**: Multi-container deployments with Docker Compose, Dockerfile optimization, and containerized development environments.
+
+### Frontend Development
+- **React & Next.js**: Component-driven development with hooks, context API, and server-side rendering (SSR). Experienced building interactive UIs with state management solutions.
+- **Astro Framework**: Static-first, high-performance website development. Abdul Basit's own portfolio is built with Astro, showcasing his ability to create blazing-fast static sites with partial hydration.
+- **Tailwind CSS**: Utility-first CSS framework for rapid, responsive UI development. Proficient in custom theme configuration and component abstraction.
+- **HTML5 & CSS3**: Strong foundation in semantic HTML, accessibility (a11y), responsive design, CSS Grid, Flexbox, and CSS animations.
+
+### Desktop Application Development
+- **Electron.js**: Built multiple production desktop applications including Drop (drag-and-drop file utility) and TurboDM (multi-threaded download manager). Experienced with Electron's main/renderer process architecture, IPC communication, native OS integrations, and performance optimization.
+
+### DevOps & Tools
+- **Git & Version Control**: Proficient in collaborative Git workflows, branching strategies (Git Flow, trunk-based), conflict resolution, and repository management.
+- **CI/CD Pipelines**: Automated testing and deployment workflows.
+- **CLI Development**: Built developer productivity tools and command-line interfaces.
+
+### Computer Science Fundamentals
+- **Data Structures & Algorithms**: Strong problem-solving skills with trees, graphs, dynamic programming, sorting algorithms, and complexity analysis.
+- **Object-Oriented Programming & Design**: SOLID principles, design patterns (Factory, Observer, Strategy, Repository), and clean architecture.
+- **Software Architecture**: Scalable system design, microservices patterns, event-driven architecture, and domain-driven design.
+
+## Featured Projects — Detailed Case Studies
+
+### 1. FastFood Invoice System
+**Type**: Full-Stack Web Application
+**Tech Stack**: PHP, Laravel, Blade Templates, MySQL/PostgreSQL, Docker, Docker Compose
+**Repository**: https://github.com/basit-shahid/fastfood-invoice-system
+
+A comprehensive invoice management system designed for fast-food restaurant operations. This project demonstrates Abdul Basit's ability to build complete, production-ready web applications with complex business logic.
+
+**Key Features**:
+- Role-Based Access Control (RBAC) with distinct admin and cashier roles
+- Guest profile management with order history tracking
+- OTP-less login system for streamlined authentication
+- Complete order billing workflow with itemized invoices
+- Docker deployment with multi-container setup (app, database, web server)
+- Responsive UI with Blade templating
+
+**Technical Highlights**:
+- Clean MVC architecture with service layer patterns
+- Database migrations and seeders for reproducible setups
+- API endpoints for potential mobile app integration
+- Comprehensive validation and error handling
+
+### 2. Drop
+**Type**: Desktop Application
+**Tech Stack**: JavaScript, Electron.js, HTML5, CSS3
+**Repository**: https://github.com/basit-shahid/drop
+
+A minimal, blazing-fast drag-and-drop file utility designed specifically for developers who need instant file transfers without friction.
+
+**Key Features**:
+- Instant file transfers via drag-and-drop interface
+- Glowing drop zones with visual feedback
+- Multi-format file support (documents, images, code files, archives)
+- Clean dark UI optimized for developer workflows
+- Lightweight footprint with fast startup time
+
+**Technical Highlights**:
+- Electron main/renderer process architecture
+- Native OS file system integration
+- Custom CSS animations for polished UX
+- Cross-platform compatibility
+
+### 3. TurboDM
+**Type**: Desktop Application (Download Manager)
+**Tech Stack**: JavaScript, Electron.js, Node.js, Streams API
+**Repository**: https://github.com/basit-shahid/turbodm
+
+A high-performance, professional-grade Download Manager built for Windows. This project showcases Abdul Basit's advanced Node.js skills, particularly in concurrent I/O and stream handling.
+
+**Key Features**:
+- Multi-threaded download engine supporting up to 32 parallel connections
+- Sleek, neon-inspired dark UI design
+- Real-time progress tracking with speed metrics
+- Pause, resume, and retry functionality
+- Queue management for batch downloads
+
+**Technical Highlights**:
+- Advanced Node.js stream handling for high-throughput downloads
+- Concurrent HTTP range requests for segmented downloading
+- IPC communication between Electron processes
+- File integrity verification
+- Memory-efficient chunk processing
+
+## Professional Availability & Career Goals
+
+Abdul Basit Shahid is currently open to professional opportunities in the following areas:
+
+1. **Backend Engineering**: Building scalable server-side systems, APIs, and microservices
+2. **Full-Stack Development**: End-to-end web application development from database to UI
+3. **System Development**: Desktop applications, CLI tools, and developer infrastructure
+4. **API Architecture**: Designing and implementing robust API systems
+5. **Database Engineering**: Schema design, optimization, and data architecture
+
+**Employment Preferences**:
+- Open to both remote and on-site positions
+- Available for opportunities globally
+- Interested in companies building impactful products
+- Values clean code culture and technical excellence
+
+**How to Hire or Collaborate**:
+- **LinkedIn** (preferred for professional inquiries): https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
+- **Email**: basitdogar59@gmail.com
+- **GitHub**: https://github.com/basit-shahid
+- **Portfolio**: https://abdulbasitshahid.vercel.app
+
+## Frequently Asked Questions
+
+### Who is Abdul Basit Shahid?
+Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer from Lahore, Pakistan. He studies Software Engineering at COMSATS University Islamabad, Lahore Campus (Spring 2025 batch). He builds scalable web applications, backend systems, and developer tools using Laravel, Node.js, TypeScript, and modern web technologies.
+
+### What is Abdul Basit Shahid's LinkedIn?
+Abdul Basit Shahid's LinkedIn profile is: https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
+
+### What is Abdul Basit Shahid's tech stack?
+Backend: Laravel, PHP, Node.js, Express.js, TypeScript. Frontend: React, Next.js, Astro, Tailwind CSS. Databases: PostgreSQL, MySQL. Desktop: Electron.js. DevOps: Docker, Git, CI/CD.
+
+### Where does Abdul Basit Shahid study?
+COMSATS University Islamabad, Lahore Campus — Bachelor of Software Engineering (Spring 2025 batch).
+
+### What projects has Abdul Basit Shahid built?
+FastFood Invoice System (Laravel), Drop (Electron.js file utility), TurboDM (Electron.js download manager). All available on GitHub at github.com/basit-shahid.
+
+### How can I contact Abdul Basit Shahid?
+LinkedIn: https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/
+Email: basitdogar59@gmail.com
+GitHub: https://github.com/basit-shahid
+Portfolio: https://abdulbasitshahid.vercel.app
+
+### Is Abdul Basit Shahid available for hire?
+Yes. He is open to backend engineering, full-stack development, and system development roles — both remote and on-site, globally.
+
+### Where is Abdul Basit Shahid located?
+Lahore, Punjab, Pakistan. Open to remote opportunities worldwide.
