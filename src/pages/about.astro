@@ -1,0 +1,232 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BaseHead from "@/components/BaseHead.astro";
+
+const title = "About Abdul Basit Shahid — Full-Stack Developer & Backend Engineer from Lahore";
+const description = "Learn about Abdul Basit Shahid, a Full-Stack Developer and Backend Engineer from Lahore, Pakistan. Software Engineering student at COMSATS University specializing in Laravel, Node.js, TypeScript, and scalable systems.";
+const siteUrl = "https://abdulbasitshahid.vercel.app";
+---
+
+<html lang="en" class="selection:bg-orange selection:text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Abdul Basit Shahid" />
+    <meta name="keywords" content="Abdul Basit Shahid, Abdul Basit, Basit Shahid, about Abdul Basit Shahid, Abdul Basit Shahid developer, Abdul Basit Shahid portfolio, Full-Stack Developer Lahore, Backend Engineer Pakistan, COMSATS software engineer, Laravel developer Pakistan, Node.js developer Lahore, tech professional portfolio Pakistan" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={`${siteUrl}/about/`} />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={`${siteUrl}/about/`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}/abdul-basit-shahid-software-engineer.png`} />
+    <meta property="og:site_name" content="Abdul Basit Shahid — Portfolio" />
+    <meta property="profile:first_name" content="Abdul Basit" />
+    <meta property="profile:last_name" content="Shahid" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={`${siteUrl}/abdul-basit-shahid-software-engineer.png`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+
+    <!-- JSON-LD: WebPage + Person -->
+    <script type="application/ld+json" set:html={JSON.stringify([
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${siteUrl}/about/#webpage`,
+        "name": title,
+        "description": description,
+        "url": `${siteUrl}/about/`,
+        "dateModified": "2026-08-15T22:54:00+05:00",
+        "isPartOf": { "@type": "WebSite", "@id": `${siteUrl}/#website` },
+        "about": { "@type": "Person", "@id": `${siteUrl}/#person` },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${siteUrl}/` },
+            { "@type": "ListItem", "position": 2, "name": "About", "item": `${siteUrl}/about/` }
+          ]
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": `${siteUrl}/#person`,
+        "name": "Abdul Basit Shahid",
+        "givenName": "Abdul Basit",
+        "familyName": "Shahid",
+        "alternateName": ["Basit Shahid", "Abdul Basit", "basit-shahid"],
+        "url": siteUrl,
+        "jobTitle": "Full-Stack Developer & Backend Engineer",
+        "description": "Abdul Basit Shahid is a Full-Stack Developer and Backend Engineer from Lahore, Pakistan studying Software Engineering at COMSATS University.",
+        "image": `${siteUrl}/abdul-basit-shahid-software-engineer.png`,
+        "email": "basitdogar59@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "addressCountry": "PK"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "COMSATS University Islamabad, Lahore Campus"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/",
+          "https://github.com/basit-shahid",
+          "https://www.instagram.com/abdulbasit_shahid"
+        ]
+      }
+    ])} />
+
+    <style>
+      @import "tailwindcss";
+    </style>
+  </head>
+  <body class="mx-auto bg-black max-w-7xl border-x border-white/20 2xl:max-w-7xl min-h-screen text-white">
+    
+    <!-- Navigation back to home -->
+    <nav class="px-8 py-6 border-b border-white/10">
+      <a href="/" class="text-orange-500 hover:text-orange-400 text-sm font-medium tracking-widest uppercase transition-colors">
+        ← Back to Portfolio
+      </a>
+    </nav>
+
+    <main class="px-8 py-12 md:py-20">
+      
+      <!-- Hero section with name -->
+      <header class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="h-px w-10 bg-orange-500/70"></span>
+          <span class="text-orange-500 text-xs font-bold tracking-[0.3em] uppercase">About</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase">
+          Abdul Basit <span class="text-orange-500">Shahid</span>
+        </h1>
+        <p class="text-zinc-400 text-lg md:text-xl mt-6 max-w-3xl leading-relaxed">
+          Full-Stack Developer & Backend Engineer based in <strong class="text-white">Lahore, Pakistan</strong>. 
+          Currently studying Software Engineering at <strong class="text-white">COMSATS University Islamabad</strong>, Lahore Campus.
+        </p>
+      </header>
+
+      <!-- Detailed About Section -->
+      <section class="mb-16" aria-labelledby="who-heading">
+        <h2 id="who-heading" class="text-2xl md:text-3xl font-bold tracking-tight mb-6">
+          Who is Abdul Basit Shahid?
+        </h2>
+        <div class="space-y-4 text-zinc-300 leading-relaxed max-w-3xl">
+          <p>
+            Abdul Basit Shahid is a passionate Full-Stack Developer and Backend Engineer from Lahore, Punjab, Pakistan. 
+            He is currently pursuing a Bachelor of Software Engineering at COMSATS University Islamabad, Lahore Campus 
+            (Spring 2025 batch), where he focuses on Data Structures & Algorithms, Object-Oriented Design, and Software Architecture.
+          </p>
+          <p>
+            Abdul Basit Shahid specializes in designing and building scalable backend systems, full-stack web applications, 
+            and professional-grade developer tools. His core technology stack includes <strong class="text-white">Laravel</strong>, 
+            <strong class="text-white">Node.js</strong>, <strong class="text-white">TypeScript</strong>, 
+            <strong class="text-white">PostgreSQL</strong>, <strong class="text-white">React</strong>, 
+            <strong class="text-white">Next.js</strong>, and <strong class="text-white">Electron.js</strong>.
+          </p>
+          <p>
+            Beyond coding, Abdul Basit Shahid is an advocate for clean code practices, modular architecture, 
+            and well-documented systems. He believes in building software that is not only functional but also 
+            maintainable, performant, and elegantly designed.
+          </p>
+        </div>
+      </section>
+
+      <!-- Technical Skills -->
+      <section class="mb-16" aria-labelledby="skills-heading">
+        <h2 id="skills-heading" class="text-2xl md:text-3xl font-bold tracking-tight mb-6">
+          Technical Skills of Abdul Basit Shahid
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+          <div class="border border-white/10 rounded-xl p-6 bg-zinc-900/50">
+            <h3 class="text-orange-500 font-bold text-sm tracking-widest uppercase mb-4">Backend</h3>
+            <ul class="space-y-2 text-zinc-300 text-sm">
+              <li>Laravel (PHP) — Expert-level framework proficiency</li>
+              <li>Node.js & Express.js — RESTful APIs, real-time systems</li>
+              <li>TypeScript — Type-safe full-stack development</li>
+              <li>PostgreSQL & MySQL — Query optimization, schema design</li>
+              <li>Docker — Multi-container deployments</li>
+            </ul>
+          </div>
+          <div class="border border-white/10 rounded-xl p-6 bg-zinc-900/50">
+            <h3 class="text-orange-500 font-bold text-sm tracking-widest uppercase mb-4">Frontend & Desktop</h3>
+            <ul class="space-y-2 text-zinc-300 text-sm">
+              <li>React & Next.js — Server-side rendering, SPAs</li>
+              <li>Astro Framework — Static-first, high-performance sites</li>
+              <li>Tailwind CSS — Utility-first responsive design</li>
+              <li>Electron.js — Cross-platform desktop applications</li>
+              <li>Git, CI/CD, CLI development tools</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section class="mb-16" aria-labelledby="projects-heading">
+        <h2 id="projects-heading" class="text-2xl md:text-3xl font-bold tracking-tight mb-6">
+          Projects by Abdul Basit Shahid
+        </h2>
+        <div class="space-y-6 max-w-3xl">
+          <article class="border border-white/10 rounded-xl p-6 bg-zinc-900/50">
+            <h3 class="text-white font-bold text-lg mb-2">FastFood Invoice System</h3>
+            <p class="text-zinc-400 text-sm mb-3">A full-stack Laravel-based invoice management system with role-based access control, guest profiles, and Docker deployment.</p>
+            <a href="https://github.com/basit-shahid/fastfood-invoice-system" class="text-orange-500 text-sm hover:text-orange-400 transition-colors" rel="noopener">View on GitHub →</a>
+          </article>
+          <article class="border border-white/10 rounded-xl p-6 bg-zinc-900/50">
+            <h3 class="text-white font-bold text-lg mb-2">Drop</h3>
+            <p class="text-zinc-400 text-sm mb-3">A minimal, blazing-fast drag-and-drop file utility built with Electron.js for developers.</p>
+            <a href="https://github.com/basit-shahid/drop" class="text-orange-500 text-sm hover:text-orange-400 transition-colors" rel="noopener">View on GitHub →</a>
+          </article>
+          <article class="border border-white/10 rounded-xl p-6 bg-zinc-900/50">
+            <h3 class="text-white font-bold text-lg mb-2">TurboDM</h3>
+            <p class="text-zinc-400 text-sm mb-3">A high-performance download manager for Windows with multi-threaded downloads supporting up to 32 parallel connections.</p>
+            <a href="https://github.com/basit-shahid/turbodm" class="text-orange-500 text-sm hover:text-orange-400 transition-colors" rel="noopener">View on GitHub →</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- Contact CTA -->
+      <section class="mb-16" aria-labelledby="contact-heading">
+        <h2 id="contact-heading" class="text-2xl md:text-3xl font-bold tracking-tight mb-6">
+          Contact Abdul Basit Shahid
+        </h2>
+        <div class="max-w-3xl space-y-3 text-zinc-300">
+          <p>Abdul Basit Shahid is currently open to backend engineering, full-stack development, and system development roles — both remote and on-site globally.</p>
+          <ul class="space-y-2 mt-4">
+            <li><strong class="text-white">LinkedIn:</strong> <a href="https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/" class="text-orange-500 hover:text-orange-400 transition-colors" rel="me noopener">linkedin.com/in/abdul-basit-shahid-9612a5424</a></li>
+            <li><strong class="text-white">Email:</strong> <a href="mailto:basitdogar59@gmail.com" class="text-orange-500 hover:text-orange-400 transition-colors">basitdogar59@gmail.com</a></li>
+            <li><strong class="text-white">GitHub:</strong> <a href="https://github.com/basit-shahid" class="text-orange-500 hover:text-orange-400 transition-colors" rel="me noopener">github.com/basit-shahid</a></li>
+            <li><strong class="text-white">Instagram:</strong> <a href="https://www.instagram.com/abdulbasit_shahid" class="text-orange-500 hover:text-orange-400 transition-colors" rel="me noopener">@abdulbasit_shahid</a></li>
+            <li><strong class="text-white">Portfolio:</strong> <a href="https://abdulbasitshahid.vercel.app" class="text-orange-500 hover:text-orange-400 transition-colors">abdulbasitshahid.vercel.app</a></li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-8 py-8 border-t border-white/10 text-center">
+      <p class="text-zinc-500 text-sm">© 2026 Abdul Basit Shahid. All rights reserved.</p>
+    </footer>
+
+  </body>
+</html>

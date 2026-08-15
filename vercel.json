@@ -57,6 +57,20 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=604800, s-maxage=604800" }
       ]
+    },
+    {
+      "source": "/f4a3b2c1d5e6f7890123456789abcdef.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/about",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "index, follow, max-snippet:-1, max-image-preview:large" }
+      ]
     }
   ]
 }
