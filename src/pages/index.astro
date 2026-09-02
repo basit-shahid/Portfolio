@@ -8,11 +8,13 @@ import Goals from "@/components/landing/Goals.astro";
 import Cta from "@/components/landing/Cta.astro";
 import Banner from '../components/landing/Banner.astro';
 import TechStack from '../components/landing/TechStack.astro';
+import Certification from '../components/landing/Certification.astro';
 
 const sections = [
   { id: "hero-section", label: "Home" },
   { id: "about", label: "About" },
   { id: "tech-stack-section", label: "Tech Stack" },
+  { id: "certifications", label: "Certifications" },
   { id: "projects", label: "Projects" },
   { id: "goals", label: "Goals" },
 ];
@@ -69,6 +71,7 @@ const sections = [
   <Intro />
   <Banner />
   <TechStack/>
+  <Certification />
   <Projects />
   <Goals />
   <Cta />
