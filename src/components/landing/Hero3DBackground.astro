@@ -1,27 +1,36 @@
-<div class="orbital-stage absolute inset-0 z-0 pointer-events-none" data-orbital-stage aria-hidden="true">
-  <div class="orbital-halo"></div>
-  <div class="orbital-canvas" data-orbital-canvas></div>
+<div class="terrain-stage absolute inset-0 z-0 pointer-events-none" data-terrain-stage aria-hidden="true">
+  <div class="terrain-halo"></div>
+  <div class="terrain-canvas" data-terrain-canvas></div>
 </div>
 
 <script>
   import * as THREE from 'three';
-  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-  // A continuous, machined ribbon: one form, with a warm illuminated seam.
-  class OrbitalPath extends THREE.Curve<THREE.Vector3> {
-    getPoint(t: number, target = new THREE.Vector3()) {
-      const angle = t * Math.PI * 2;
-      const radius = 1.72 + 0.5 * Math.cos(angle * 3);
-      return target.set(
-        radius * Math.cos(angle * 2),
-        radius * Math.sin(angle * 2),
-        0.64 * Math.sin(angle * 3),
-      );
+  // An open, folded landscape: a sharp ridgeline rising out of a fine triangular mesh.
+  // Surface, edges, and survey points share the same GPU displacement.
+  const terrainVertex = `
+    uniform float uTime;
+    varying float vHeight;
+    varying float vFade;
+    varying float vSignal;
+    void main() {
+      vec3 p = position;
+      float breath = sin(p.x * 0.7 + p.z * 0.65 + uTime * 0.42);
+      p.y += breath * 0.09 + sin(p.z * 1.1 - uTime * 0.3) * 0.045;
+      vHeight = clamp((position.y + 1.2) / 3.7, 0.0, 1.0);
+      vFade = (1.0 - smoothstep(4.8, 7.8, abs(p.x)))
+        * (1.0 - smoothstep(2.6, 3.9, abs(p.z)));
+      // A narrow signal sweeps across the mesh without adding geometry each frame.
+      float phase = fract(p.x * 0.065 - uTime * 0.055);
+      vSignal = pow(max(0.0, 1.0 - abs(phase - 0.5) * 18.0), 3.0);
+      vec4 viewPosition = modelViewMatrix * vec4(p, 1.0);
+      gl_Position = projectionMatrix * viewPosition;
+      gl_PointSize = min(3.0, 15.0 / max(1.0, -viewPosition.z));
     }
-  }
+  `;
 
-  function mountOrbital(stage: HTMLElement) {
-    const container = stage.querySelector<HTMLElement>('[data-orbital-canvas]');
+  function mountTerrain(stage: HTMLElement) {
+    const container = stage.querySelector<HTMLElement>('[data-terrain-canvas]');
     if (!container || container.childElementCount) return;
 
     let renderer: THREE.WebGLRenderer;
@@ -40,90 +49,114 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(39, 1, 0.1, 40);
-    camera.position.set(0, 0, 9.8);
-
-    const environment = new RoomEnvironment();
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const environmentMap = pmrem.fromScene(environment, 0.04);
-    scene.environment = environmentMap.texture;
-    environment.dispose();
-    pmrem.dispose();
+    camera.position.set(0, 3.8, 12.5);
+    camera.lookAt(0, 0.2, 0);
 
     const sculpture = new THREE.Group();
     scene.add(sculpture);
-    const path = new OrbitalPath();
-    const segments = window.innerWidth < 768 ? 180 : 320;
-    const frames = path.computeFrenetFrames(segments, true);
+    const columns = window.innerWidth < 768 ? 56 : 88;
+    const rows = window.innerWidth < 768 ? 26 : 40;
     const positions: number[] = [];
     const indices: number[] = [];
-    // Beveled rectangular section gives the ribbon broad faces and precise edges.
-    const section = [
-      [-0.23, -0.035], [-0.205, -0.06], [0.205, -0.06], [0.23, -0.035],
-      [0.23, 0.035], [0.205, 0.06], [-0.205, 0.06], [-0.23, 0.035],
-    ];
-    const seams = [[], []] as THREE.Vector3[][];
-    const point = new THREE.Vector3();
-    const normal = new THREE.Vector3();
-    const binormal = new THREE.Vector3();
+    const edges: number[] = [];
+    const surveyPoints: number[] = [];
+    const uniforms = { uTime: { value: 0 } };
 
-    for (let i = 0; i <= segments; i++) {
-      const t = i / segments;
-      path.getPoint(t, point);
-      // A complete twist closes seamlessly and catches the light as it turns.
-      const twist = t * Math.PI * 2;
-      normal.copy(frames.normals[i]).multiplyScalar(Math.cos(twist))
-        .addScaledVector(frames.binormals[i], Math.sin(twist));
-      binormal.copy(frames.binormals[i]).multiplyScalar(Math.cos(twist))
-        .addScaledVector(frames.normals[i], -Math.sin(twist));
-      for (const [width, depth] of section) {
-        positions.push(
-          point.x + normal.x * width + binormal.x * depth,
-          point.y + normal.y * width + binormal.y * depth,
-          point.z + normal.z * width + binormal.z * depth,
-        );
-      }
-      for (let side = 0; side < 2; side++) {
-        seams[side].push(point.clone().addScaledVector(normal, side ? 0.218 : -0.218)
-          .addScaledVector(binormal, 0.048));
-      }
-      if (i < segments) {
-        for (let j = 0; j < section.length; j++) {
-          const a = i * section.length + j;
-          const b = i * section.length + (j + 1) % section.length;
-          const c = a + section.length;
-          const d = b + section.length;
-          indices.push(a, b, c, b, d, c);
+    function heightAt(x: number, z: number) {
+      const spine = -0.9 + Math.sin(x * 0.53) * 0.7;
+      const crest = Math.exp(-Math.pow((z - spine) / 0.95, 2));
+      const rise = 2.4 + 1.7 * Math.exp(-Math.pow((x - 0.4) / 2.8, 2));
+      const foothill = 0.85 * Math.exp(-Math.pow((z - 1.65) / 0.65, 2))
+        * Math.exp(-Math.pow((x + 3.3) / 3.4, 2));
+      return -1.45 + crest * rise + foothill
+        + Math.sin(x * 0.8 + z * 0.6) * 0.14
+        + Math.sin(x * 1.6 - z * 0.9) * 0.08;
+    }
+
+    for (let row = 0; row <= rows; row++) {
+      for (let col = 0; col <= columns; col++) {
+        // Staggered rows create an architectural triangular lattice.
+        const x = (col / columns - 0.5) * 16 + (row % 2) * 8 / columns;
+        const z = (row / rows - 0.5) * 7.8;
+        const y = heightAt(x, z);
+        positions.push(x, y, z);
+        if (col % 4 === 0 && row % 3 === 0) surveyPoints.push(x, y, z);
+        if (row < rows && col < columns) {
+          const a = row * (columns + 1) + col;
+          const b = a + 1;
+          const c = a + columns + 1;
+          const d = c + 1;
+          if (row % 2) {
+            indices.push(a, c, b, b, c, d);
+            edges.push(a, b, a, c, b, c);
+          } else {
+            indices.push(a, c, d, a, d, b);
+            edges.push(a, b, a, c, a, d);
+          }
         }
       }
     }
 
-    const ribbonGeometry = new THREE.BufferGeometry();
-    ribbonGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    ribbonGeometry.setIndex(indices);
-    ribbonGeometry.computeVertexNormals();
-    const titanium = new THREE.MeshStandardMaterial({
-      color: 0x44434a, metalness: 0.92, roughness: 0.27, side: THREE.DoubleSide,
+    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+    const surfaceGeometry = new THREE.BufferGeometry();
+    surfaceGeometry.setAttribute('position', positionAttribute);
+    surfaceGeometry.setIndex(indices);
+    const surfaceMaterial = new THREE.ShaderMaterial({
+      uniforms, vertexShader: terrainVertex,
+      fragmentShader: `
+        varying float vHeight;
+        varying float vFade;
+        void main() {
+          vec3 shade = mix(vec3(0.018, 0.019, 0.025), vec3(0.065, 0.033, 0.022), vHeight);
+          gl_FragColor = vec4(shade, vFade * 0.92);
+        }
+      `,
+      side: THREE.DoubleSide, transparent: true,
+      polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
     });
-    sculpture.add(new THREE.Mesh(ribbonGeometry, titanium));
+    sculpture.add(new THREE.Mesh(surfaceGeometry, surfaceMaterial));
 
-    const copper = new THREE.MeshStandardMaterial({
-      color: 0xff792f, metalness: 0.68, roughness: 0.3,
-      emissive: 0xee490c, emissiveIntensity: 0.65,
+    const edgeGeometry = new THREE.BufferGeometry();
+    edgeGeometry.setAttribute('position', positionAttribute);
+    edgeGeometry.setIndex(edges);
+    const edgeMaterial = new THREE.ShaderMaterial({
+      uniforms, vertexShader: terrainVertex,
+      fragmentShader: `
+        varying float vHeight;
+        varying float vFade;
+        varying float vSignal;
+        void main() {
+          vec3 color = mix(vec3(0.48, 0.16, 0.055), vec3(1.0, 0.49, 0.19), vHeight);
+          color = mix(color, vec3(1.0, 0.72, 0.38), vSignal * 0.65);
+          float opacity = (0.2 + vHeight * 0.65 + vSignal * 0.2) * vFade;
+          gl_FragColor = vec4(color, opacity);
+        }
+      `,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     });
-    const seamGeometries = seams.map((points) => new THREE.TubeGeometry(
-      new THREE.CatmullRomCurve3(points, true), segments, 0.013, 5, true,
-    ));
-    seamGeometries.forEach((geometry) => sculpture.add(new THREE.Mesh(geometry, copper)));
+    const wireframe = new THREE.LineSegments(edgeGeometry, edgeMaterial);
+    wireframe.renderOrder = 1;
+    sculpture.add(wireframe);
 
-    const keyLight = new THREE.DirectionalLight(0xffe2c4, 4);
-    keyLight.position.set(-3, 5, 5);
-    scene.add(keyLight);
-    const rimLight = new THREE.PointLight(0xff611f, 28, 14, 2);
-    rimLight.position.set(3, -1, 2);
-    scene.add(rimLight);
-    const fillLight = new THREE.DirectionalLight(0xb9c4da, 1.8);
-    fillLight.position.set(-4, -2, 1);
-    scene.add(fillLight);
+    const pointGeometry = new THREE.BufferGeometry();
+    pointGeometry.setAttribute('position', new THREE.Float32BufferAttribute(surveyPoints, 3));
+    const pointMaterial = new THREE.ShaderMaterial({
+      uniforms, vertexShader: terrainVertex,
+      fragmentShader: `
+        varying float vHeight;
+        varying float vFade;
+        varying float vSignal;
+        void main() {
+          float radius = length(gl_PointCoord - 0.5);
+          float dot = 1.0 - smoothstep(0.15, 0.5, radius);
+          gl_FragColor = vec4(1.0, 0.65, 0.32, dot * vFade * (0.25 + vHeight * 0.4 + vSignal * 0.35));
+        }
+      `,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    });
+    const points = new THREE.Points(pointGeometry, pointMaterial);
+    points.renderOrder = 2;
+    sculpture.add(points);
 
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const pointer = new THREE.Vector2();
@@ -142,10 +175,11 @@
       if (!motion.matches) elapsed += delta;
       if (motion.matches) smoothedPointer.set(0, 0);
       else smoothedPointer.lerp(pointer, 0.035);
+      uniforms.uTime.value = elapsed;
       sculpture.rotation.set(
-        0.28 + Math.sin(elapsed * 0.18) * 0.12 + smoothedPointer.y * 0.12,
-        -0.36 + Math.sin(elapsed * 0.12) * 0.24 + smoothedPointer.x * 0.18,
-        -0.24 + elapsed * 0.035,
+        -0.08 + smoothedPointer.y * 0.035,
+        -0.16 + smoothedPointer.x * 0.065,
+        0.065,
       );
       renderer.render(scene, camera);
       if (visible && !document.hidden && !motion.matches) frame = requestAnimationFrame(render);
@@ -165,8 +199,8 @@
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       const mobile = width < 768;
-      sculpture.scale.setScalar(mobile ? 0.73 : 1.05);
-      sculpture.position.set(mobile ? 0.1 : 0.5, mobile ? 0.7 : -0.15, 0);
+      sculpture.scale.setScalar(mobile ? 0.65 : 1.0);
+      sculpture.position.set(mobile ? -0.6 : 0, mobile ? 0.8 : -0.55, 0);
       requestRender();
     }
 
@@ -207,11 +241,12 @@
       document.removeEventListener('astro:before-swap', dispose);
       window.removeEventListener('pagehide', onPageHide);
       window.removeEventListener('pageshow', updatePlayback);
-      ribbonGeometry.dispose();
-      seamGeometries.forEach((geometry) => geometry.dispose());
-      titanium.dispose();
-      copper.dispose();
-      environmentMap.dispose();
+      surfaceGeometry.dispose();
+      surfaceMaterial.dispose();
+      edgeGeometry.dispose();
+      edgeMaterial.dispose();
+      pointGeometry.dispose();
+      pointMaterial.dispose();
       renderer.dispose();
       renderer.domElement.remove();
     }
@@ -223,37 +258,37 @@
     window.addEventListener('pageshow', updatePlayback);
   }
 
-  function initOrbital() {
-    document.querySelectorAll<HTMLElement>('[data-orbital-stage]').forEach(mountOrbital);
+  function initTerrain() {
+    document.querySelectorAll<HTMLElement>('[data-terrain-stage]').forEach(mountTerrain);
   }
-  initOrbital();
-  document.addEventListener('astro:page-load', initOrbital);
+  initTerrain();
+  document.addEventListener('astro:page-load', initTerrain);
 </script>
 
 <style>
-  .orbital-stage {
+  .terrain-stage {
     overflow: hidden;
     contain: layout paint;
   }
-  .orbital-halo {
+  .terrain-halo {
     position: absolute;
     inset: 0;
     background:
       radial-gradient(ellipse at 55% 54%, rgb(234 88 12 / 0.08), transparent 53%),
       radial-gradient(ellipse at 46% 43%, rgb(148 163 184 / 0.035), transparent 48%);
   }
-  .orbital-canvas {
+  .terrain-canvas {
     position: absolute;
     inset: 0;
-    opacity: 0.85;
+    opacity: 1;
     mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 84%, transparent);
   }
-  .orbital-canvas :global(canvas) {
+  .terrain-canvas :global(canvas) {
     display: block;
     width: 100%;
     height: 100%;
   }
   @media (max-width: 767px) {
-    .orbital-canvas { opacity: 0.62; }
+    .terrain-canvas { opacity: 0.85; }
   }
 </style>
