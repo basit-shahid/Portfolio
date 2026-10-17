@@ -1,388 +1,259 @@
----
-// Standalone High-Performance Interactive Three.js Background Component
-// Features: The Original Git Repo Cyber-Wave & Particles, but fully enhanced with Interactive Physics & Scroll Momentum
----
-
-<div id="canvas-container" class="absolute inset-0 z-0 pointer-events-none opacity-100"></div>
+<div class="orbital-stage absolute inset-0 z-0 pointer-events-none" data-orbital-stage aria-hidden="true">
+  <div class="orbital-halo"></div>
+  <div class="orbital-canvas" data-orbital-canvas></div>
+</div>
 
 <script>
-  if (typeof window !== "undefined") {
-    const initThreeJS = () => {
-      import('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js')
-        .then((THREE) => {
-          runConstellationEngine(THREE);
-        })
-        .catch((err) => console.error("Failed to build 3d original matrix", err));
-    };
+  import * as THREE from 'three';
+  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(initThreeJS, { timeout: 2000 });
-    } else {
-      setTimeout(initThreeJS, 100);
-    }
-
-    function runConstellationEngine(THREE) {
-      const container = document.getElementById('canvas-container');
-      if (!container) return;
-
-      const isMobile = window.innerWidth < 768;
-      const particleCount = isMobile ? 160 : 340;
-      const maxDistance = isMobile ? 3.2 : 3.6;
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      // ---------- Scene / camera / renderer ----------
-      const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x09090b, 0.017);
-
-      const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
-      camera.position.set(0, 2.4, 16);
-      camera.lookAt(0, -1, 0);
-
-      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
-      container.appendChild(renderer.domElement);
-
-      // Shared palette: deep amber core -> molten orange -> warm gold highlight
-      // Keeps the exact orange tones you requested
-      const colorCore = new THREE.Color(0xff8a1f);
-      const colorMid = new THREE.Color(0xff5e00);
-      const colorHot = new THREE.Color(0xffd27a);
-
-      // ================= PARTICLE FIELD (shader-based, glowing + twinkling) =================
-      const positions = new Float32Array(particleCount * 3);
-      const velocities = [];
-      const repulseVelocities = new Float32Array(particleCount * 3);
-      const sizes = new Float32Array(particleCount);
-      const phases = new Float32Array(particleCount);
-      const colorMix = new Float32Array(particleCount);
-
-      for (let i = 0; i < particleCount; i++) {
-        // Exact original repository layout limits
-        positions[i * 3] = (Math.random() - 0.5) * 42;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 26 + 2;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 18;
-
-        velocities.push({
-          x: (Math.random() - 0.5) * 0.022,
-          y: (Math.random() - 0.5) * 0.022,
-          z: (Math.random() - 0.5) * 0.022
-        });
-
-        sizes[i] = 5 + Math.random() * 9;
-        phases[i] = Math.random() * Math.PI * 2;
-        colorMix[i] = Math.random();
-      }
-
-      const pGeometry = new THREE.BufferGeometry();
-      pGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      pGeometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
-      pGeometry.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
-      pGeometry.setAttribute('aMix', new THREE.BufferAttribute(colorMix, 1));
-
-      // The exact shader from the repository
-      const particleMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          uTime: { value: 0 },
-          uColorCore: { value: colorCore },
-          uColorHot: { value: colorHot },
-          uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) }
-        },
-        vertexShader: `
-          uniform float uTime;
-          uniform float uPixelRatio;
-          attribute float aSize;
-          attribute float aPhase;
-          attribute float aMix;
-          varying float vAlpha;
-          varying float vMix;
-          void main() {
-            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            float twinkle = 0.7 + 0.3 * sin(uTime * 1.6 + aPhase);
-            vAlpha = twinkle;
-            vMix = aMix;
-            gl_PointSize = aSize * uPixelRatio * (14.0 / -mvPosition.z);
-            gl_Position = projectionMatrix * mvPosition;
-          }
-        `,
-        fragmentShader: `
-          uniform vec3 uColorCore;
-          uniform vec3 uColorHot;
-          varying float vAlpha;
-          varying float vMix;
-          void main() {
-            vec2 c = gl_PointCoord - vec2(0.5);
-            float d = length(c);
-            float core = smoothstep(0.16, 0.06, d);
-            float glow = smoothstep(0.34, 0.0, d);
-            glow = pow(glow, 2.4);
-            float intensity = core + glow * 0.6;
-            if (intensity < 0.01) discard;
-            vec3 color = mix(uColorCore, uColorHot, vMix);
-            gl_FragColor = vec4(color, intensity * vAlpha);
-          }
-        `,
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending
-      });
-
-      const particles = new THREE.Points(pGeometry, particleMaterial);
-      scene.add(particles);
-
-      // Connective constellation lines (repository exactly)
-      const linesGeometry = new THREE.BufferGeometry();
-      const linesMaterial = new THREE.LineBasicMaterial({
-        vertexColors: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        transparent: true
-      });
-      const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
-      scene.add(linesMesh);
-
-      // ================= WAVE-GRID LANDSCAPE (the "cyber-wave" floor) =================
-      const gridCols = isMobile ? 26 : 42;
-      const gridRows = isMobile ? 18 : 28;
-      const gridSpacing = 1.35;
-      const gridWidth = (gridCols - 1) * gridSpacing;
-      const gridDepth = (gridRows - 1) * gridSpacing;
-
-      const gridVerts = [];
-      const gridBaseY = -9;
-      for (let r = 0; r < gridRows; r++) {
-        for (let c = 0; c < gridCols; c++) {
-          const x = c * gridSpacing - gridWidth / 2;
-          const z = r * gridSpacing - gridDepth / 2 - 6;
-          gridVerts.push(x, gridBaseY, z);
-        }
-      }
-
-      const idx = (r, c) => r * gridCols + c;
-      const gridLinePositions = [];
-      const gridLineColors = [];
-      const gridSegmentPairs = [];
-      for (let r = 0; r < gridRows; r++) {
-        for (let c = 0; c < gridCols; c++) {
-          if (c < gridCols - 1) gridSegmentPairs.push([idx(r, c), idx(r, c + 1)]);
-          if (r < gridRows - 1) gridSegmentPairs.push([idx(r, c), idx(r + 1, c)]);
-        }
-      }
-
-      const gridPositionArray = new Float32Array(gridSegmentPairs.length * 2 * 3);
-      const gridColorArray = new Float32Array(gridSegmentPairs.length * 2 * 3);
-      const gridGeometry = new THREE.BufferGeometry();
-      gridGeometry.setAttribute('position', new THREE.BufferAttribute(gridPositionArray, 3));
-      gridGeometry.setAttribute('color', new THREE.BufferAttribute(gridColorArray, 3));
-
-      const gridMaterial = new THREE.LineBasicMaterial({
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.55,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-      });
-      const gridMesh = new THREE.LineSegments(gridGeometry, gridMaterial);
-      scene.add(gridMesh);
-
-      const gridHeights = new Float32Array(gridCols * gridRows);
-
-      function updateWaveGrid(t) {
-        for (let r = 0; r < gridRows; r++) {
-          for (let c = 0; c < gridCols; c++) {
-            const i = idx(r, c);
-            const x = gridVerts[i * 3];
-            const z = gridVerts[i * 3 + 2];
-            const h =
-              Math.sin(x * 0.22 + t * 0.6) * 1.1 +
-              Math.cos(z * 0.18 - t * 0.45) * 1.1 +
-              Math.sin((x + z) * 0.12 + t * 0.3) * 0.7;
-            gridHeights[i] = h;
-          }
-        }
-
-        let p = 0;
-        for (let s = 0; s < gridSegmentPairs.length; s++) {
-          const [a, b] = gridSegmentPairs[s];
-          const ax = gridVerts[a * 3], az = gridVerts[a * 3 + 2];
-          const bx = gridVerts[b * 3], bz = gridVerts[b * 3 + 2];
-          const ay = gridBaseY + gridHeights[a];
-          const by = gridBaseY + gridHeights[b];
-
-          gridPositionArray[p * 6 + 0] = ax;
-          gridPositionArray[p * 6 + 1] = ay;
-          gridPositionArray[p * 6 + 2] = az;
-          gridPositionArray[p * 6 + 3] = bx;
-          gridPositionArray[p * 6 + 4] = by;
-          gridPositionArray[p * 6 + 5] = bz;
-
-          // Height-based color mappings from the original repository theme
-          const heightNorm = (val) => Math.min(Math.max((val + 2.0) / 4.0, 0), 1);
-          const ta = heightNorm(gridHeights[a]);
-          const tb = heightNorm(gridHeights[b]);
-
-          const ca = colorMid.clone().lerp(colorHot, ta);
-          const cb = colorMid.clone().lerp(colorHot, tb);
-
-          gridColorArray[p * 6 + 0] = ca.r;
-          gridColorArray[p * 6 + 1] = ca.g;
-          gridColorArray[p * 6 + 2] = ca.b;
-          gridColorArray[p * 6 + 3] = cb.r;
-          gridColorArray[p * 6 + 4] = cb.g;
-          gridColorArray[p * 6 + 5] = cb.b;
-          p++;
-        }
-
-        gridGeometry.attributes.position.needsUpdate = true;
-        gridGeometry.attributes.color.needsUpdate = true;
-      }
-
-      updateWaveGrid(0);
-
-      // ================= Interaction / Enhanced Physics Events =================
-      let mouseX = 0, mouseY = 0;
-      let targetX = 0, targetY = 0;
-      let scrollVelocity = 0;
-      let lastScrollY = window.scrollY || 0;
-      const baseColor = new THREE.Color(0xff6d00);
-
-      window.addEventListener('resize', () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        particleMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
-      });
-
-      window.addEventListener('mousemove', (event) => {
-        // Normalize mouse coordinates precisely for the repulsion physics
-        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-      });
-      
-      window.addEventListener("scroll", () => {
-        const sy = window.scrollY;
-        // Collect scrolling momentum 
-        scrollVelocity += (sy - lastScrollY) * 0.007; 
-        lastScrollY = sy;
-      }, { passive: true });
-
-      // ================= Animation loop (with the injected JS effects!) =================
-      const clock = new THREE.Clock();
-      let totalTime = 0;
-
-      function animate() {
-        requestAnimationFrame(animate);
-        const dt = clock.getDelta();
-        
-        scrollVelocity *= 0.93; // Fluid friction decay on the scroll momentum
-        
-        // Time accelerates organically based on scroll velocity
-        const timeDelta = (reduceMotion ? 0.15 : 1.0) * dt + Math.abs(scrollVelocity) * 0.015;
-        totalTime += timeDelta;
-        particleMaterial.uniforms.uTime.value = totalTime;
-
-        // Smooth camera targeting values
-        targetX += (mouseX - targetX) * 0.04;
-        targetY += (mouseY - targetY) * 0.04;
-        
-        // Project mouse coordinates closely to world space Z=0
-        const mwX = targetX * 18;
-        const mwY = 2.4 + (targetY * 18);
-
-        const posArray = pGeometry.attributes.position.array;
-        
-        // The core speeds up gracefully during scrolling
-        const speedScale = (reduceMotion ? 0.2 : 1) + Math.abs(scrollVelocity) * 0.5;
-
-        for (let i = 0; i < particleCount; i++) {
-          let cx = posArray[i * 3];
-          let cy = posArray[i * 3 + 1];
-          let cz = posArray[i * 3 + 2];
-          
-          // --- INJECTED MOUSE REPULSION FLUID PHYSICS ---
-          // Prevent particles too deep in z-space from dodging to look realistic
-          if (Math.abs(cz) < 14) {
-             const dx = cx - mwX;
-             const dy = cy - mwY;
-             const distSq = dx * dx + dy * dy;
-             const repulseRadius = 6.0;
-
-             if (distSq < repulseRadius * repulseRadius && distSq > 0.01) {
-                const dist = Math.sqrt(distSq);
-                const force = (repulseRadius - dist) / repulseRadius;
-                // Add physical force to the particle's repulse array based on cursor proximity
-                repulseVelocities[i * 3] += (dx / dist) * force * 0.015;
-                repulseVelocities[i * 3 + 1] += (dy / dist) * force * 0.015;
-             }
-          }
-
-          // Friction damping quickly stops the particle once it successfully dodges
-          repulseVelocities[i * 3] *= 0.92;
-          repulseVelocities[i * 3 + 1] *= 0.92;
-
-          cx += velocities[i].x * speedScale + repulseVelocities[i * 3];
-          cy += velocities[i].y * speedScale + repulseVelocities[i * 3 + 1];
-          cz += velocities[i].z * speedScale;
-
-          // The original repository boundary-box mathematical bounces!
-          if (Math.abs(cx) > 26) { cx = Math.sign(cx)*26; velocities[i].x *= -1; }
-          if (Math.abs(cy - 2) > 16) { cy = 2 + Math.sign(cy - 2)*16; velocities[i].y *= -1; }
-          if (Math.abs(cz) > 11) { cz = Math.sign(cz)*11; velocities[i].z *= -1; }
-          
-          posArray[i * 3] = cx;
-          posArray[i * 3 + 1] = cy;
-          posArray[i * 3 + 2] = cz;
-        }
-        pGeometry.attributes.position.needsUpdate = true;
-
-        // Dynamic Line Connecting Map
-        const linePositions = [];
-        const lineColors = [];
-
-        for (let i = 0; i < particleCount; i++) {
-          for (let j = i + 1; j < particleCount; j++) {
-            const dx = posArray[i * 3] - posArray[j * 3];
-            const dy = posArray[i * 3 + 1] - posArray[j * 3 + 1];
-            const dz = posArray[i * 3 + 2] - posArray[j * 3 + 2];
-            const distSq = dx * dx + dy * dy + dz * dz;
-
-            if (distSq < maxDistance * maxDistance) {
-              const alpha = 1.0 - Math.sqrt(distSq) / maxDistance;
-
-              linePositions.push(
-                posArray[i * 3], posArray[i * 3 + 1], posArray[i * 3 + 2],
-                posArray[j * 3], posArray[j * 3 + 1], posArray[j * 3 + 2]
-              );
-
-              lineColors.push(
-                baseColor.r * alpha, baseColor.g * alpha, baseColor.b * alpha,
-                baseColor.r * alpha, baseColor.g * alpha, baseColor.b * alpha
-              );
-            }
-          }
-        }
-
-        linesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-        linesGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
-
-        // Original wave engine calculation
-        if (!reduceMotion) {
-          updateWaveGrid(totalTime);
-        }
-
-        // Camera elegantly flows and dives forward heavily when scrolling for visual momentum
-        camera.position.x += (targetX * 2.2 - camera.position.x) * 0.06;
-        camera.position.y += ((2.4 - targetY * 1.6) - camera.position.y) * 0.06;
-        camera.position.z = 16.0 - (scrollVelocity * 2.3); 
-        camera.lookAt(0, -1, 0);
-
-        scene.rotation.y += reduceMotion ? 0 : 0.0009;
-
-        renderer.render(scene, camera);
-      }
-
-      animate();
+  // A continuous, machined ribbon: one form, with a warm illuminated seam.
+  class OrbitalPath extends THREE.Curve<THREE.Vector3> {
+    getPoint(t: number, target = new THREE.Vector3()) {
+      const angle = t * Math.PI * 2;
+      const radius = 1.72 + 0.5 * Math.cos(angle * 3);
+      return target.set(
+        radius * Math.cos(angle * 2),
+        radius * Math.sin(angle * 2),
+        0.64 * Math.sin(angle * 3),
+      );
     }
   }
+
+  function mountOrbital(stage: HTMLElement) {
+    const container = stage.querySelector<HTMLElement>('[data-orbital-canvas]');
+    if (!container || container.childElementCount) return;
+
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+    } catch {
+      // The CSS halo remains when WebGL is unavailable.
+      return;
+    }
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setClearColor(0x09090b, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    container.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(39, 1, 0.1, 40);
+    camera.position.set(0, 0, 9.8);
+
+    const environment = new RoomEnvironment();
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const environmentMap = pmrem.fromScene(environment, 0.04);
+    scene.environment = environmentMap.texture;
+    environment.dispose();
+    pmrem.dispose();
+
+    const sculpture = new THREE.Group();
+    scene.add(sculpture);
+    const path = new OrbitalPath();
+    const segments = window.innerWidth < 768 ? 180 : 320;
+    const frames = path.computeFrenetFrames(segments, true);
+    const positions: number[] = [];
+    const indices: number[] = [];
+    // Beveled rectangular section gives the ribbon broad faces and precise edges.
+    const section = [
+      [-0.23, -0.035], [-0.205, -0.06], [0.205, -0.06], [0.23, -0.035],
+      [0.23, 0.035], [0.205, 0.06], [-0.205, 0.06], [-0.23, 0.035],
+    ];
+    const seams = [[], []] as THREE.Vector3[][];
+    const point = new THREE.Vector3();
+    const normal = new THREE.Vector3();
+    const binormal = new THREE.Vector3();
+
+    for (let i = 0; i <= segments; i++) {
+      const t = i / segments;
+      path.getPoint(t, point);
+      // A complete twist closes seamlessly and catches the light as it turns.
+      const twist = t * Math.PI * 2;
+      normal.copy(frames.normals[i]).multiplyScalar(Math.cos(twist))
+        .addScaledVector(frames.binormals[i], Math.sin(twist));
+      binormal.copy(frames.binormals[i]).multiplyScalar(Math.cos(twist))
+        .addScaledVector(frames.normals[i], -Math.sin(twist));
+      for (const [width, depth] of section) {
+        positions.push(
+          point.x + normal.x * width + binormal.x * depth,
+          point.y + normal.y * width + binormal.y * depth,
+          point.z + normal.z * width + binormal.z * depth,
+        );
+      }
+      for (let side = 0; side < 2; side++) {
+        seams[side].push(point.clone().addScaledVector(normal, side ? 0.218 : -0.218)
+          .addScaledVector(binormal, 0.048));
+      }
+      if (i < segments) {
+        for (let j = 0; j < section.length; j++) {
+          const a = i * section.length + j;
+          const b = i * section.length + (j + 1) % section.length;
+          const c = a + section.length;
+          const d = b + section.length;
+          indices.push(a, b, c, b, d, c);
+        }
+      }
+    }
+
+    const ribbonGeometry = new THREE.BufferGeometry();
+    ribbonGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    ribbonGeometry.setIndex(indices);
+    ribbonGeometry.computeVertexNormals();
+    const titanium = new THREE.MeshStandardMaterial({
+      color: 0x44434a, metalness: 0.92, roughness: 0.27, side: THREE.DoubleSide,
+    });
+    sculpture.add(new THREE.Mesh(ribbonGeometry, titanium));
+
+    const copper = new THREE.MeshStandardMaterial({
+      color: 0xff792f, metalness: 0.68, roughness: 0.3,
+      emissive: 0xee490c, emissiveIntensity: 0.65,
+    });
+    const seamGeometries = seams.map((points) => new THREE.TubeGeometry(
+      new THREE.CatmullRomCurve3(points, true), segments, 0.013, 5, true,
+    ));
+    seamGeometries.forEach((geometry) => sculpture.add(new THREE.Mesh(geometry, copper)));
+
+    const keyLight = new THREE.DirectionalLight(0xffe2c4, 4);
+    keyLight.position.set(-3, 5, 5);
+    scene.add(keyLight);
+    const rimLight = new THREE.PointLight(0xff611f, 28, 14, 2);
+    rimLight.position.set(3, -1, 2);
+    scene.add(rimLight);
+    const fillLight = new THREE.DirectionalLight(0xb9c4da, 1.8);
+    fillLight.position.set(-4, -2, 1);
+    scene.add(fillLight);
+
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pointer = new THREE.Vector2();
+    const smoothedPointer = new THREE.Vector2();
+    let frame = 0;
+    let visible = false;
+    let disposed = false;
+    let elapsed = 0;
+    let previousTime = 0;
+
+    function render(time: number) {
+      frame = 0;
+      if (disposed) return;
+      const delta = previousTime ? Math.min((time - previousTime) / 1000, 0.05) : 0;
+      previousTime = time;
+      if (!motion.matches) elapsed += delta;
+      if (motion.matches) smoothedPointer.set(0, 0);
+      else smoothedPointer.lerp(pointer, 0.035);
+      sculpture.rotation.set(
+        0.28 + Math.sin(elapsed * 0.18) * 0.12 + smoothedPointer.y * 0.12,
+        -0.36 + Math.sin(elapsed * 0.12) * 0.24 + smoothedPointer.x * 0.18,
+        -0.24 + elapsed * 0.035,
+      );
+      renderer.render(scene, camera);
+      if (visible && !document.hidden && !motion.matches) frame = requestAnimationFrame(render);
+    }
+
+    function requestRender() {
+      if (!frame && !disposed && visible && !document.hidden) {
+        previousTime = 0;
+        frame = requestAnimationFrame(render);
+      }
+    }
+
+    function resize() {
+      const { width, height } = container.getBoundingClientRect();
+      if (!width || !height) return;
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      const mobile = width < 768;
+      sculpture.scale.setScalar(mobile ? 0.73 : 1.05);
+      sculpture.position.set(mobile ? 0.1 : 0.5, mobile ? 0.7 : -0.15, 0);
+      requestRender();
+    }
+
+    function onPointer(event: PointerEvent) {
+      const rect = stage.getBoundingClientRect();
+      pointer.set(
+        THREE.MathUtils.clamp((event.clientX - rect.left) / rect.width * 2 - 1, -1, 1),
+        THREE.MathUtils.clamp((event.clientY - rect.top) / rect.height * 2 - 1, -1, 1),
+      );
+    }
+
+    function updatePlayback() {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      requestRender();
+    }
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(container);
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      updatePlayback();
+    });
+    intersectionObserver.observe(stage);
+    window.addEventListener('pointermove', onPointer, { passive: true });
+    document.addEventListener('visibilitychange', updatePlayback);
+    motion.addEventListener('change', updatePlayback);
+    resize();
+
+    function dispose() {
+      disposed = true;
+      cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
+      intersectionObserver.disconnect();
+      window.removeEventListener('pointermove', onPointer);
+      document.removeEventListener('visibilitychange', updatePlayback);
+      motion.removeEventListener('change', updatePlayback);
+      document.removeEventListener('astro:before-swap', dispose);
+      window.removeEventListener('pagehide', onPageHide);
+      window.removeEventListener('pageshow', updatePlayback);
+      ribbonGeometry.dispose();
+      seamGeometries.forEach((geometry) => geometry.dispose());
+      titanium.dispose();
+      copper.dispose();
+      environmentMap.dispose();
+      renderer.dispose();
+      renderer.domElement.remove();
+    }
+    function onPageHide(event: PageTransitionEvent) {
+      if (!event.persisted) dispose();
+    }
+    document.addEventListener('astro:before-swap', dispose, { once: true });
+    window.addEventListener('pagehide', onPageHide);
+    window.addEventListener('pageshow', updatePlayback);
+  }
+
+  function initOrbital() {
+    document.querySelectorAll<HTMLElement>('[data-orbital-stage]').forEach(mountOrbital);
+  }
+  initOrbital();
+  document.addEventListener('astro:page-load', initOrbital);
 </script>
+
+<style>
+  .orbital-stage {
+    overflow: hidden;
+    contain: layout paint;
+  }
+  .orbital-halo {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 55% 54%, rgb(234 88 12 / 0.08), transparent 53%),
+      radial-gradient(ellipse at 46% 43%, rgb(148 163 184 / 0.035), transparent 48%);
+  }
+  .orbital-canvas {
+    position: absolute;
+    inset: 0;
+    opacity: 0.85;
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 84%, transparent);
+  }
+  .orbital-canvas :global(canvas) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  @media (max-width: 767px) {
+    .orbital-canvas { opacity: 0.62; }
+  }
+</style>
