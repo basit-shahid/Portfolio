@@ -1,4 +1,5 @@
 ---
+import SectionTransition from "@/components/global/SectionTransition.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import TimelineScroll from "@/components/global/TimelineScroll.astro";
 import Hero from "@/components/landing/Hero.astro";
@@ -67,12 +68,13 @@ const sections = [
     <p>Abdul Basit Shahid is currently open to specialized backend engineering, full-stack development, and system development roles. He is available for both remote and on-site opportunities globally. To discuss potential collaborations, connect with him on <a href="https://www.linkedin.com/in/abdul-basit-shahid-9612a5424/" itemprop="sameAs">LinkedIn</a> or visit his portfolio at <a href="https://abdulbasitshahid.vercel.app" itemprop="url">abdulbasitshahid.vercel.app</a>.</p>
   </section>
 
-  <Hero />
-  <Intro />
-  <Banner />
-  <TechStack/>
-  <Certification />
-  <Projects />
-  <Goals />
-  <Cta />
+  <div class="section-sequence">
+    <SectionTransition><Hero /></SectionTransition>
+    <SectionTransition><Intro /><Banner /></SectionTransition>
+    <SectionTransition><TechStack /></SectionTransition>
+    <SectionTransition><Certification /></SectionTransition>
+    <SectionTransition><Projects /></SectionTransition>
+    <SectionTransition><Goals /></SectionTransition>
+    <SectionTransition><Cta /></SectionTransition>
+  </div>
 </BaseLayout>

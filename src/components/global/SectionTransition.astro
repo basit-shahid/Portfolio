@@ -1,0 +1,93 @@
+<div class="section-transition" data-section-transition>
+  <div class="section-pin">
+    <div class="section-surface"><slot /></div>
+  </div>
+</div>
+
+<style is:global>
+  .section-sequence { isolation: isolate; }
+  .section-transition { position: relative; }
+  .section-surface { display: flow-root; background: var(--color-black, #1e1e1e); }
+
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .section-transition.is-enhanced:not(:last-child) {
+      margin-bottom: -65vh;
+    }
+    .section-transition.is-enhanced:not(:last-child)::after {
+      content: "";
+      display: block;
+      height: 65vh;
+      pointer-events: none;
+    }
+    .section-transition.is-enhanced > .section-pin {
+      position: sticky;
+      top: var(--section-top, 0px);
+    }
+    .section-transition.is-enhanced .section-surface {
+      position: relative;
+      min-height: 85svh;
+      transform-origin: center bottom;
+      transform: scale(var(--section-scale, 1));
+      border-radius: var(--section-radius, 0px);
+      overflow: clip;
+      box-shadow: 0 -24px 64px #0003;
+    }
+    .section-transition.is-enhanced .section-surface::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: var(--section-dim, 0);
+      pointer-events: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-sequence [data-framer-reveal] { opacity: 1; transform: none; }
+    .section-sequence .bounce-in { animation: none !important; opacity: 1; transform: none; }
+  }
+</style>
+
+<script>
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-section-transition]"));
+  const motion = window.matchMedia("(min-width: 768px) and (prefers-reduced-motion: no-preference)");
+  let frame = 0;
+
+  const paint = () => {
+    frame = 0;
+    if (!motion.matches) return;
+    const height = window.innerHeight;
+    // Read all geometry before writing styles. Progress reverses naturally when scrolling up.
+    const positions = sections.map((section) => section.getBoundingClientRect().top);
+    sections.forEach((section, index) => {
+      const next = positions[index + 1];
+      const progress = next === undefined ? 0 : Math.max(0, Math.min(1, (height - next) / (height * 0.85)));
+      section.style.setProperty("--section-scale", String(1 - progress * 0.055));
+      section.style.setProperty("--section-dim", String(progress * 0.32));
+      section.style.setProperty("--section-radius", `${progress * 24}px`);
+    });
+  };
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(paint); };
+  const measure = () => {
+    sections.forEach((section) => section.classList.toggle("is-enhanced", motion.matches));
+    const heights = sections.map((section) => section.querySelector<HTMLElement>(".section-pin")!.offsetHeight);
+    sections.forEach((section, index) => {
+      // Tall sections scroll fully before their last viewport pins for the handoff.
+      section.style.setProperty("--section-top", `${Math.min(0, window.innerHeight - heights[index])}px`);
+    });
+    schedule();
+  };
+  const observer = new ResizeObserver(measure);
+  sections.forEach((section) => observer.observe(section.querySelector(".section-pin")!));
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", measure, { passive: true });
+  motion.addEventListener("change", measure);
+  measure();
+  document.addEventListener("astro:before-swap", () => {
+    observer.disconnect();
+    cancelAnimationFrame(frame);
+    window.removeEventListener("scroll", schedule);
+    window.removeEventListener("resize", measure);
+    motion.removeEventListener("change", measure);
+  }, { once: true });
+</script>

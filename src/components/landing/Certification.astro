@@ -378,153 +378,27 @@ const certifications = [
 </style>
 
 <script>
-  (() => {
-    const section = document.getElementById("certifications");
-    const grid = document.getElementById("cert-grid");
-    const progress = document.getElementById("cert-progress");
-    if (!section || !grid) return;
-
-    const cards = Array.from(grid.querySelectorAll(".cert-bounce-card"));
-    const dots = progress ? Array.from(progress.querySelectorAll(".cert-progress-dot")) : [];
-    const total = cards.length;
-
-    if (window.matchMedia("(max-width: 1023px)").matches) {
-      const mobileObserver = new IntersectionObserver((entries) => {
+  // Reveal cards without intercepting wheel input or locking the page.
+  const grid = document.getElementById("cert-grid");
+  if (grid) {
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".cert-bounce-card"));
+    const dots = document.querySelectorAll("#cert-progress .cert-progress-dot");
+    const reveal = (card: HTMLElement) => {
+      card.classList.add("bounce-in");
+      const index = cards.indexOf(card);
+      dots[index]?.classList.add("active");
+    };
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      cards.forEach(reveal);
+    } else {
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("bounce-in");
-            mobileObserver.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) return;
+          reveal(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
         });
-      }, { rootMargin: "0px 0px -50px 0px", threshold: 0 });
-
-      cards.forEach((c) => {
-        mobileObserver.observe(c);
-      });
-      return;
+      }, { rootMargin: "0px 0px -40px 0px", threshold: 0.05 });
+      cards.forEach((card) => observer.observe(card));
     }
-
-    let revealed = 0;
-    let engaged = false;
-    let locked = false;
-    let direction = "down";
-    let lastScrollY = window.scrollY;
-
-    const STEP_LOCK_MS = 550;
-
-    window.addEventListener(
-      "scroll",
-      () => {
-        const y = window.scrollY;
-        if (Math.abs(y - lastScrollY) > 2) {
-          direction = y > lastScrollY ? "down" : "up";
-          lastScrollY = y;
-        }
-      },
-      { passive: true }
-    );
-
-    function updateDots() {
-      dots.forEach((d, i) => d.classList.toggle("active", i < revealed));
-    }
-
-    function lockBodyScroll() { document.body.style.overflow = "hidden"; }
-    function unlockBodyScroll() { document.body.style.overflow = ""; }
-
-    function bounceIn(i) {
-      const c = cards[i];
-      c.classList.remove("bounce-out");
-      void c.offsetWidth;
-      c.classList.add("bounce-in");
-    }
-    function bounceOut(i) {
-      const c = cards[i];
-      c.classList.remove("bounce-in");
-      void c.offsetWidth;
-      c.classList.add("bounce-out");
-    }
-
-    function releaseEngagement() {
-      engaged = false;
-      unlockBodyScroll();
-    }
-
-    function stepDown() {
-      if (revealed >= total) { releaseEngagement(); return false; }
-      bounceIn(revealed);
-      revealed++;
-      updateDots();
-      locked = true;
-      setTimeout(() => (locked = false), STEP_LOCK_MS);
-      if (revealed === total) setTimeout(releaseEngagement, STEP_LOCK_MS);
-      return true;
-    }
-
-    function stepUp() {
-      if (revealed <= 0) { releaseEngagement(); return false; }
-      revealed--;
-      bounceOut(revealed);
-      updateDots();
-      locked = true;
-      setTimeout(() => (locked = false), STEP_LOCK_MS);
-      if (revealed === 0) setTimeout(releaseEngagement, STEP_LOCK_MS);
-      return true;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target !== section) return;
-          if (!entry.isIntersecting || entry.intersectionRatio < 0.55) return;
-          if (engaged) return;
-
-          if (direction === "down" && revealed < total) {
-            engaged = true;
-            lockBodyScroll();
-          } else if (direction === "up" && revealed > 0) {
-            engaged = true;
-            lockBodyScroll();
-          }
-        });
-      },
-      { threshold: [0, 0.55, 1] }
-    );
-    observer.observe(section);
-
-    function onWheel(e) {
-      if (!engaged) return;
-      if (locked) { e.preventDefault(); return; }
-      const consumed = e.deltaY > 0 ? stepDown() : stepUp();
-      if (consumed) e.preventDefault();
-    }
-
-    function onKeyDown(e) {
-      if (!engaged) return;
-      const downKeys = ["ArrowDown", "PageDown", " "];
-      const upKeys = ["ArrowUp", "PageUp"];
-      if (downKeys.includes(e.key)) {
-        if (locked) { e.preventDefault(); return; }
-        if (stepDown()) e.preventDefault();
-      } else if (upKeys.includes(e.key)) {
-        if (locked) { e.preventDefault(); return; }
-        if (stepUp()) e.preventDefault();
-      }
-    }
-
-    let touchStartY = 0;
-    function onTouchStart(e) { touchStartY = e.touches[0].clientY; }
-    function onTouchMove(e) { if (engaged) e.preventDefault(); }
-    function onTouchEnd(e) {
-      if (!engaged || locked) return;
-      const dy = touchStartY - e.changedTouches[0].clientY;
-      if (Math.abs(dy) < 25) return;
-      dy > 0 ? stepDown() : stepUp();
-    }
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    window.addEventListener("touchend", onTouchEnd);
-  })();
+  }
 </script>
